@@ -19,13 +19,21 @@ namespace StayStop.Model
         public required List<Room> Rooms { get; set; }
         public required HotelType HotelType { get; set; }
         public required int Stars { get; set; }
+        [MaxLength(30)]
         public required string Country { get; set; }
+        [MaxLength(30)]
         public required string City { get; set; }
+        [MaxLength(30)]
         public required string Street { get; set; }
+        [MaxLength(15)]
         public required string ZipCode { get; set; }
+        [MaxLength(30)]
         public required string EmailAddress { get; set; }
+        [MaxLength(15)]
         public required string PhoneNumber { get; set; }
+        [MaxLength(30)]
         public required string Name { get; set; }
+        [MaxLength(200)]
         public required string Descritpion { get; set; }
         public required string CoverImage { get; set; }
         public required List<string> Images { get; set; }

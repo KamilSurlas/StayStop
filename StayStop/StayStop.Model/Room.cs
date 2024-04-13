@@ -15,6 +15,7 @@ namespace StayStop.Model
     {
         [Key]
         public int RoomId { get; set; }
+        [MaxLength(200)]
         public required string Description { get; set; }
         public required RoomType RoomType { get; set; }
         public required string CoverImage { get; set; }

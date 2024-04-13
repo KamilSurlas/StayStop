@@ -11,11 +11,15 @@ namespace StayStop.Model
     {
         [Key]
         public int UserId { get; set; }
+        [MaxLength(30)]
         public required string Email { get; set; }
         public required string HashedPassword { get; set; }
+        [MaxLength(30)]
         public required string PhoneNumber { get; set; }
         public UserRole UserRole { get; set; } = UserRole.User;
+        [MaxLength(30)]
         public required string Name { get; set; }
+        [MaxLength(30)]
         public required string LastName { get; set; }
         public List<Reservation>? UserReservations { get; set; }
         public List<ReservationPosition>? UserReservationPositions { get; set; }

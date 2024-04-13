@@ -14,6 +14,7 @@ namespace StayStop.Model
         [ForeignKey(nameof(ReservationId))]
         public required Reservation Reservation { get; set; }
         public required int Mark { get; set; }
+        [MaxLength(150)]
         public required string UserOpinion { get; set; }
         public required string Details { get; set; }
 
