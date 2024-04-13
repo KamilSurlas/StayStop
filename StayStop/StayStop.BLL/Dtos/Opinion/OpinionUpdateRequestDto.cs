@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StayStop.BLL.Dtos.Opinion
 {
-    public class OpinionUpdateDto
+    public class OpinionUpdateRequestDto
     {
         public int? Mark { get; set; }
         public string? UserOpinion { get; set; }
