@@ -1,0 +1,6 @@
+@StayStop.API_HostAddress = http://localhost:5080
+
+GET {{StayStop.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
