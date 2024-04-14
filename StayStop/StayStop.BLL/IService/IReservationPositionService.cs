@@ -1,4 +1,5 @@
 ﻿using StayStop.BLL.Dtos.ReservationPosition;
+using StayStop.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,9 @@ namespace StayStop.BLL.IService
 {
     public interface IReservationPositionService
     {
-        int Create(ReservationPositionRequestDto reservationPositionDto);
-        ReservationPositionResponseDto GetById(int userId, int reservationPositionId);
-        IEnumerable<ReservationPositionRequestDto> GetUserReservationPositions(int userId);
-        IEnumerable<ReservationPositionRequestDto> GetAll();
+        int Create(int reservationId, ReservationPositionRequestDto reservationPositionDto);
+        ReservationPositionResponseDto GetById(int reservationId, int reservationPositionId);
+        IEnumerable<ReservationPositionResponseDto> GetReservationPositions(int reservationId);
+        void DeleteReservationPosition(int reservationId, int reservationPositionId);
     }
 }

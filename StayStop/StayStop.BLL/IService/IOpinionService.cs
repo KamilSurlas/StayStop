@@ -12,7 +12,6 @@ namespace StayStop.BLL.IService
         int Create(int reservationId, OpinionRequestDto opinionDto);
         void Update(int reservationId, OpinionUpdateRequestDto opinionDto);
         OpinionResponseDto GetByReservationId(int reservationId);
-        OpinionResponseDto GetById(int opinionId);
         void Delete(int reservationId);
 
     }

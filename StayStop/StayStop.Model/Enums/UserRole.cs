@@ -2,6 +2,5 @@
 {
     User,
     Manager,
-    HotelOwner,
     Admin
 }

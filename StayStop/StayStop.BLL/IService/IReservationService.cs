@@ -13,6 +13,6 @@ namespace StayStop.BLL.IService
         ReservationResponseDto GetUserReservationById(int userId, int reservationId);
         IEnumerable<ReservationResponseDto> GetUserReservations(int userId);
         IEnumerable<ReservationResponseDto> GetAll();
-
+        void DeleteById(int userId, int reservationId);
     }
 }

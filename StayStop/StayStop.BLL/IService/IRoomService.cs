@@ -14,7 +14,7 @@ namespace StayStop.BLL.IService
         void DeleteById(int hotelId, int roomId);
         IEnumerable<RoomResponseDto> GetAll(int hotelId);
         RoomResponseDto GetById(int hotelId, int roomId);
-        void UpdateHotel(int hotelId, int roomId, RoomUpdateRequestDto roomDto);
+        void Update(int hotelId, int roomId, RoomUpdateRequestDto roomDto);
         void SetRoomActivity(int hotelId, int roomId);
     }
 }
