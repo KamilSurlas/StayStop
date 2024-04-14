@@ -18,7 +18,7 @@ namespace StayStop.API.Controllers
             _opinionService = opinionService;
         }
 
-        [HttpPost("{reservationId}")]
+        [HttpPost]
         public ActionResult Create([FromRoute] int reservationId, [FromBody] OpinionRequestDto opinionDto)
         {
             var newOpinionId = _opinionService.Create(reservationId, opinionDto);
@@ -26,7 +26,7 @@ namespace StayStop.API.Controllers
 
             return Created($"api/reservation/{reservationId}/opinion/{newOpinionId}", null);
         }
-        [HttpGet("{reservationId}")]
+        [HttpGet]
         [AllowAnonymous]
         public ActionResult<OpinionResponseDto> GetByReservationId([FromRoute] int reservationId)
         {
@@ -34,13 +34,13 @@ namespace StayStop.API.Controllers
 
             return Ok(opinion);
         }
-        [HttpDelete("{reservationId}")]
-        public ActionResult Delete([FromRoute] int reservationId) 
+        [HttpDelete]
+        public ActionResult Delete([FromRoute] int reservationId)
         {
             _opinionService.Delete(reservationId);
             return NoContent();
         }
-        [HttpPut("{reservationId}")]
+        [HttpPut]
         public ActionResult Update([FromRoute] int reservationId, [FromBody] OpinionUpdateRequestDto opinionDto)
         {
             _opinionService.Update(reservationId, opinionDto);

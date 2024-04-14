@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StayStop.BLL\StayStop.BLL.csproj" />
+    <ProjectReference Include="..\StayStop.BLL_EF\StayStop.BLL_EF.csproj" />
   </ItemGroup>
 
 </Project>

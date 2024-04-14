@@ -17,21 +17,21 @@ namespace StayStop.API.Controllers
         {
             _reservationService = reservationService;
         }
-        [HttpGet]
+        [HttpPost]
         public ActionResult Create() 
         {
             var newReservationId = _reservationService.Create();
 
             return Created($"/api/reservation/{newReservationId}", null);
         }
-        [HttpGet("{reservationId}/user/{userId}")]
+        [HttpGet("/api/user/{userId}/reservation/{reservationId}")]
         public ActionResult<ReservationResponseDto> GetUserReservationById([FromRoute] int reservationId, [FromRoute] int userId)
         {
             var reservation = _reservationService.GetUserReservationById(userId, reservationId);
 
             return Ok(reservation);
         }
-        [HttpGet("/user/{userId}")]
+        [HttpGet("/api/user/{userId}/reservation")]
         public ActionResult<IEnumerable<ReservationResponseDto>> GetUserReservations([FromRoute] int userId)
         {
             var reservations = _reservationService.GetUserReservations(userId);
