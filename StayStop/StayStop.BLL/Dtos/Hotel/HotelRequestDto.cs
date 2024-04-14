@@ -1,9 +1,9 @@
-﻿namespace StayStop.BLL.Dtos.Hotel
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace StayStop.BLL.Dtos.Hotel
 {
     public class HotelRequestDto
     {
-        public List<StayStop.Model.User>? Managers { get; set; }
-        public List<StayStop.Model.Room>? Rooms { get; set; }
         public required HotelType HotelType { get; set; }
         public required int Stars { get; set; }
         public required string Country { get; set; }

@@ -15,5 +15,8 @@ namespace StayStop.BLL.IService
         PageResult<HotelResponseDto> GetAll(HotelPagination pagination);
         HotelResponseDto GetById(int hotelId);
         public void Update(int hotelId, HotelUpdateRequestDto hotelDto);
+
+        public void AddManager(int hotelId, string managerEmail);
+        public void RemoveManager(int hotelId, int userId);
     }
 }

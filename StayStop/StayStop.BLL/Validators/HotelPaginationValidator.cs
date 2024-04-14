@@ -10,8 +10,9 @@ namespace StayStop.BLL.Validators
         private int[] allowedPageSizes = { 5, 10, 15 };
         private string[] allowedSortByNames =
         {
-        nameof(Hotel.Name), nameof(Hotel.Stars), nameof(Hotel.Country), nameof(Hotel.City)
-    };
+            nameof(Hotel.Name), nameof(Hotel.Stars), nameof(Hotel.Country), nameof(Hotel.City),
+            "Rating" 
+        };
 
 
         public HotelPaginationValidator()

@@ -22,8 +22,8 @@ namespace StayStop.API.Controllers
         [HttpPost("login")]
         public ActionResult Login([FromBody] UserLoginDto dto)
         {
-            string token = _accountService.GetJwtToken(dto);
-            return Ok(token);
+            string loginToken = _accountService.LoginUser(dto);
+            return Ok(loginToken);
         }
     }
 }

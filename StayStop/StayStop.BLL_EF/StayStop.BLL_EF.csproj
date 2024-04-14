@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Service\" />
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StayStop.BLL\StayStop.BLL.csproj" />
+    <ProjectReference Include="..\StayStop.Model\StayStop.Model.csproj" />
   </ItemGroup>
 
 </Project>

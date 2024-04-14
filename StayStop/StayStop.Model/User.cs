@@ -21,8 +21,7 @@ namespace StayStop.Model
         public required string Name { get; set; }
         [MaxLength(30)]
         public required string LastName { get; set; }
-        public List<Reservation>? UserReservations { get; set; }
-        public List<ReservationPosition>? UserReservationPositions { get; set; }
+        public List<Reservation>? UserReservations { get; set; } = [];
         public List<Hotel>? ManagedHotels { get; } = [];
     }
 }

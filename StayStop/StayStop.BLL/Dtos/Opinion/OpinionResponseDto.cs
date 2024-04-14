@@ -1,4 +1,5 @@
-﻿using StayStop.BLL.Dtos.Room;
+﻿using StayStop.BLL.Dtos.Hotel;
+using StayStop.BLL.Dtos.Room;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace StayStop.BLL.Dtos.Opinion
 {
     public class OpinionResponseDto
     {
-        public required RoomResponseDto Room { get; set; }
+        public required HotelResponseDto Hotel { get; set; }
         public required int Mark { get; set; }
         public required string UserOpinion { get; set; }
         public required string Details { get; set; }

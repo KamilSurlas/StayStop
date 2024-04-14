@@ -18,9 +18,9 @@ namespace StayStop.API.Controllers
             _reservationService = reservationService;
         }
         [HttpPost]
-        public ActionResult Create() 
+        public ActionResult Create([FromBody] ReservationRequestDto reservationDto) 
         {
-            var newReservationId = _reservationService.Create();
+            var newReservationId = _reservationService.Create(reservationDto);
 
             return Created($"/api/reservation/{newReservationId}", null);
         }
@@ -45,10 +45,10 @@ namespace StayStop.API.Controllers
 
             return Ok(reservations);
         }
-        [HttpDelete("{reservationId}/user/{userId}")]
-        public ActionResult DeleteUserReservationById ([FromRoute] int reservationId, [FromRoute] int userId)
+        [HttpDelete("{reservationId}")]
+        public ActionResult DeleteUserReservationById ([FromRoute] int reservationId)
         {
-            _reservationService.DeleteById(userId, reservationId);
+            _reservationService.DeleteById( reservationId);
 
             return NoContent();
         }

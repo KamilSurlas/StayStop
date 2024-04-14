@@ -14,7 +14,7 @@ namespace StayStop.Model
     {
         [Key]
         public int ReservationPositionId { get; set; }
-        public required int ReservationId { get; set; }
+        public int ReservationId { get; set; }
         [ForeignKey(nameof(ReservationId))]
         public required Reservation Reservation { get; set; }
         public required int RoomId { get; set; }

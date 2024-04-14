@@ -9,7 +9,7 @@ namespace StayStop.BLL.IService
 {
     public interface IAccountService
     {
-        string GetJwtToken(UserLoginDto dto);
-        void RegisterUser(UserRegisterDto dto);
+        string LoginUser(UserLoginDto dto); // w tej metodzie jwt gen
+        void RegisterUser(UserRegisterDto dto); // mozna mzienic od razu na zalogowanie
     }
 }

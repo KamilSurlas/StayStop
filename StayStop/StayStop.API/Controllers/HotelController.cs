@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using StayStop.BLL.Dtos.Hotel;
 using StayStop.BLL.IService;
 using StayStop.BLL.Pagination;
+using StayStop.Model;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace StayStop.API.Controllers
@@ -51,6 +52,20 @@ namespace StayStop.API.Controllers
         public ActionResult Update([FromRoute] int hotelId, [FromBody] HotelUpdateRequestDto hotelDto)
         {
             _hotelService.Update(hotelId, hotelDto);
+
+            return Ok();
+        }
+        [HttpPost("{hotelId}/managers/add")]
+        public ActionResult RemoveManager([FromRoute] int hotelId, [FromQuery] string managerEmail)
+        {
+            _hotelService.AddManager(hotelId,managerEmail);
+
+            return Ok();
+        }
+        [HttpPost("{hotelId}/managers/remove/{userId}")]
+        public ActionResult RemoveManager([FromRoute] int hotelId, [FromRoute] int userId)
+        {
+            _hotelService.RemoveManager(hotelId, userId);
 
             return Ok();
         }
