@@ -20,8 +20,8 @@ namespace StayStop.BLL.Validators
             RuleFor(x => x.Stars).InclusiveBetween(1, 5);
             RuleFor(x => x.PhoneNumber).MinimumLength(9).MaximumLength(13).Custom((value, context) =>
             {
-                var existingEmail = _context.Users.Any(u => u.Email == value);
-                if (existingEmail)
+                var existingPhoneNumber = _context.Users.Any(u => u.PhoneNumber == value);
+                if (existingPhoneNumber)
                 {
                     context.AddFailure("PhoneNumber", $"Phone number {value} is already in use");
                 }
