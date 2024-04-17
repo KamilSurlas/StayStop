@@ -132,12 +132,12 @@ namespace StayStop.BLL_EF.Service
         public void Update(int hotelId, HotelUpdateRequestDto hotelDto)
         {       
             var hotelToUpdate = GetHotelById(hotelId);
-            var images = hotelToUpdate.Images;
-            if (hotelDto.Images?.Any() == false)
+            var hotelImagesFromDb = hotelToUpdate.Images;
+            if (hotelDto.Images?.Count > 0)
             {        
-               images.AddRange(hotelDto.Images);
+               hotelImagesFromDb.AddRange(hotelDto.Images);
             }
-            hotelDto.Images = images;
+            hotelDto.Images = hotelImagesFromDb;
             _mapper.Map(hotelDto, hotelToUpdate);
             _context.SaveChanges();
         }

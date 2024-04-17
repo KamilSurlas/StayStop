@@ -33,7 +33,7 @@ namespace StayStop.Model
         public required string PhoneNumber { get; set; }
         [MaxLength(30)]
         public required string Name { get; set; }
-        [MaxLength(200)]
+        [MaxLength(1000)]
         public required string Description { get; set; }
         public required string CoverImage { get; set; }
         public required List<string> Images { get; set; }

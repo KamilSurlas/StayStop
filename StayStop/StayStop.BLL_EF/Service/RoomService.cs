@@ -120,13 +120,13 @@ namespace StayStop.BLL_EF.Service
             if (room.HotelId != hotelId) 
                 throw new ContentNotFoundException($"Provided hotel id is wrong (hotel id: {hotelId})");
 
-            var roomsFromDb = room.Images.ToList();
-            if (roomDto.Images is not null && roomDto.Images.Any())
+            var roomImagesFromDb = room.Images.ToList();
+            if (roomDto.Images?.Count>0)
             {
-                roomsFromDb.AddRange(roomDto.Images);
+                roomImagesFromDb.AddRange(roomDto.Images);
             }
 
-            roomDto.Images = roomsFromDb;
+            roomDto.Images = roomImagesFromDb;
             _mapper.Map(roomDto, room);
 
             room.HotelId = hotelId;

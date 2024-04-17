@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StayStop.DAL.Context;
 
@@ -11,9 +12,11 @@ using StayStop.DAL.Context;
 namespace StayStop.DAL.Migrations
 {
     [DbContext(typeof(StayStopDbContext))]
-    partial class StayStopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240417150416_decimal_precision")]
+    partial class decimal_precision
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,17 +64,16 @@ namespace StayStop.DAL.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("EmailAddress")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<string>("HotelType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("HotelType")
+                        .HasColumnType("int");
 
                     b.Property<string>("Images")
                         .IsRequired()
@@ -125,8 +127,8 @@ namespace StayStop.DAL.Migrations
 
                     b.Property<string>("UserOpinion")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.HasKey("OpinionId");
 
@@ -148,7 +150,7 @@ namespace StayStop.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(7,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -181,7 +183,7 @@ namespace StayStop.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(7,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("ReservationId")
                         .HasColumnType("int");
@@ -212,8 +214,8 @@ namespace StayStop.DAL.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("HotelId")
                         .HasColumnType("int");
@@ -231,9 +233,8 @@ namespace StayStop.DAL.Migrations
                     b.Property<decimal>("PriceForChild")
                         .HasColumnType("decimal(7,2)");
 
-                    b.Property<string>("RoomType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("RoomType")
+                        .HasColumnType("int");
 
                     b.HasKey("RoomId");
 
