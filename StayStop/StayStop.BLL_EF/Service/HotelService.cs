@@ -114,7 +114,8 @@ namespace StayStop.BLL_EF.Service
 
             var hotelResults = _mapper.Map<List<HotelResponseDto>>(hotels);
 
-            var result = new PageResult<HotelResponseDto>(hotelResults, baseQuery.Count(), pagination.PageSize, pagination.PageNumber);
+            var result = new PageResult<HotelResponseDto>(hotelResults, baseQuery.Count(), 
+                pagination.PageSize, pagination.PageNumber);
 
             return result;
         }
@@ -132,7 +133,7 @@ namespace StayStop.BLL_EF.Service
         {       
             var hotelToUpdate = GetHotelById(hotelId);
             var images = hotelToUpdate.Images;
-            if (hotelDto.Images?.Any() ?? false)
+            if (hotelDto.Images?.Any() == false)
             {        
                images.AddRange(hotelDto.Images);
             }

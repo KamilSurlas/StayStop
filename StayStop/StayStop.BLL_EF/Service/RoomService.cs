@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace StayStop.BLL_EF.Service
 {
@@ -110,12 +111,22 @@ namespace StayStop.BLL_EF.Service
 
         public void Update(int hotelId, int roomId, RoomUpdateRequestDto roomDto)
         {
-            if (roomDto.PriceForChild <= 0.0M || roomDto.PriceForAdult <= 0.0M) throw new InvalidDataException("$Price can't be lower or equal to 0");
+            if (roomDto.PriceForChild <= 0.0M || roomDto.PriceForAdult <= 0.0M) 
+                throw new InvalidDataException("$Price can't be lower or equal to 0");
+
             var hotel = GetHotelById(hotelId);
             var room = GetRoomById(roomId);
-            if (room.HotelId != hotelId) throw new ContentNotFoundException($"Provided hotel id is wrong (hotel id: {hotelId})");
-            // room ma zdjecia - tak jak w hotelu
-            //MIDDLEWARE NIE DZIALA
+            
+            if (room.HotelId != hotelId) 
+                throw new ContentNotFoundException($"Provided hotel id is wrong (hotel id: {hotelId})");
+
+            var roomsFromDb = room.Images.ToList();
+            if (roomDto.Images is not null && roomDto.Images.Any())
+            {
+                roomsFromDb.AddRange(roomDto.Images);
+            }
+
+            roomDto.Images = roomsFromDb;
             _mapper.Map(roomDto, room);
 
             room.HotelId = hotelId;
