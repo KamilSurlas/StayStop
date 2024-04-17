@@ -88,7 +88,7 @@ namespace StayStop.BLL_EF.Service
 
             if (reservation.Opinion is null) throw new InvalidOperationException($"Reservation with an id {reservationId} don't have opinion");
 
-            _mapper.Map(reservation.Opinion, opinionDto);
+            _mapper.Map(opinionDto, reservation.Opinion);
 
             reservation.Opinion.ReservationId = reservationId;
 
