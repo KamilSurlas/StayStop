@@ -1,22 +1,27 @@
 ﻿using FluentValidation;
 using StayStop.BLL.Pagination;
 using StayStop.Model;
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace StayStop.BLL.Validators
 {
-    public class HotelPaginationValidator : AbstractValidator<HotelPagination>
+    public class ReservationPaginationValidator:AbstractValidator<HotelPagination>
     {
-        private int[] allowedPageSizes = { 5, 10, 15 };
+        private int[] allowedPageSizes = { 5,10, 15, 20 };
         private string[] allowedSortByNames =
         {
-            nameof(Hotel.Name), nameof(Hotel.Stars), nameof(Hotel.Country), nameof(Hotel.City),
-            "Rating" 
+            nameof(Reservation.Price),
+            "Rating"
         };
 
 
-        public HotelPaginationValidator()
+        public ReservationPaginationValidator()
         {
+            RuleFor(p => p.HotelsSortBy).Null();
             RuleFor(p => p.PageNumber).GreaterThanOrEqualTo(1);
             RuleFor(p => p.PageSize).Custom((value, context) =>
             {
@@ -25,7 +30,7 @@ namespace StayStop.BLL.Validators
                     context.AddFailure("PageSize", $"PageSize must be in [{string.Join(",", allowedPageSizes)}]");
                 }
             });
-            RuleFor(p => p.HotelsSortBy).Must(value => string.IsNullOrEmpty(value) || allowedSortByNames.Contains(value))
+            RuleFor(p => p.ReservationsSortBy).Must(value => string.IsNullOrEmpty(value) || allowedSortByNames.Contains(value))
             .WithMessage($"Sort by is optional or must be in [{string.Join(", ", allowedSortByNames)}]");
         }
     }

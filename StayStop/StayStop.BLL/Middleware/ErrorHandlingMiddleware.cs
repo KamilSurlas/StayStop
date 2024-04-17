@@ -12,11 +12,6 @@ namespace StayStop.BLL.Middleware
 {
     public class ErrorHandlingMiddleware : IMiddleware
     {
-
-        public ErrorHandlingMiddleware()
-        {
-
-        }
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             try

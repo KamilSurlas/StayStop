@@ -18,9 +18,9 @@ namespace StayStop.BLL.Validators
             _context = context;
 
             RuleFor(x => x.Stars).InclusiveBetween(1, 5);
-            RuleFor(x => x.PhoneNumber).MinimumLength(9).MaximumLength(13).Custom((value, context) =>
+            RuleFor(x => x.PhoneNumber).MinimumLength(11).MaximumLength(15).Custom((value, context) =>
             {
-                var existingPhoneNumber = _context.Users.Any(u => u.PhoneNumber == value);
+                var existingPhoneNumber = _context.Hotels.Any(h => h.PhoneNumber == value);
                 if (existingPhoneNumber)
                 {
                     context.AddFailure("PhoneNumber", $"Phone number {value} is already in use");
@@ -28,7 +28,7 @@ namespace StayStop.BLL.Validators
             });
             RuleFor(x => x.EmailAddress).EmailAddress().Custom((value, context) =>
             {
-                var existingEmail = _context.Users.Any(u => u.Email == value);
+                var existingEmail = _context.Hotels.Any(h => h.EmailAddress == value);
                 if (existingEmail)
                 {
                     context.AddFailure("Email", $"Email {value} is already in use");

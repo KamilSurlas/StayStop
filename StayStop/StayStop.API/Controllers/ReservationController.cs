@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using StayStop.BLL.Dtos.Reservation;
 using StayStop.BLL.IService;
+using StayStop.BLL.Pagination;
 using StayStop.Model;
 
 namespace StayStop.API.Controllers
@@ -39,9 +40,9 @@ namespace StayStop.API.Controllers
             return Ok(reservations);
         }
         [HttpGet]
-        public ActionResult<IEnumerable<ReservationResponseDto>> GetAll()
+        public ActionResult<IEnumerable<ReservationResponseDto>> GetAll([FromQuery] HotelPagination pagination)
         {
-            var reservations = _reservationService.GetAll();
+            var reservations = _reservationService.GetAll(pagination);
 
             return Ok(reservations);
         }

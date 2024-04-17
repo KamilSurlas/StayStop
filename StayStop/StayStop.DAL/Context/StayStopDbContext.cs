@@ -9,7 +9,7 @@ namespace StayStop.DAL.Context
         public DbSet<User> Users { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ReservationPosition> ReservationPositions { get; set; }
-        public DbSet<Room> Room { get; set; }
+        public DbSet<Room> Rooms { get; set; }
         public DbSet<Hotel> Hotels { get; set; }
 
 
@@ -23,7 +23,7 @@ namespace StayStop.DAL.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //ReservationPosition - Room
+            //ReservationPosition - Rooms
             modelBuilder.Entity<ReservationPosition>()
                 .HasOne(rp => rp.Room)
                 .WithMany(r => r.ReservationPositions)
@@ -47,7 +47,7 @@ namespace StayStop.DAL.Context
                 .WithMany(u => u.UserReservations)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            //Room - Hotel
+            //Rooms - Hotel
             modelBuilder.Entity<Room>()
                 .HasOne(r => r.Hotel)
                 .WithMany(h => h.Rooms)

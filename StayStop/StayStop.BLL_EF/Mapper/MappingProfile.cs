@@ -3,7 +3,9 @@ using StayStop.BLL.Dtos;
 using StayStop.BLL.Dtos.Hotel;
 using StayStop.BLL.Dtos.Opinion;
 using StayStop.BLL.Dtos.Reservation;
+using StayStop.BLL.Dtos.ReservationPosition;
 using StayStop.BLL.Dtos.Room;
+using StayStop.BLL.Dtos.User;
 using StayStop.Model;
 using System;
 using System.Collections.Generic;
@@ -18,16 +20,32 @@ namespace StayStop.BLL_EF.Mapper
     {
         public MappingProfile()
         {
+            // Nullable types
+            CreateMap<List<string>?, List<string>>().ConvertUsing((src, dest) => src ?? dest);
+            CreateMap<int?,int>().ConvertUsing((src, dest) => src ?? dest);
+            CreateMap<decimal?, decimal>().ConvertUsing((src, dest) => src ?? dest);
+            CreateMap<DateTime?, DateTime>().ConvertUsing((src, dest) => src ?? dest);
+            CreateMap<RoomType?, RoomType>().ConvertUsing((src, dest) => src ?? dest);
+            CreateMap<HotelType?, HotelType>().ConvertUsing((src, dest) => src ?? dest);
+            CreateMap<bool?, bool>().ConvertUsing((src, dest) => src ?? dest);
+
+            //User
+            CreateMap<User, UserResponseDto>();
+
+
             // Hotel
-            CreateMap<HotelRequestDto, Hotel>().ReverseMap();
-            CreateMap<HotelUpdateRequestDto, Hotel>()
-            .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null)); // TEST UPDATE
+            CreateMap<HotelRequestDto, Hotel>();
+            CreateMap<HotelUpdateRequestDto, Hotel>()          
+            .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
+            
+            CreateMap<Hotel, HotelResponseDto>();
 
 
-            // Room
-            CreateMap<RoomRequestDto, Room>().ReverseMap();
+            // Rooms
+            CreateMap<RoomRequestDto, Room>();
             CreateMap<RoomUpdateRequestDto, Room>()
             .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
+            CreateMap<Room, RoomResponseDto>();
 
 
             // Opinion
@@ -42,7 +60,9 @@ namespace StayStop.BLL_EF.Mapper
             CreateMap<ReservationRequestDto, Reservation>();
             CreateMap<Reservation, ReservationResponseDto>();
 
-            CreateMap<ReservationPosition, ReservationResponseDto>().ReverseMap();
+            // ReservationPosition
+            CreateMap<ReservationPosition, ReservationPositionResponseDto>();
+            CreateMap<ReservationPositionRequestDto,ReservationPosition>();
         }
     }
 }

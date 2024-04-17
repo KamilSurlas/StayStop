@@ -16,7 +16,7 @@ namespace StayStop.Model
         [Key]
         public int HotelId { get; set; }
         public List<User> Managers { get; } = [];
-        public required List<Room> Rooms { get; set; }
+        public required List<Room> Rooms { get; set; } 
         public required HotelType HotelType { get; set; }
         public required int Stars { get; set; }
         [MaxLength(30)]
@@ -34,7 +34,7 @@ namespace StayStop.Model
         [MaxLength(30)]
         public required string Name { get; set; }
         [MaxLength(200)]
-        public required string Descritpion { get; set; }
+        public required string Description { get; set; }
         public required string CoverImage { get; set; }
         public required List<string> Images { get; set; }
     }

@@ -12,7 +12,7 @@ namespace StayStop.BLL.IService
     {
         int Create(HotelRequestDto hotelDto);
         void Delete(int hotelId);
-        PageResult<HotelResponseDto> GetAll(HotelPagination pagination);
+        PageResult<HotelResponseDto> GetAll(Pagination.HotelPagination pagination);
         HotelResponseDto GetById(int hotelId);
         public void Update(int hotelId, HotelUpdateRequestDto hotelDto);
 

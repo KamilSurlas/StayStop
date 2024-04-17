@@ -1,4 +1,5 @@
 ﻿using StayStop.BLL.Dtos.Reservation;
+using StayStop.BLL.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace StayStop.BLL.IService
         int Create(ReservationRequestDto reservationDto);
         ReservationResponseDto GetUserReservationById(int userId, int reservationId);
         IEnumerable<ReservationResponseDto> GetUserReservations(int userId);
-        IEnumerable<ReservationResponseDto> GetAll();
+        PageResult<ReservationResponseDto> GetAll(HotelPagination pagination);
         void DeleteById(int reservationId);
     }
 }

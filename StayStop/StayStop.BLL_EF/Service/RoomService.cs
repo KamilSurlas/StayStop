@@ -35,7 +35,7 @@ namespace StayStop.BLL_EF.Service
         }
         private Room GetRoomById(int roomId)
         {
-            var room = _context.Room.
+            var room = _context.Rooms.
                 Include(r => r.ReservationPositions).
                 FirstOrDefault(r => r.RoomId == roomId);
 
@@ -53,6 +53,7 @@ namespace StayStop.BLL_EF.Service
             var room = _mapper.Map<Room>(roomDto);
 
             room.HotelId = hotelId;
+            room.Hotel = hotel;
 
             _context.Add(room);
             _context.SaveChanges();
@@ -113,7 +114,8 @@ namespace StayStop.BLL_EF.Service
             var hotel = GetHotelById(hotelId);
             var room = GetRoomById(roomId);
             if (room.HotelId != hotelId) throw new ContentNotFoundException($"Provided hotel id is wrong (hotel id: {hotelId})");
-            
+            // room ma zdjecia - tak jak w hotelu
+            //MIDDLEWARE NIE DZIALA
             _mapper.Map(roomDto, room);
 
             room.HotelId = hotelId;

@@ -47,10 +47,11 @@ namespace StayStop.BLL_EF.Service
         private double CalculateAvgOpinions(Hotel hotel)
         {
             var averageRating = hotel.Rooms
+            .Where(r=>r.ReservationPositions is not null)
             .SelectMany(r => r.ReservationPositions)
-            .Where(rp => rp.Reservation.Opinion != null)
-            .Select(rp => rp.Reservation.Opinion.Mark) 
-            .DefaultIfEmpty(0) 
+            .Where(rp => rp.Reservation.Opinion is not null)
+            .Select(rp => rp.Reservation.Opinion.Mark)
+            .DefaultIfEmpty()
             .Average(); 
 
             return averageRating;
@@ -79,17 +80,17 @@ namespace StayStop.BLL_EF.Service
             .Hotels
             .Include(h => h.Rooms)
             .Include(h => h.Managers)
-            .Where(h => pagination.SortBy == null || (h.Name.ToLower().Contains(pagination.SortBy.ToLower())
-            || h.Stars.ToString().Contains(pagination.SortBy)
-            || h.Country.ToLower().Contains(pagination.SortBy.ToLower())
-            || h.City.ToLower().Contains(pagination.SortBy.ToLower())));
+            .Where(h => pagination.HotelsSortBy == null || (h.Name.ToLower().Contains(pagination.HotelsSortBy.ToLower())
+            || h.Stars.ToString().Contains(pagination.HotelsSortBy)
+            || h.Country.ToLower().Contains(pagination.HotelsSortBy.ToLower())
+            || h.City.ToLower().Contains(pagination.HotelsSortBy.ToLower())));
 
-            if (pagination.SortBy.ToLower().Contains("average"))
+            if (pagination.HotelsSortBy?.ToLower().Contains("average") ?? false)
             {
                 baseQuery = pagination.SortDirection == SortDirection.ASC ? baseQuery.OrderBy(h=>CalculateAvgOpinions(h))
                 : baseQuery.OrderByDescending(h => CalculateAvgOpinions(h));
             }
-            else if (!string.IsNullOrEmpty(pagination.SortBy))
+            else if (!string.IsNullOrEmpty(pagination.HotelsSortBy))
             {
                 var columnsSelector = new Dictionary<string, Expression<Func<Hotel, object>>>()
                 {
@@ -99,7 +100,7 @@ namespace StayStop.BLL_EF.Service
                     {nameof(Hotel.City), h => h.City },                
                 };
 
-                var selected = columnsSelector[pagination.SortBy];
+                var selected = columnsSelector[pagination.HotelsSortBy];
 
                 baseQuery = pagination.SortDirection == SortDirection.ASC ? baseQuery.OrderBy(selected)
                 : baseQuery.OrderByDescending(selected);
@@ -110,6 +111,7 @@ namespace StayStop.BLL_EF.Service
               .Skip(pagination.PageSize * (pagination.PageNumber - 1))
             .Take(pagination.PageSize)
             .ToList();
+
             var hotelResults = _mapper.Map<List<HotelResponseDto>>(hotels);
 
             var result = new PageResult<HotelResponseDto>(hotelResults, baseQuery.Count(), pagination.PageSize, pagination.PageNumber);
@@ -119,15 +121,22 @@ namespace StayStop.BLL_EF.Service
 
         public HotelResponseDto GetById(int hotelId)
         {
-            var hotel = _mapper.Map<HotelResponseDto>(GetHotelById(hotelId));
+            var hotel = GetHotelById(hotelId);
 
-            return hotel;
+            var result = _mapper.Map<HotelResponseDto>(hotel);
+
+            return result;
         }
 
         public void Update(int hotelId, HotelUpdateRequestDto hotelDto)
-        {
+        {       
             var hotelToUpdate = GetHotelById(hotelId);
-
+            var images = hotelToUpdate.Images;
+            if (hotelDto.Images?.Any() ?? false)
+            {        
+               images.AddRange(hotelDto.Images);
+            }
+            hotelDto.Images = images;
             _mapper.Map(hotelDto, hotelToUpdate);
             _context.SaveChanges();
         }
@@ -137,6 +146,11 @@ namespace StayStop.BLL_EF.Service
             var hotel = GetHotelById(hotelId);
 
             var manager = GetUserByMail(managerEmail);
+
+            if (manager.UserRole == UserRole.User)
+            {
+                manager.UserRole = UserRole.Manager;
+            }
 
             hotel.Managers.Add(manager);
 

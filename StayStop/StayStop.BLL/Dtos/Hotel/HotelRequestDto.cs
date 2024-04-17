@@ -13,7 +13,7 @@ namespace StayStop.BLL.Dtos.Hotel
         public required string EmailAddress { get; set; }
         public required string PhoneNumber { get; set; }
         public required string Name { get; set; }
-        public required string Descritpion { get; set; }
+        public required string Description { get; set; }
         public required string CoverImage { get; set; }
         public required List<string> Images { get; set; }
     }

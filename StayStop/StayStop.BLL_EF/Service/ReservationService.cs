@@ -1,13 +1,17 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using StayStop.BLL.Dtos.Hotel;
 using StayStop.BLL.Dtos.Reservation;
 using StayStop.BLL.IService;
+using StayStop.BLL.Pagination;
 using StayStop.BLL_EF.Exceptions;
 using StayStop.DAL.Context;
 using StayStop.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,10 +29,17 @@ namespace StayStop.BLL_EF.Service
         }
         private User GetUserById(int userId)
         {
-            var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
+            var user = _context.Users.Include(u=>u.UserReservations).FirstOrDefault(u => u.UserId == userId);
             if (user is null) throw new ContentNotFoundException($"User with id: {userId} was not found");
 
             return user;
+        }
+        private Reservation GetReservationById(int reservationId)
+        {
+            var reservation = _context.Reservations.First(r => r.ReservationId == reservationId);
+            if (reservation is null) throw new ContentNotFoundException($"Reservation with id: {reservationId} was not found");
+
+            return reservation;
         }
         public int Create(ReservationRequestDto reservationDto)
         {
@@ -56,22 +67,67 @@ namespace StayStop.BLL_EF.Service
 
         public void DeleteById(int reservationId)
         {
-            throw new NotImplementedException();
+            var reservation = GetReservationById(reservationId);
+            _context.Reservations.Remove(reservation);
+            _context.SaveChanges();
         }
 
-        public IEnumerable<ReservationResponseDto> GetAll()
+        public PageResult<ReservationResponseDto> GetAll(HotelPagination pagination)
         {
-            throw new NotImplementedException();
+            var baseQuery = _context
+           .Reservations
+           .Include(r => r.User)
+           .Include(r => r.ReservationPositions)
+           .Where(r => pagination.ReservationsSortBy == null || r.Price.ToString().Contains(pagination.ReservationsSortBy.ToLower()));
+        
+           
+            if (!string.IsNullOrEmpty(pagination.ReservationsSortBy))
+            {
+                var columnsSelector = new Dictionary<string, Expression<Func<Reservation, object>>>()
+                {
+                    {nameof(Reservation.Price), r => r.Price },                 
+                };
+
+                var selected = columnsSelector[pagination.ReservationsSortBy];
+
+                baseQuery = pagination.SortDirection == SortDirection.ASC ? baseQuery.OrderBy(selected)
+                : baseQuery.OrderByDescending(selected);
+            }
+
+
+            var reservations = baseQuery
+              .Skip(pagination.PageSize * (pagination.PageNumber - 1))
+            .Take(pagination.PageSize)
+            .ToList();
+
+            var reservationsResults = _mapper.Map<List<ReservationResponseDto>>(reservations);
+
+            var result = new PageResult<ReservationResponseDto>(reservationsResults, baseQuery.Count(), pagination.PageSize, pagination.PageNumber);
+
+            return result;
         }
 
         public ReservationResponseDto GetUserReservationById(int userId, int reservationId)
         {
-            throw new NotImplementedException();
+            var user = GetUserById(userId);
+            var reservation = GetReservationById(reservationId);
+            if (reservation.UserId!=userId) throw new ContentNotFoundException($"Provided reservation id is wrong (reservation id: {reservationId})");
+
+            var result = _mapper.Map<ReservationResponseDto>(reservation);
+
+            return result;
         }
 
         public IEnumerable<ReservationResponseDto> GetUserReservations(int userId)
         {
-            throw new NotImplementedException();
+            var user = GetUserById(userId);
+
+            if (user.UserReservations?.Count == 0) throw new ContentNotFoundException($"User with id: {userId} don't have reservation history");
+
+            var results = _mapper.Map<IEnumerable<ReservationResponseDto>>(user.UserReservations);
+
+            return results;
+
         }
     }
 }

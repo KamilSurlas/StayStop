@@ -10,6 +10,7 @@ namespace StayStop.BLL.Dtos.Opinion
 {
     public class OpinionResponseDto
     {
+        public required int OpinionId{ get; set; }
         public required HotelResponseDto Hotel { get; set; }
         public required int Mark { get; set; }
         public required string UserOpinion { get; set; }

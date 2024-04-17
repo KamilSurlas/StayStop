@@ -20,29 +20,33 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddDbContext<StayStopDbContext>();
 builder.Services.AddScoped<IValidator<HotelPagination>, HotelPaginationValidator>();
+builder.Services.AddScoped<IValidator<HotelPagination>, ReservationPaginationValidator>();
 builder.Services.AddScoped<IValidator<UserRegisterDto>, UserRegisterDtoValidator>();
 builder.Services.AddScoped<IValidator<HotelRequestDto>,HotelRequestDtoValidator>();
 builder.Services.AddScoped<IValidator<HotelUpdateRequestDto>,HotelUpdateRequestDtoValidator>();
-builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<IHotelService, HotelService>();
 builder.Services.AddScoped<IRoomService, RoomService>();
-//builder.Services.AddScoped<IAccountService, AccountService>();
-//builder.Services.AddScoped<IReservationPositionService, Reser>();
 builder.Services.AddScoped<IOpinionService, OpinionService>();
-builder.Services.AddDbContext<StayStopDbContext>();
+//builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IReservationPositionService, ReservationPositionService>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddFluentValidationAutoValidation();
-var app = builder.Build();
 
+var app = builder.Build();
+app.UseMiddleware<ErrorHandlingMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

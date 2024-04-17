@@ -1,4 +1,6 @@
-﻿using StayStop.Model;
+﻿using StayStop.BLL.Dtos.Room;
+using StayStop.BLL.Dtos.User;
+using StayStop.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +11,8 @@ namespace StayStop.BLL.Dtos.Hotel
 {
     public class HotelResponseDto
     {
-        public required List<StayStop.Model.User> Managers { get; set; }
-        public required List<StayStop.Model.Room> Rooms { get; set; }
+        public required int HotelId { get; set; }
+        public required List<RoomResponseDto> Rooms { get; set; }
         public required HotelType HotelType { get; set; }
         public required int Stars { get; set; }
         public required string Country { get; set; }
@@ -20,7 +22,7 @@ namespace StayStop.BLL.Dtos.Hotel
         public required string EmailAddress { get; set; }
         public required string PhoneNumber { get; set; }
         public required string Name { get; set; }
-        public required string Descritpion { get; set; }
+        public required string Description { get; set; }
         public required string CoverImage { get; set; }
         public required List<string> Images { get; set; }
     }
