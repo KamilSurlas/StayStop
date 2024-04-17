@@ -33,6 +33,16 @@ namespace StayStop.BLL.Middleware
                 context.Response.StatusCode = 400;
                 await context.Response.WriteAsync(exc.Message);
             }
+            catch (InvalidDataException exc)
+            {
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsync(exc.Message);
+            }
+            catch (InvalidOperationException exc)
+            {
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsync(exc.Message);
+            }
             catch (RoomIsAlreadyActive exc)
             {
                 context.Response.StatusCode = 400;
