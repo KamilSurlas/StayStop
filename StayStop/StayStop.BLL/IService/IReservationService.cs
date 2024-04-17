@@ -13,7 +13,7 @@ namespace StayStop.BLL.IService
         int Create(ReservationRequestDto reservationDto);
         ReservationResponseDto GetUserReservationById(int userId, int reservationId);
         IEnumerable<ReservationResponseDto> GetUserReservations(int userId);
-        PageResult<ReservationResponseDto> GetAll(HotelPagination pagination);
+        PageResult<ReservationResponseDto> GetAll(ReservationPagination pagination);
         void DeleteById(int reservationId);
     }
 }

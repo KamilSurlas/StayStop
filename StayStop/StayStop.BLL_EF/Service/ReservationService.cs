@@ -72,13 +72,13 @@ namespace StayStop.BLL_EF.Service
             _context.SaveChanges();
         }
 
-        public PageResult<ReservationResponseDto> GetAll(HotelPagination pagination)
+        public PageResult<ReservationResponseDto> GetAll(ReservationPagination pagination)
         {
             var baseQuery = _context
            .Reservations
            .Include(r => r.User)
-           .Include(r => r.ReservationPositions)
-           .Where(r => pagination.ReservationsSortBy == null || r.Price.ToString().Contains(pagination.ReservationsSortBy.ToLower()));
+           .Include(r => r.ReservationPositions).AsQueryable();
+  
         
            
             if (!string.IsNullOrEmpty(pagination.ReservationsSortBy))
@@ -86,6 +86,8 @@ namespace StayStop.BLL_EF.Service
                 var columnsSelector = new Dictionary<string, Expression<Func<Reservation, object>>>()
                 {
                     {nameof(Reservation.Price), r => r.Price },                 
+                    {nameof(Reservation.StartDate), r => r.StartDate},                 
+                    {nameof(Reservation.EndDate), r => r.EndDate },                 
                 };
 
                 var selected = columnsSelector[pagination.ReservationsSortBy];

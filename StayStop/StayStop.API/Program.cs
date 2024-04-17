@@ -22,7 +22,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<StayStopDbContext>();
 builder.Services.AddScoped<IValidator<HotelPagination>, HotelPaginationValidator>();
-builder.Services.AddScoped<IValidator<HotelPagination>, ReservationPaginationValidator>();
+builder.Services.AddScoped<IValidator<ReservationPagination>, ReservationPaginationValidator>();
 builder.Services.AddScoped<IValidator<UserRegisterDto>, UserRegisterDtoValidator>();
 builder.Services.AddScoped<IValidator<HotelRequestDto>,HotelRequestDtoValidator>();
 builder.Services.AddScoped<IValidator<HotelUpdateRequestDto>,HotelUpdateRequestDtoValidator>();

@@ -40,19 +40,19 @@ namespace StayStop.BLL_EF.Service
         }
         private User GetUserByMail(string email)
         {
-            var user = _context.Users.Include(u=>u.ManagedHotels).FirstOrDefault(u => u.Email.Equals(email));
+            var user = _context.Users.Include(u => u.ManagedHotels).FirstOrDefault(u => u.Email.Equals(email));
             if (user is null) throw new ContentNotFoundException($"User with email: {email} was not found");
             return user;
         }
         private double CalculateAvgOpinions(Hotel hotel)
         {
             var averageRating = hotel.Rooms
-            .Where(r=>r.ReservationPositions is not null)
+            .Where(r => r.ReservationPositions is not null)
             .SelectMany(r => r.ReservationPositions)
             .Where(rp => rp.Reservation.Opinion is not null)
             .Select(rp => rp.Reservation.Opinion.Mark)
-            .DefaultIfEmpty()
-            .Average(); 
+            .DefaultIfEmpty(0)
+            .Average();
 
             return averageRating;
         }
@@ -80,12 +80,14 @@ namespace StayStop.BLL_EF.Service
             .Hotels
             .Include(h => h.Rooms)
             .Include(h => h.Managers)
-            .Where(h => pagination.HotelsSortBy == null || (h.Name.ToLower().Contains(pagination.HotelsSortBy.ToLower())
-            || h.Stars.ToString().Contains(pagination.HotelsSortBy)
-            || h.Country.ToLower().Contains(pagination.HotelsSortBy.ToLower())
-            || h.City.ToLower().Contains(pagination.HotelsSortBy.ToLower())));
+            .Where(h => pagination.SearchPhrase == null || (h.Name.ToLower().Contains(pagination.SearchPhrase.ToLower())
+            || h.Description.ToLower().Contains(pagination.SearchPhrase.ToLower())
+            || h.EmailAddress.ToLower().Contains(pagination.SearchPhrase.ToLower())
+            || h.PhoneNumber.ToLower().Contains(pagination.SearchPhrase.ToLower())
+            || h.Country.ToLower().Contains(pagination.SearchPhrase.ToLower())
+            || h.City.ToLower().Contains(pagination.SearchPhrase.ToLower())));
 
-            if (pagination.HotelsSortBy?.ToLower().Contains("average") ?? false)
+            if (pagination.HotelsSortBy?.Contains("Rating") ?? false)
             {
                 baseQuery = pagination.SortDirection == SortDirection.ASC ? baseQuery.OrderBy(h=>CalculateAvgOpinions(h))
                 : baseQuery.OrderByDescending(h => CalculateAvgOpinions(h));

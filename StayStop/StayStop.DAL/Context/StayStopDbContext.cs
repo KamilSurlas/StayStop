@@ -28,7 +28,7 @@ namespace StayStop.DAL.Context
             modelBuilder.Entity<Room>().Property(r => r.PriceForAdult).HasColumnType("decimal(7,2)");
             modelBuilder.Entity<Room>().Property(r => r.PriceForChild).HasColumnType("decimal(7,2)");
             modelBuilder.Entity<Reservation>().Property(r => r.Price).HasColumnType("decimal(7,2)");
-            modelBuilder.Entity<ReservationPosition>().Property(r => r.Price).HasColumnType("decimal(7,2)");
+            modelBuilder.Entity<ReservationPosition>().Property(rp => rp.Price).HasColumnType("decimal(7,2)");
 
             // Enumy jako tekst nie inty
             modelBuilder.Entity<Hotel>().Property(h => h.HotelType).HasConversion(new EnumToStringConverter<HotelType>());

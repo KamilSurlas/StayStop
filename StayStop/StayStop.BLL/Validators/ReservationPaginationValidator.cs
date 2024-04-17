@@ -9,19 +9,17 @@ using System.Threading.Tasks;
 
 namespace StayStop.BLL.Validators
 {
-    public class ReservationPaginationValidator:AbstractValidator<HotelPagination>
+    public class ReservationPaginationValidator:AbstractValidator<ReservationPagination>
     {
         private int[] allowedPageSizes = { 5,10, 15, 20 };
         private string[] allowedSortByNames =
         {
-            nameof(Reservation.Price),
-            "Rating"
+            nameof(Reservation.Price),nameof(Reservation.EndDate),nameof(Reservation.StartDate)
         };
 
 
         public ReservationPaginationValidator()
-        {
-            RuleFor(p => p.HotelsSortBy).Null();
+        {        
             RuleFor(p => p.PageNumber).GreaterThanOrEqualTo(1);
             RuleFor(p => p.PageSize).Custom((value, context) =>
             {

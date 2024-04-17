@@ -40,7 +40,7 @@ namespace StayStop.API.Controllers
             return Ok(reservations);
         }
         [HttpGet]
-        public ActionResult<IEnumerable<ReservationResponseDto>> GetAll([FromQuery] HotelPagination pagination)
+        public ActionResult<IEnumerable<ReservationResponseDto>> GetAll([FromQuery] ReservationPagination pagination)
         {
             var reservations = _reservationService.GetAll(pagination);
 
