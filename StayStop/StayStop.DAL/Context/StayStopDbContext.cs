@@ -12,6 +12,7 @@ namespace StayStop.DAL.Context
         public DbSet<ReservationPosition> ReservationPositions { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Hotel> Hotels { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

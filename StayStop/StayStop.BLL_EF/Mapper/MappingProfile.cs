@@ -31,7 +31,7 @@ namespace StayStop.BLL_EF.Mapper
 
             //User
             CreateMap<User, UserResponseDto>();
-
+            CreateMap<UserRegisterDto, User>().ConvertUsing<RegisterUserConverter>();
 
             // Hotel
             CreateMap<HotelRequestDto, Hotel>();

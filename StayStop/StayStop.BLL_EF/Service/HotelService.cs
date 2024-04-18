@@ -150,9 +150,9 @@ namespace StayStop.BLL_EF.Service
 
             var manager = GetUserByMail(managerEmail);
 
-            if (manager.UserRole == UserRole.User)
+            if (manager.RoleId == 3)
             {
-                manager.UserRole = UserRole.Manager;
+                manager.RoleId = 2;
             }
 
             hotel.Managers.Add(manager);

@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using StayStop.BLL.Exceptions;
 namespace StayStop.BLL.Middleware
 {
     public class ErrorHandlingMiddleware : IMiddleware
@@ -36,6 +37,11 @@ namespace StayStop.BLL.Middleware
             catch (InvalidDataException exc)
             {
                 context.Response.StatusCode = 400;
+                await context.Response.WriteAsync(exc.Message);
+            }
+            catch(BadEmailOrPassword exc)
+            {
+                context.Response.StatusCode = 401;
                 await context.Response.WriteAsync(exc.Message);
             }
             catch (InvalidOperationException exc)

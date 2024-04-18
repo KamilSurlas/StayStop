@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StayStop.DAL.Context;
 
@@ -11,9 +12,11 @@ using StayStop.DAL.Context;
 namespace StayStop.DAL.Migrations
 {
     [DbContext(typeof(StayStopDbContext))]
-    partial class StayStopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240418155056_user_role_table")]
+    partial class user_role_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

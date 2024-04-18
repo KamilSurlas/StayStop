@@ -55,14 +55,14 @@ namespace StayStop.API.Controllers
 
             return Ok();
         }
-        [HttpPost("{hotelId}/managers/add")]
-        public ActionResult RemoveManager([FromRoute] int hotelId, [FromQuery] string managerEmail)
+        [HttpPost("{hotelId}/managers")]
+        public ActionResult RemoveManager([FromRoute] int hotelId, [FromBody] string managerEmail)
         {
             _hotelService.AddManager(hotelId,managerEmail);
 
             return Ok();
         }
-        [HttpPost("{hotelId}/managers/remove/{userId}")]
+        [HttpDelete("{hotelId}/managers/remove/{userId}")]
         public ActionResult RemoveManager([FromRoute] int hotelId, [FromRoute] int userId)
         {
             _hotelService.RemoveManager(hotelId, userId);
