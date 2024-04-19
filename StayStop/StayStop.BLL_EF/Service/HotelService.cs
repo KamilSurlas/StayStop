@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using StayStop.BLL.Authorization;
 using StayStop.BLL.Dtos.Hotel;
+using StayStop.BLL.Exceptions;
 using StayStop.BLL.IService;
 using StayStop.BLL.Pagination;
 using StayStop.BLL_EF.Exceptions;
@@ -21,17 +24,23 @@ namespace StayStop.BLL_EF.Service
     {
         private readonly StayStopDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IUserContextService _userContextService;
+        private readonly IAuthorizationService _authorizationService;
 
-        public HotelService(StayStopDbContext context, IMapper mapper)
+        public HotelService(StayStopDbContext context, IMapper mapper, IUserContextService userContextService, IAuthorizationService authorizationService)
         {
             _context = context;
             _mapper = mapper;
+            _userContextService = userContextService;
+            _authorizationService = authorizationService;
         }
+
         private Hotel GetHotelById(int hotelId)
         {
             var hotel = _context.Hotels.
                 Include(h => h.Rooms).
-                Include(h => h.Managers).
+                Include(h => h.Managers)
+                .Include(h=>h.Owner).
                 FirstOrDefault(h => h.HotelId == hotelId);
 
             if (hotel is null) throw new ContentNotFoundException($"Hotel with id: {hotelId} was not found");
@@ -59,7 +68,8 @@ namespace StayStop.BLL_EF.Service
         public int Create(HotelRequestDto hotelDto)
         {
             var hotel = _mapper.Map<Hotel>(hotelDto);
-
+            hotel.OwnerId = _userContextService.GetUserId;
+ 
             _context.Add(hotel);
             _context.SaveChanges();
 
@@ -69,7 +79,12 @@ namespace StayStop.BLL_EF.Service
         public void Delete(int hotelId)
         {
             var hotelToDelete = GetHotelById(hotelId);
-
+            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, hotelToDelete, new ResourceOperationRequirement(ResourceOperation.Delete)).Result;
+            if (!authorizationResult.Succeeded)
+            {
+                throw new ForbiddenException("Permission denied");
+            }
+            hotelToDelete.Owner.OwnedHotels.Remove(hotelToDelete);
             _context.Remove(hotelToDelete);
             _context.SaveChanges();
         }
@@ -134,6 +149,11 @@ namespace StayStop.BLL_EF.Service
         public void Update(int hotelId, HotelUpdateRequestDto hotelDto)
         {       
             var hotelToUpdate = GetHotelById(hotelId);
+            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, hotelToUpdate, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
+            if (!authorizationResult.Succeeded)
+            {
+                throw new ForbiddenException("Permission denied");
+            }
             var hotelImagesFromDb = hotelToUpdate.Images;
             if (hotelDto.Images?.Count > 0)
             {        
@@ -147,7 +167,11 @@ namespace StayStop.BLL_EF.Service
         public void AddManager(int hotelId, string managerEmail)
         {
             var hotel = GetHotelById(hotelId);
-
+            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, hotel, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
+            if (!authorizationResult.Succeeded)
+            {
+                throw new ForbiddenException("Permission denied");
+            }
             var manager = GetUserByMail(managerEmail);
 
             if (manager.RoleId == 3)
@@ -165,7 +189,11 @@ namespace StayStop.BLL_EF.Service
         public void RemoveManager(int hotelId, int userId)
         {
             var hotel = GetHotelById(hotelId);
-
+            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, hotel, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
+            if (!authorizationResult.Succeeded)
+            {
+                throw new ForbiddenException("Permission denied");
+            }
             var manager = _context.Users.FirstOrDefault(u=>u.UserId == userId);
             if (manager is null) throw new ContentNotFoundException($"User with id: {userId} was not found");
 

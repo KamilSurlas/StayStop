@@ -19,6 +19,11 @@ namespace StayStop.BLL.Middleware
             {
                 await next.Invoke(context);
             }
+            catch (ForbiddenException exc)
+            {
+                context.Response.StatusCode = 403;
+                await context.Response.WriteAsync(exc.Message);
+            }
             catch (InvalidManagerToRemove exc)
             {
                 context.Response.StatusCode = 400;

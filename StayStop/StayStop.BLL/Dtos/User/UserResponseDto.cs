@@ -13,5 +13,6 @@ namespace StayStop.BLL.Dtos.User
         public required string LastName { get; set; }
         public List<ReservationResponseDto>? UserReservations { get; set; } 
         public List<HotelResponseDto>? ManagedHotels { get; set; } 
+        public List<HotelResponseDto>? OwnedHotels { get; set; } 
     }
 }

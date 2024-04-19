@@ -29,6 +29,8 @@ namespace StayStop.Model
         public required string ZipCode { get; set; }
         [MaxLength(30)]
         public required string EmailAddress { get; set; }
+        public required int? OwnerId { get; set; }
+        public required User? Owner { get; set; }
         [MaxLength(15)]
         public required string PhoneNumber { get; set; }
         [MaxLength(30)]

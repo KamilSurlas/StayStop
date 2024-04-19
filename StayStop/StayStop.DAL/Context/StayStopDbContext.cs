@@ -25,6 +25,16 @@ namespace StayStop.DAL.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Hotel>()
+            .HasMany(h => h.Managers)
+            .WithMany(u => u.ManagedHotels)
+            .UsingEntity(j => j.ToTable("HotelManagers"));
+
+            modelBuilder.Entity<Hotel>()
+                .HasOne(h => h.Owner)
+                .WithMany(u => u.OwnedHotels);
+
+
             // Cena w postaci (10000.00 zl)
             modelBuilder.Entity<Room>().Property(r => r.PriceForAdult).HasColumnType("decimal(7,2)");
             modelBuilder.Entity<Room>().Property(r => r.PriceForChild).HasColumnType("decimal(7,2)");

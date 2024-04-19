@@ -1,10 +1,12 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using StayStop.API.DbSeeder;
 using StayStop.BLL.Authentication;
+using StayStop.BLL.Authorization;
 using StayStop.BLL.Dtos.Hotel;
 using StayStop.BLL.Dtos.User;
 using StayStop.BLL.IService;
@@ -44,8 +46,10 @@ builder.Services.AddScoped<IReservationPositionService, ReservationPositionServi
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<DbSeeder>();
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
+builder.Services.AddScoped<IUserContextService,UserContextService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddScoped<IAuthorizationHandler, HotelOperationRequirementHandler>();
 builder.Services.AddFluentValidationAutoValidation();
 var authSettings = new AuthenticationSettings();
 builder.Configuration.GetSection("Authentication").Bind(authSettings);

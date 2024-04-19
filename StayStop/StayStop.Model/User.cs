@@ -26,5 +26,6 @@ namespace StayStop.Model
         public Role Role { get; set; }
         public List<Reservation>? UserReservations { get; set; }
         public List<Hotel>? ManagedHotels { get; set; } = [];
+        public List<Hotel>? OwnedHotels { get; set; } 
     }
 }
