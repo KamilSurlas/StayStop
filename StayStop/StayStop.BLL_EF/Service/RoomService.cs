@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using StayStop.BLL.Authorization;
 using StayStop.BLL.Dtos.Room;
+using StayStop.BLL.Exceptions;
 using StayStop.BLL.IService;
 using StayStop.BLL_EF.Exceptions;
 using StayStop.DAL.Context;
@@ -18,12 +21,17 @@ namespace StayStop.BLL_EF.Service
     {
         private readonly StayStopDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IUserContextService _userContextService;
+        private readonly IAuthorizationService _authorizationService;
 
-        public RoomService(StayStopDbContext context, IMapper mapper)
+        public RoomService(StayStopDbContext context, IMapper mapper, IUserContextService userContextService, IAuthorizationService authorizationService)
         {
             _context = context;
             _mapper = mapper;
+            _userContextService = userContextService;
+            _authorizationService = authorizationService;
         }
+
         private Hotel GetHotelById(int hotelId)
         {
             var hotel = _context.Hotels.
@@ -50,9 +58,13 @@ namespace StayStop.BLL_EF.Service
 
 
             var hotel = GetHotelById(hotelId);
-
+            
             var room = _mapper.Map<Room>(roomDto);
-
+            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User,room , new ResourceOperationRequirement(ResourceOperation.Create)).Result;
+            if (!authorizationResult.Succeeded)
+            {
+                throw new ForbiddenException("Permission denied");
+            }
             room.HotelId = hotelId;
             room.Hotel = hotel;
 
@@ -65,7 +77,11 @@ namespace StayStop.BLL_EF.Service
         public void DeleteAll(int hotelId)
         {
             var hotel = GetHotelById(hotelId);
-            
+            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, hotel, new ResourceOperationRequirement(ResourceOperation.Delete)).Result;
+            if (!authorizationResult.Succeeded)
+            {
+                throw new ForbiddenException("Permission denied");
+            }
             _context.RemoveRange(hotel.Rooms);
 
             _context.SaveChanges();       
@@ -75,6 +91,11 @@ namespace StayStop.BLL_EF.Service
         {
             var hotel = GetHotelById(hotelId);
             var room = GetRoomById(roomId);
+            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, room, new ResourceOperationRequirement(ResourceOperation.Delete)).Result;
+            if (!authorizationResult.Succeeded)
+            {
+                throw new ForbiddenException("Permission denied");
+            }
             if (room.HotelId != hotelId) throw new ContentNotFoundException($"Provided hotel id is wrong (hotel id: {hotelId})");
             
             _context.Remove(room);
@@ -93,6 +114,7 @@ namespace StayStop.BLL_EF.Service
         {
             var hotel = GetHotelById(hotelId);
             var room = GetRoomById(roomId);
+          
             if (room.HotelId != hotelId) throw new ContentNotFoundException($"Provided hotel id is wrong (hotel id: {hotelId})");
 
             var roomResult = _mapper.Map<RoomResponseDto>(room);
@@ -104,6 +126,11 @@ namespace StayStop.BLL_EF.Service
         {
             var hotel = GetHotelById(hotelId);
             var room = GetRoomById(roomId);
+            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, room, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
+            if (!authorizationResult.Succeeded)
+            {
+                throw new ForbiddenException("Permission denied");
+            }
             if (room.HotelId != hotelId) throw new ContentNotFoundException($"Provided hotel id is wrong (hotel id: {hotelId})");
 
             if (room.IsAvailable) throw new RoomIsAlreadyActive($"Room with {roomId} in hotel {hotelId} is already active");
@@ -116,7 +143,11 @@ namespace StayStop.BLL_EF.Service
 
             var hotel = GetHotelById(hotelId);
             var room = GetRoomById(roomId);
-            
+            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, room, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
+            if (!authorizationResult.Succeeded)
+            {
+                throw new ForbiddenException("Permission denied");
+            }
             if (room.HotelId != hotelId) 
                 throw new ContentNotFoundException($"Provided hotel id is wrong (hotel id: {hotelId})");
 

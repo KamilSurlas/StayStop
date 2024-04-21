@@ -10,7 +10,6 @@ namespace StayStop.BLL.Dtos.ReservationPosition
     {
         public int NumberOfAdults { get; set; }
         public int NumberOfChildren { get; set; }
-        public required decimal Price { get; set; }
         public required int Amount { get; set; } = 1;
         public required int RoomId { get; set; }
     }

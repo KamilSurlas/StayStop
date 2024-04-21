@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using StayStop.BLL.DateTimeExtension;
 using StayStop.BLL.Dtos.Hotel;
 using StayStop.BLL.Dtos.Reservation;
 using StayStop.BLL.IService;
@@ -21,12 +22,15 @@ namespace StayStop.BLL_EF.Service
     {
         private readonly StayStopDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IUserContextService _userContextService;
 
-        public ReservationService(StayStopDbContext context, IMapper mapper)
+        public ReservationService(StayStopDbContext context, IMapper mapper, IUserContextService userContextService)
         {
             _context = context;
             _mapper = mapper;
+            _userContextService = userContextService;
         }
+
         private User GetUserById(int userId)
         {
             var user = _context.Users.Include(u=>u.UserReservations).FirstOrDefault(u => u.UserId == userId);
@@ -41,16 +45,29 @@ namespace StayStop.BLL_EF.Service
 
             return reservation;
         }
+        private decimal CalculatePrice(Reservation reservation)
+        {
+            var price = 0.0M;
+            var nights = reservation.StartDate.NumberOfNights(reservation.EndDate);
+
+            foreach (var position in reservation.ReservationPositions)
+            {
+                var room = _context.Rooms.FirstOrDefault(r => r.RoomId == position.RoomId);
+                position.Price = (room.PriceForChild * position.NumberOfChildren + room.PriceForAdult * position.NumberOfAdults) * position.Amount;
+                price += nights * position.Price;
+            }
+
+            return price;
+        }
         public int Create(ReservationRequestDto reservationDto)
         {
-            if (reservationDto.StartDate <= reservationDto.EndDate) throw new InvalidReservationDate($"Reservation end date can't equal or before start date");
+            if (reservationDto.StartDate > reservationDto.EndDate) throw new InvalidReservationDate($"Reservation end date can't equal or before start date");
  
-            //tutaj id uzytkownika będzie pobierane z tokenu JWT - narazie 
-            //ustawiliśmy na sztywno w celu pokazania na sprawozdaniu.
-
-            var user = GetUserById(0); // id bedzie pobierane z tokenu JWT
+            var user = GetUserById(_userContextService.GetUserId ?? throw new InvalidDataException("User id was not found"));
 
             var reservation = _mapper.Map<Reservation>(reservationDto);
+            // tutaj mozna sprobowac zrobic to w mapperze
+            CalculatePrice(reservation);
 
             reservation.User = user;
             reservation.UserId = user.UserId;

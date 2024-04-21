@@ -48,7 +48,8 @@ namespace StayStop.BLL_EF.Service
             var reservation = GetReservationById(reservationId);
 
             var reservationPosition = _mapper.Map<ReservationPosition>(reservationPositionDto);
-
+            // tutaj mozna sprobowac zrobic to w mapperze - trzeba by bylo jakos pobrac tam z bazy pokoj po id z Dto
+            reservationPosition.Price = (roomInReservationPistion.PriceForAdult * reservationPosition.NumberOfAdults + roomInReservationPistion.PriceForChild * reservationPosition.NumberOfChildren) * reservationPosition.Amount;
             reservationPosition.ReservationId = reservationId;
             reservationPosition.Reservation = reservation;
 

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using StayStop.BLL.DateTimeExtension;
 using StayStop.BLL.Dtos;
 using StayStop.BLL.Dtos.Hotel;
 using StayStop.BLL.Dtos.Opinion;
@@ -62,7 +63,7 @@ namespace StayStop.BLL_EF.Mapper
 
             // ReservationPosition
             CreateMap<ReservationPosition, ReservationPositionResponseDto>();
-            CreateMap<ReservationPositionRequestDto,ReservationPosition>();
+            CreateMap<ReservationPositionRequestDto, ReservationPosition>();     
         }
     }
 }
