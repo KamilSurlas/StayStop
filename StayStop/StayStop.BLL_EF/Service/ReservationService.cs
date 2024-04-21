@@ -67,7 +67,7 @@ namespace StayStop.BLL_EF.Service
 
             var reservation = _mapper.Map<Reservation>(reservationDto);
             // tutaj mozna sprobowac zrobic to w mapperze
-            CalculatePrice(reservation);
+            reservation.Price = CalculatePrice(reservation);
 
             reservation.User = user;
             reservation.UserId = user.UserId;
