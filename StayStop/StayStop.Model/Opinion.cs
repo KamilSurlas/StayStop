@@ -17,6 +17,8 @@ namespace StayStop.Model
         [MaxLength(250)]
         public required string UserOpinion { get; set; }
         public required string Details { get; set; }
+        public required int? AddedById { get; set; }
+        public required User? AddedBy { get; set; }
 
     }
 }
