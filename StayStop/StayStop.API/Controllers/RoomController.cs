@@ -7,7 +7,7 @@ namespace StayStop.API.Controllers
 {
     [Route("api/hotel/{hotelId}/room")]
     [ApiController]
-    [Authorize(Roles = "Admin,Manager")]
+    [Authorize(Roles = "Admin,Manager,HotelOwner")]
     public class RoomController : ControllerBase
     {
         private readonly IRoomService _roomService;

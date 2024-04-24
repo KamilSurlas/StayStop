@@ -36,6 +36,7 @@ namespace StayStop.API.Controllers
             return Ok(hotel);
         }
         [HttpPost]
+        [Authorize(Roles = "HotelOwner")]
         public ActionResult Create([FromBody] HotelRequestDto hotelDto)
         {
             var id = _hotelService.Create(hotelDto);

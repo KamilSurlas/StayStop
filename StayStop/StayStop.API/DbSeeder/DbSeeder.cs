@@ -40,6 +40,10 @@ namespace StayStop.API.DbSeeder
              new Role()
              {
                  RoleName = "User"
+             },
+             new Role()
+             {
+                 RoleName = "HotelOwner"
              }
          };
             return roles;

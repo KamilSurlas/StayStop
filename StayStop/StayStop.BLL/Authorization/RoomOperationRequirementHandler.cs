@@ -26,7 +26,6 @@ namespace StayStop.BLL.Authorization
                 if (room.Hotel.Managers.Any(manager => manager.UserId == int.Parse(userId)))
                 {
                     context.Succeed(requirement);
-                    return Task.CompletedTask;
                 }
             }
             
