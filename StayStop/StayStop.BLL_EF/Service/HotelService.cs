@@ -34,7 +34,10 @@ namespace StayStop.BLL_EF.Service
             _userContextService = userContextService;
             _authorizationService = authorizationService;
         }
-
+        private bool CanHotelBeDeleted(Hotel hotel)
+        {
+            return !_context.ReservationPositions.Any(rp => rp.Room.Hotel.HotelId == hotel.HotelId);
+        }
         private Hotel GetHotelById(int hotelId)
         {
             var hotel = _context.Hotels.
@@ -79,12 +82,12 @@ namespace StayStop.BLL_EF.Service
         public void Delete(int hotelId)
         {
             var hotelToDelete = GetHotelById(hotelId);
+            if (!CanHotelBeDeleted(hotelToDelete)) throw new InvalidDataException("Hotel can't be deleted - it is assigned to reservations");
             var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, hotelToDelete, new ResourceOperationRequirement(ResourceOperation.Delete)).Result;
             if (!authorizationResult.Succeeded)
             {
                 throw new ForbiddenException("Permission denied");
-            }
-            hotelToDelete.Owner.OwnedHotels.Remove(hotelToDelete);
+            }          
             _context.Remove(hotelToDelete);
             _context.SaveChanges();
         }
@@ -181,8 +184,7 @@ namespace StayStop.BLL_EF.Service
 
             hotel.Managers.Add(manager);
 
-            manager.ManagedHotels.Add(hotel);
-
+        
             _context.SaveChanges();
         }
 

@@ -134,6 +134,9 @@ namespace StayStop.BLL_EF.Service
             if (room.HotelId != hotelId) throw new ContentNotFoundException($"Provided hotel id is wrong (hotel id: {hotelId})");
 
             if (room.IsAvailable) throw new RoomIsAlreadyActive($"Room with {roomId} in hotel {hotelId} is already active");
+
+            room.IsAvailable = true;
+            _context.SaveChanges();
         }
 
         public void Update(int hotelId, int roomId, RoomUpdateRequestDto roomDto)
