@@ -2,12 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using StayStop.BLL.Dtos.Room;
 using StayStop.BLL.IService;
+using StayStop.Model.Constants;
 
 namespace StayStop.API.Controllers
 {
     [Route("api/hotel/{hotelId}/room")]
     [ApiController]
-    [Authorize(Roles = "Admin,Manager,HotelOwner")]
+    [Authorize(Roles = UserRole.Admin + "," + UserRole.Manager+ "," + UserRole.HotelOwner)]
     public class RoomController : ControllerBase
     {
         private readonly IRoomService _roomService;

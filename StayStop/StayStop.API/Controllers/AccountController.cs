@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using StayStop.BLL.Authentication;
 using StayStop.BLL.Dtos.User;
 using StayStop.BLL.IService;
 
@@ -22,8 +23,14 @@ namespace StayStop.API.Controllers
         [HttpPost("login")]
         public ActionResult Login([FromBody] UserLoginDto dto)
         {
-            string loginToken = _accountService.LoginUser(dto);
-            return Ok(loginToken);
+            var response = _accountService.LoginUser(dto, populateExp: true);
+            return Ok(response);
+        }
+        [HttpPost("refresh")]
+        public ActionResult Refresh([FromBody] UserTokenResponse token)
+        {
+            var refreshToken = _accountService.RefreshToken(token);
+            return Ok(refreshToken);
         }
     }
 }

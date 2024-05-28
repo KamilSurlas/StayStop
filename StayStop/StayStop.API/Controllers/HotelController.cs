@@ -4,6 +4,7 @@ using StayStop.BLL.Dtos.Hotel;
 using StayStop.BLL.IService;
 using StayStop.BLL.Pagination;
 using StayStop.Model;
+using StayStop.Model.Constants;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace StayStop.API.Controllers
@@ -36,7 +37,7 @@ namespace StayStop.API.Controllers
             return Ok(hotel);
         }
         [HttpPost]
-        [Authorize(Roles = "HotelOwner")]
+        [Authorize(Roles = UserRole.HotelOwner)]
         public ActionResult Create([FromBody] HotelRequestDto hotelDto)
         {
             var id = _hotelService.Create(hotelDto);

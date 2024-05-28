@@ -27,5 +27,7 @@ namespace StayStop.Model
         public List<Reservation>? UserReservations { get; set; }
         public List<Hotel>? ManagedHotels { get; set; } = [];
         public List<Hotel>? OwnedHotels { get; set; } 
+        public string? RefreshToken { get; set;}
+        public DateTime RefreshTokenExpiryDate { get; set; }
     }
 }

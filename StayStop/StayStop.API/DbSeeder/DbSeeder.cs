@@ -1,6 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using StayStop.DAL.Context;
 using StayStop.Model;
+using StayStop.Model.Constants;
 
 namespace StayStop.API.DbSeeder
 {
@@ -31,19 +32,19 @@ namespace StayStop.API.DbSeeder
          {
              new Role()
              {
-                 RoleName = "Admin"
+                 RoleName = UserRole.Admin
              },
              new Role()
              {
-                 RoleName = "Manager"
+                 RoleName = UserRole.Manager
              },
              new Role()
              {
-                 RoleName = "User"
+                 RoleName = UserRole.User
              },
              new Role()
              {
-                 RoleName = "HotelOwner"
+                 RoleName = UserRole.HotelOwner
              }
          };
             return roles;

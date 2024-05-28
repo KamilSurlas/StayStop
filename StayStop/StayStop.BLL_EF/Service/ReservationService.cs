@@ -126,22 +126,24 @@ namespace StayStop.BLL_EF.Service
             return result;
         }
 
-        public ReservationResponseDto GetUserReservationById(int userId, int reservationId)
+        public IEnumerable<ReservationResponseDto> GetUserReservationsById(int userId)
         {
             var user = GetUserById(userId);
-            var reservation = GetReservationById(reservationId);
-            if (reservation.UserId!=userId) throw new ContentNotFoundException($"Provided reservation id is wrong (reservation id: {reservationId})");
 
-            var result = _mapper.Map<ReservationResponseDto>(reservation);
+            if (user.UserReservations is null)
+            {
+                throw new ContentNotFoundException($"User with id: {user.UserId} does not have reservations history");
+            }
+            var result = _mapper.Map<IEnumerable<ReservationResponseDto>>(user.UserReservations);
 
             return result;
         }
 
-        public IEnumerable<ReservationResponseDto> GetUserReservations(int userId)
+        public IEnumerable<ReservationResponseDto> GetReservationsHistory()
         {
-            var user = GetUserById(userId);
+            var user = GetUserById(_userContextService.GetUserId ?? throw new InvalidDataException("Provided Uuser id is wrong"));
 
-            if (user.UserReservations?.Count == 0) throw new ContentNotFoundException($"User with id: {userId} don't have reservation history");
+            if (user.UserReservations?.Count == 0) throw new ContentNotFoundException($"User with id: {user.UserId} don't have reservation history");
 
             var results = _mapper.Map<IEnumerable<ReservationResponseDto>>(user.UserReservations);
 

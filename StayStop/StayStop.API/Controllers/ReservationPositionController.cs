@@ -4,6 +4,7 @@ using StayStop.BLL.Dtos.ReservationPosition;
 using StayStop.BLL.Dtos.Room;
 using StayStop.BLL.IService;
 using StayStop.Model;
+using StayStop.Model.Constants;
 
 namespace StayStop.API.Controllers
 {
@@ -19,7 +20,7 @@ namespace StayStop.API.Controllers
             _reservationPositionService = reservationPositionService;
         }
 
-        [HttpGet("{reservationPositionId}")]
+        [HttpGet("{reservationPositionId}")]     
         public ActionResult<ReservationPositionResponseDto> GetById([FromRoute] int reservationId, [FromRoute] int reservationPositionId)
         {
             var resPosition = _reservationPositionService.GetById(reservationId, reservationPositionId);

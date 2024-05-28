@@ -4,6 +4,7 @@ using StayStop.BLL.Dtos.Reservation;
 using StayStop.BLL.IService;
 using StayStop.BLL.Pagination;
 using StayStop.Model;
+using StayStop.Model.Constants;
 
 namespace StayStop.API.Controllers
 {
@@ -25,21 +26,23 @@ namespace StayStop.API.Controllers
 
             return Created($"/api/reservation/{newReservationId}", null);
         }
-        [HttpGet("/api/user/{userId}/reservation/{reservationId}")]
-        public ActionResult<ReservationResponseDto> GetUserReservationById([FromRoute] int reservationId, [FromRoute] int userId)
+        [HttpGet("/api/user/{userId}/reservations")]
+        [Authorize(Roles = UserRole.Admin)]
+        public ActionResult<ReservationResponseDto> GetUserReservationsById([FromRoute] int userId)
         {
-            var reservation = _reservationService.GetUserReservationById(userId, reservationId);
+            var reservation = _reservationService.GetUserReservationsById(userId);
 
             return Ok(reservation);
         }
-        [HttpGet("/api/user/{userId}/reservation")]
-        public ActionResult<IEnumerable<ReservationResponseDto>> GetUserReservations([FromRoute] int userId)
+        [HttpGet("/api/user/reservations")]
+        public ActionResult<IEnumerable<ReservationResponseDto>> GetReservationsHistory()
         {
-            var reservations = _reservationService.GetUserReservations(userId);
+            var reservations = _reservationService.GetReservationsHistory();
 
             return Ok(reservations);
         }
         [HttpGet]
+        [Authorize(Roles = UserRole.Admin)]
         public ActionResult<IEnumerable<ReservationResponseDto>> GetAll([FromQuery] ReservationPagination pagination)
         {
             var reservations = _reservationService.GetAll(pagination);
@@ -47,6 +50,7 @@ namespace StayStop.API.Controllers
             return Ok(reservations);
         }
         [HttpDelete("{reservationId}")]
+        [Authorize(Roles = UserRole.Admin)]
         public ActionResult DeleteUserReservationById ([FromRoute] int reservationId)
         {
             _reservationService.DeleteById( reservationId);
