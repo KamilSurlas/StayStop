@@ -58,15 +58,21 @@ namespace StayStop.BLL_EF.Service
         }
         private double CalculateAvgOpinions(Hotel hotel)
         {
-            var averageRating = hotel.Rooms
-            .Where(r => r.ReservationPositions is not null)
-            .SelectMany(r => r.ReservationPositions)
-            .Where(rp => rp.Reservation.Opinion is not null)
-            .Select(rp => rp.Reservation.Opinion.Mark)
-            .DefaultIfEmpty(0)
-            .Average();
+            var rooms = hotel.Rooms.ToList();
 
-            return averageRating;
+            var roomsId = rooms.Select(r => r.RoomId).ToList();
+
+            var reservationIds = _context.ReservationPositions
+                .Where(rp => roomsId.Contains(rp.RoomId))
+                .Select(rp => rp.ReservationId)
+                .Distinct()
+                .ToList();
+
+            var averageMark = _context.Opinions
+                .Where(o => reservationIds.Contains(o.ReservationId))
+                .Average(o => o.Mark);
+
+            return averageMark;
         }
         public int Create(HotelRequestDto hotelDto)
         {
@@ -103,7 +109,7 @@ namespace StayStop.BLL_EF.Service
             || h.EmailAddress.ToLower().Contains(pagination.SearchPhrase.ToLower())
             || h.PhoneNumber.ToLower().Contains(pagination.SearchPhrase.ToLower())
             || h.Country.ToLower().Contains(pagination.SearchPhrase.ToLower())
-            || h.City.ToLower().Contains(pagination.SearchPhrase.ToLower())));
+            || h.City.ToLower().Contains(pagination.SearchPhrase.ToLower()))).ToList();
 
             if (pagination.HotelsSortBy?.Contains("Rating") ?? false)
             {
@@ -114,13 +120,11 @@ namespace StayStop.BLL_EF.Service
                     hotelAvgOpinions.Add(hotel, avg);
                 }
 
-                if (pagination.SortDirection == SortDirection.ASC)
-                    hotelAvgOpinions.OrderBy(avgOpinion => avgOpinion.Value);
-                else
-                    hotelAvgOpinions.OrderByDescending(avgOpinion => avgOpinion.Value);
+                var sortedHotels = pagination.SortDirection == SortDirection.ASC 
+                    ? hotelAvgOpinions.OrderBy(avgOpinion => avgOpinion.Value) 
+                    : hotelAvgOpinions.OrderByDescending(avgOpinion => avgOpinion.Value);
 
-
-                baseQuery = hotelAvgOpinions.Keys.ToList().AsQueryable();
+                baseQuery = sortedHotels.Select(h => h.Key).ToList();
             }
             else if (!string.IsNullOrEmpty(pagination.HotelsSortBy))
             {
@@ -134,8 +138,9 @@ namespace StayStop.BLL_EF.Service
 
                 var selected = columnsSelector[pagination.HotelsSortBy];
 
-                baseQuery = pagination.SortDirection == SortDirection.ASC ? baseQuery.OrderBy(selected)
-                : baseQuery.OrderByDescending(selected);
+                baseQuery = pagination.SortDirection == SortDirection.ASC
+                ? baseQuery.AsQueryable().OrderBy(selected).ToList()
+                : baseQuery.AsQueryable().OrderByDescending(selected).ToList();
             }
 
 
