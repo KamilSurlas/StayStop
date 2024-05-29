@@ -107,8 +107,20 @@ namespace StayStop.BLL_EF.Service
 
             if (pagination.HotelsSortBy?.Contains("Rating") ?? false)
             {
-                baseQuery = pagination.SortDirection == SortDirection.ASC ? baseQuery.OrderBy(h=>CalculateAvgOpinions(h))
-                : baseQuery.OrderByDescending(h => CalculateAvgOpinions(h));
+                Dictionary<Hotel, double> hotelAvgOpinions = new Dictionary<Hotel, double>();
+                foreach (var hotel in baseQuery)
+                {
+                    double avg = CalculateAvgOpinions(hotel);
+                    hotelAvgOpinions.Add(hotel, avg);
+                }
+
+                if (pagination.SortDirection == SortDirection.ASC)
+                    hotelAvgOpinions.OrderBy(avgOpinion => avgOpinion.Value);
+                else
+                    hotelAvgOpinions.OrderByDescending(avgOpinion => avgOpinion.Value);
+
+
+                baseQuery = hotelAvgOpinions.Keys.ToList().AsQueryable();
             }
             else if (!string.IsNullOrEmpty(pagination.HotelsSortBy))
             {

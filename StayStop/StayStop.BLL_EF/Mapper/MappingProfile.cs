@@ -55,6 +55,7 @@ namespace StayStop.BLL_EF.Mapper
                   .ForMember(dest => dest.Hotel, opt => opt.MapFrom((src, dest,_, context) =>
                       context.Mapper.Map<HotelResponseDto>(src.Reservation.ReservationPositions.FirstOrDefault().Room.Hotel)));
             CreateMap<OpinionUpdateRequestDto, Opinion>();
+            CreateMap<OpinionRequestDto, Opinion>().ReverseMap();
 
 
             //Reservation

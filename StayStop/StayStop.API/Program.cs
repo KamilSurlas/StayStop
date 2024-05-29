@@ -1,9 +1,11 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using StayStop.API.DbSeeder;
 using StayStop.BLL.Authentication;
 using StayStop.BLL.Authorization;
@@ -30,7 +32,31 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition(name: JwtBearerDefaults.AuthenticationScheme,
+        securityScheme: new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+        {
+            Name = "Authorization",
+            Description = "Enter the Baerer Authorization : `Bearer Generated-JWT-Token`",
+            In = ParameterLocation.Header,
+            Type = SecuritySchemeType.ApiKey,
+            Scheme = "Bearer"
+        });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+        new OpenApiSecurityScheme
+        {
+            Reference = new OpenApiReference
+            {
+                Type = ReferenceType.SecurityScheme,
+                Id = JwtBearerDefaults.AuthenticationScheme
+            }
+        }, new string[] {  }
+        }
+    });
+});
 builder.Services.AddDbContext<StayStopDbContext>();
 builder.Services.AddScoped<IValidator<HotelPagination>, HotelPaginationValidator>();
 builder.Services.AddScoped<IValidator<ReservationPagination>, ReservationPaginationValidator>();
@@ -50,6 +76,8 @@ builder.Services.AddScoped<IUserContextService,UserContextService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IAuthorizationHandler, HotelOperationRequirementHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, RoomOperationRequirementHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, OpinionOperationRequirementHandler>();
 builder.Services.AddFluentValidationAutoValidation();
 var authSettings = new AuthenticationSettings();
 builder.Configuration.GetSection("Authentication").Bind(authSettings);
@@ -70,6 +98,7 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authSettings.JwtKey))
     };
 });
+
 var app = builder.Build();
 var scope = app.Services.CreateScope();
 var seeder = scope.ServiceProvider.GetRequiredService<DbSeeder>();
@@ -80,6 +109,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
 }
 
 app.UseAuthentication();
