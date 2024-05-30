@@ -112,6 +112,11 @@ if (app.Environment.IsDevelopment())
 
 }
 
+app.UseCors(optBuilder => optBuilder
+                                .AllowAnyHeader()
+                                .AllowAnyMethod()
+                                .AllowAnyOrigin()
+                                .Build());
 app.UseAuthentication();
 app.UseAuthorization();
 
