@@ -1,4 +1,5 @@
 ﻿using StayStop.BLL.Dtos.Hotel;
+using StayStop.BLL.Dtos.Hotel.HotelOpinion;
 using StayStop.BLL.Pagination;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,10 @@ namespace StayStop.BLL.IService
         void Delete(int hotelId);
         PageResult<HotelResponseDto> GetAll(Pagination.HotelPagination pagination);
         HotelResponseDto GetById(int hotelId);
-        public void Update(int hotelId, HotelUpdateRequestDto hotelDto);
+        void Update(int hotelId, HotelUpdateRequestDto hotelDto);
 
-        public void AddManager(int hotelId, string managerEmail);
-        public void RemoveManager(int hotelId, int userId);
+        void AddManager(int hotelId, string managerEmail);
+        void RemoveManager(int hotelId, int userId);
+        HotelOpinionResponseDto GetOpinion(int hotelId);
     }
 }

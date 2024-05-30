@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StayStop.BLL.Dtos.Hotel;
+using StayStop.BLL.Dtos.Hotel.HotelOpinion;
 using StayStop.BLL.IService;
 using StayStop.BLL.Pagination;
 using StayStop.Model;
@@ -35,6 +36,14 @@ namespace StayStop.API.Controllers
             var hotel = _hotelService.GetById(hotelId);
 
             return Ok(hotel);
+        }
+        [HttpGet("{hotelId}/opinion")]
+        [AllowAnonymous]
+        public ActionResult<HotelOpinionResponseDto> GetHotelOpinion([FromRoute] int hotelId)
+        {
+            var hotelOpinion = _hotelService.GetOpinion(hotelId);
+
+            return Ok(hotelOpinion);
         }
         [HttpPost]
         [Authorize(Roles = UserRole.HotelOwner)]

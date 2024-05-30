@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using StayStop.BLL.Authorization;
 using StayStop.BLL.Dtos.Hotel;
+using StayStop.BLL.Dtos.Hotel.HotelOpinion;
 using StayStop.BLL.Exceptions;
 using StayStop.BLL.IService;
 using StayStop.BLL.Pagination;
@@ -56,7 +57,7 @@ namespace StayStop.BLL_EF.Service
             if (user is null) throw new ContentNotFoundException($"User with email: {email} was not found");
             return user;
         }
-        private double CalculateAvgOpinions(Hotel hotel)
+        private (double avgOpinion, int count) CalculateAvgOpinions(Hotel hotel)
         {
             var rooms = hotel.Rooms.ToList();
 
@@ -68,12 +69,16 @@ namespace StayStop.BLL_EF.Service
                 .Distinct()
                 .ToList();
 
-            var averageMark = _context.Opinions
-                .Where(o => reservationIds.Contains(o.ReservationId))
-                .Average(o => o.Mark);
+            var opinions = _context.Opinions
+                .Where(o => reservationIds.Contains(o.ReservationId));
 
-            return averageMark;
+            var averageMark = opinions.Average(o => o.Mark);
+
+            var count = opinions.Count();
+
+            return (averageMark, count);
         }
+      
         public int Create(HotelRequestDto hotelDto)
         {
             var hotel = _mapper.Map<Hotel>(hotelDto);
@@ -116,7 +121,7 @@ namespace StayStop.BLL_EF.Service
                 Dictionary<Hotel, double> hotelAvgOpinions = new Dictionary<Hotel, double>();
                 foreach (var hotel in baseQuery)
                 {
-                    double avg = CalculateAvgOpinions(hotel);
+                    double avg = CalculateAvgOpinions(hotel).avgOpinion;
                     hotelAvgOpinions.Add(hotel, avg);
                 }
 
@@ -223,6 +228,22 @@ namespace StayStop.BLL_EF.Service
             manager.ManagedHotels.Remove(hotel); 
             
             _context.SaveChanges();
+        }
+
+        public HotelOpinionResponseDto GetOpinion(int hotelId)
+        {
+            var hotel = GetHotelById(hotelId);
+            var result = CalculateAvgOpinions(hotel);
+            var avg = result.avgOpinion;
+            var numberOfOpinions = result.count;
+
+            var response = new HotelOpinionResponseDto()
+            {
+                AvgOpinion = avg,
+                NumberOfOpinions = numberOfOpinions
+            };
+
+            return response;
         }
     }
 }
