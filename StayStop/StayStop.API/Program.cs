@@ -10,6 +10,7 @@ using StayStop.API.DbSeeder;
 using StayStop.BLL.Authentication;
 using StayStop.BLL.Authorization;
 using StayStop.BLL.Dtos.Hotel;
+using StayStop.BLL.Dtos.Room;
 using StayStop.BLL.Dtos.User;
 using StayStop.BLL.IService;
 using StayStop.BLL.Middleware;
@@ -63,6 +64,8 @@ builder.Services.AddScoped<IValidator<ReservationPagination>, ReservationPaginat
 builder.Services.AddScoped<IValidator<UserRegisterDto>, UserRegisterDtoValidator>();
 builder.Services.AddScoped<IValidator<HotelRequestDto>,HotelRequestDtoValidator>();
 builder.Services.AddScoped<IValidator<HotelUpdateRequestDto>,HotelUpdateRequestDtoValidator>();
+builder.Services.AddScoped<IValidator<RoomRequestDto>, RoomRequestDtoValidator>();
+builder.Services.AddScoped<IValidator<RoomUpdateRequestDto>, RoomUpdateRequestDtoValidator>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<IHotelService, HotelService>();
 builder.Services.AddScoped<IRoomService, RoomService>();

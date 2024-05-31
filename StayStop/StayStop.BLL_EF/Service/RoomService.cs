@@ -8,12 +8,6 @@ using StayStop.BLL.IService;
 using StayStop.BLL_EF.Exceptions;
 using StayStop.DAL.Context;
 using StayStop.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace StayStop.BLL_EF.Service
 {
@@ -53,10 +47,7 @@ namespace StayStop.BLL_EF.Service
             return room;
         }
         public int Create(int hotelId, RoomRequestDto roomDto)
-        {
-            if (roomDto.PriceForChild <= 0.0M || roomDto.PriceForAdult <= 0.0M) throw new InvalidDataException("$Price can't be lower or equal to 0");
-
-
+        {         
             var hotel = GetHotelById(hotelId);
             
             var room = _mapper.Map<Room>(roomDto);
@@ -143,18 +134,18 @@ namespace StayStop.BLL_EF.Service
 
         public void Update(int hotelId, int roomId, RoomUpdateRequestDto roomDto)
         {
-            if (roomDto.PriceForChild <= 0.0M || roomDto.PriceForAdult <= 0.0M) 
-                throw new InvalidDataException("$Price can't be lower or equal to 0");
-
             var hotel = GetHotelById(hotelId);
             var room = GetRoomById(roomId);
+
+            if (room.HotelId != hotelId)
+                throw new ContentNotFoundException($"Provided hotel id is wrong (hotel id: {hotelId})");
+
             var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, room, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
             if (!authorizationResult.Succeeded)
             {
                 throw new ForbiddenException("Permission denied");
             }
-            if (room.HotelId != hotelId) 
-                throw new ContentNotFoundException($"Provided hotel id is wrong (hotel id: {hotelId})");
+            
 
             var roomImagesFromDb = room.Images.ToList();
             if (roomDto.Images?.Count>0)
