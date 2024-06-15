@@ -9,8 +9,16 @@ import { FormsModule } from '@angular/forms';
 import { AuthGuard } from './guards/auth-guard.guard';
 import { JwtModule } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
-
-
+import { HotelsComponent } from './hotels/hotels.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { HotelRowComponent } from './hotel-row/hotel-row.component';
+import {MatCardModule} from '@angular/material/card';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatSelectModule} from '@angular/material/select';
+import {MatInputModule} from '@angular/material/input';
+import {MatGridListModule} from '@angular/material/grid-list';
 export function tokenGetter() { 
   return localStorage.getItem("accessToken"); 
 }
@@ -19,13 +27,22 @@ export function tokenGetter() {
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    HotelsComponent,
+    HotelRowComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    MatCardModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatToolbarModule,
+    MatSelectModule,
+    MatInputModule,
+    MatGridListModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -34,7 +51,7 @@ export function tokenGetter() {
       }
     })
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard, provideAnimationsAsync()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
