@@ -9,4 +9,6 @@ export interface RoomResponseDto {
     isAvailable: boolean;
     priceForAdult: number;
     priceForChild: number;
+    numberOfChildren: number; 
+    numberOfAdults: number; 
 }

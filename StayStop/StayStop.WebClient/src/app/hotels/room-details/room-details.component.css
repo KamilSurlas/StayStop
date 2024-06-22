@@ -1,0 +1,79 @@
+.book-button {
+    font-size: 16px;
+    padding: 10px 20px;
+    background-color: #00796b;
+    color: white;
+  }
+  
+  .book-button:hover {
+    background-color: #004d40;
+  }
+  .room-details-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+  }
+  
+  .room-card {
+    max-width: 800px;
+    width: 100%;
+  }
+  
+  mat-card-title,
+  mat-card-subtitle {
+    text-align: center;
+  }
+  
+  mat-grid-list {
+    margin-top: 10px;
+  }
+  
+  mat-grid-tile img {
+    width: 100%;
+    height: auto;
+  }
+  
+  mat-card-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 10px;
+  }
+  
+  .book-button {
+    font-size: 16px;
+    padding: 10px 20px;
+    background-color: #00796b;
+    color: white;
+  }
+  
+  .book-button:hover {
+    background-color: #004d40;
+  }
+  
+  .delete-button {
+    font-size: 16px;
+    padding: 10px 20px;
+    background-color: #d32f2f;
+    color: white;
+  }
+  
+  .delete-button:hover {
+    background-color: #b71c1c;
+  }
+  
+  .error-message {
+    color: #d32f2f;
+    font-size: 14px;
+    text-align: center;
+    display: block;
+    margin-top: 10px;
+  }
+  
+  .error-card {
+    margin: 20px;
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+  }
+  

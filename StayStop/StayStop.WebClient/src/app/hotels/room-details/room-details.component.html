@@ -1,0 +1,42 @@
+<div class="room-details-container" *ngIf="room; else loading">
+    <mat-card class="room-card">
+      <img mat-card-image [src]="room.coverImage" alt="Room cover image">
+      <mat-card-title>{{ room.roomType }} Room</mat-card-title>
+      <mat-card-subtitle>Price for Adult: {{ room.priceForAdult | currency }} | Price for Child: {{ room.priceForChild | currency }}</mat-card-subtitle>
+      <mat-card-content>Maximum number of children: {{room.numberOfChildren}}</mat-card-content>
+      <mat-card-content>Maximum number of adults: {{room.numberOfAdults}}</mat-card-content>
+      <mat-card-content>
+        <p>{{ room.description }}</p>
+        <mat-divider></mat-divider>
+        <h3>Gallery</h3>
+        <mat-grid-list cols="3" rowHeight="2:1">
+          <mat-grid-tile *ngFor="let image of room.images">
+            <img [src]="image" alt="Room image">
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" class="book-button">Book Now</button>
+      
+      </mat-card-actions>
+      <span *ngIf="error" class="error-message">{{error}}</span>
+    </mat-card>
+  </div>
+  
+  <ng-template #loading>
+    <mat-spinner></mat-spinner>
+  </ng-template>
+
+
+
+
+  <button mat-raised-button color="warn" class="delete-button" (click)="deleteRoom()">Delete Room</button>
+  <div *ngIf="error">
+    <mat-card class="error-card">
+      <mat-card-title>Error</mat-card-title>
+      <mat-card-content>
+        <p>{{ error }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  

@@ -19,6 +19,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { DetailsComponent } from './hotels/details/details.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatIconModule} from '@angular/material/icon';
+import { RoomDetailsComponent } from './hotels/room-details/room-details.component';
 export function tokenGetter() { 
   return localStorage.getItem("accessToken"); 
 }
@@ -29,7 +34,9 @@ export function tokenGetter() {
     LoginComponent,
     HomeComponent,
     HotelsComponent,
-    HotelRowComponent
+    HotelRowComponent,
+    DetailsComponent,
+    RoomDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +49,10 @@ export function tokenGetter() {
     MatToolbarModule,
     MatSelectModule,
     MatInputModule,
+    MatProgressSpinnerModule,
     MatGridListModule,
+    MatDividerModule,
+    MatIconModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

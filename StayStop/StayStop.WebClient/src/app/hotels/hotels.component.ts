@@ -31,7 +31,7 @@ export class HotelsComponent {
       });
   }
   public redirectToHotelDetails(hotelId: number): void {
-    this.router.navigate(['/hotel', hotelId]);
+    this.router.navigateByUrl(`/hotels/${hotelId}`);
   }
   public handlePageEvent(e: PageEvent) {
     this.result!.totalItemsCount = e.length;

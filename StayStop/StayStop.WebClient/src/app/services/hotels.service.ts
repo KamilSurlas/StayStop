@@ -8,7 +8,7 @@ import { Injectable } from "@angular/core";
     providedIn: 'root'
   })
 export class HotelsService {
-    private apiUrl: string = 'http://localhost:5080/api/hotel';
+    private apiUrl: string = 'http://localhost:5080/api/hotel/';
     constructor(private httpClient: HttpClient){}
     public getAll(pagination: HotelPagination): Observable<PageResult<HotelResponseDto>>
     {
@@ -18,5 +18,8 @@ export class HotelsService {
     }
     public getById(hotelId: number):Observable<HotelResponseDto>{
         return this.httpClient.get<HotelResponseDto>(this.apiUrl + hotelId);
+      }
+      public delete(hotelId:number):Observable<void>{
+        return this.httpClient.delete<void>(this.apiUrl + hotelId);
       }
 }

@@ -1,0 +1,52 @@
+<div class="hotel-details-container" *ngIf="hotel; else loading">
+    <mat-card class="hotel-card">
+      <img mat-card-image [src]="hotel.coverImage" alt="Hotel cover image">
+      <mat-card-title>{{ hotel.name }}
+            <ng-container *ngFor="let star of getStars(hotel.stars)">
+              <mat-icon color="warn">star</mat-icon>
+            </ng-container>
+      </mat-card-title>
+      <mat-card-subtitle>{{ hotel.city }}, {{ hotel.country }} </mat-card-subtitle>
+      <mat-card-content>
+        <p>{{ hotel.description }}</p>
+        <mat-divider></mat-divider>
+        <h3>Details</h3>
+        <p>Hotel Type: {{ hotel.hotelType }}</p>
+        <p>Address: {{ hotel.street }}, {{ hotel.zipCode }}</p>
+        <p>Email: {{ hotel.emailAddress }}</p>
+        <p>Phone: {{ hotel.phoneNumber }}</p>
+        <mat-divider></mat-divider>
+        <h3>Available rooms</h3>
+        <mat-grid-list cols="3" rowHeight="2:1">
+            <mat-grid-tile *ngFor="let room of hotel.rooms">
+            <img class="selectable" *ngIf="room.isAvailable" (click)="onRoomChoosed(room.roomId)" [src]="room.images[0]" alt="Room image"><br>
+            <mat-grid-tile-footer>
+                <h3>{{ room.roomType}} Room for {{room.numberOfAdults + room.numberOfChildren}} people</h3>
+              </mat-grid-tile-footer>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <mat-divider></mat-divider>
+        <h3>Hotel gallery</h3>
+        <mat-grid-list cols="3" rowHeight="2:1">
+          <mat-grid-tile *ngFor="let image of hotel.images">
+            <img [src]="image" alt="Hotel image">
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
+  <ng-template #loading>
+    <mat-spinner></mat-spinner>
+  </ng-template>
+ 
+<!--Ponizej dla admin/wlasciciela hotelu-->
+<button mat-raised-button color="warn" class="delete-button" (click)="deleteHotel()">Delete Hotel</button>
+<div *ngIf="error">
+    <mat-card class="error-card">
+      <mat-card-title>Error</mat-card-title>
+      <mat-card-content>
+        <p>{{ error }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>

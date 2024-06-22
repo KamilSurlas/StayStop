@@ -15,5 +15,7 @@ namespace StayStop.BLL.Dtos.Room
         public required bool IsAvailable { get; set; }
         public required decimal PriceForAdult { get; set; }
         public required decimal PriceForChild { get; set; }
+        public required int NumberOfChildren { get; set; }
+        public required int NumberOfAdults { get; set; }
     }
 }
