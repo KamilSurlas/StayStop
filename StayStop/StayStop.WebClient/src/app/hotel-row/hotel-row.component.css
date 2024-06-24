@@ -1,0 +1,17 @@
+.example-card {
+    margin: 16px;
+}
+  
+  .image-container {
+    float: right; /* Przesuwa kontener z obrazkiem na prawą stronę */
+    margin-left: 16px; /* Odstęp między kontenerem a tekstem */
+    width: 200px; /* Szerokość kontenera na zdjęcie (dostosuj do potrzeb) */
+}
+  
+.hotel-image {
+    width: 100%; /* Zapełnia kontener */
+    height: auto; /* Automatyczna wysokość, aby zachować proporcje */
+    border-radius: 8px; /* Opcjonalne: zaokrąglenie rogów */
+    transform: scale(1.2); /* Przeskalowanie obrazka o 20% */
+}
+  

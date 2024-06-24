@@ -1,7 +1,11 @@
 <mat-card class="example-card">
-    <mat-card-header>
-      <mat-card-title-group>
-        <mat-card-title>{{ hotel.name }}</mat-card-title>
-      </mat-card-title-group>
-    </mat-card-header>
-  </mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ hotel.name }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-card-subtitle *ngIf="hotel.description">{{ hotel.description }}</mat-card-subtitle>
+    <div class="image-container">
+      <img class="hotel-image" src="{{ hotel.coverImage }}">
+    </div>
+  </mat-card-content>
+</mat-card>

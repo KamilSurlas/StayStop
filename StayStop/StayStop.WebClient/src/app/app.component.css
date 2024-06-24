@@ -1,0 +1,53 @@
+.navbar {
+    background: linear-gradient(to right, #56CCF2, #2F80ED); /* Gradient tła */
+    padding: 10px 20px; /* Wewnętrzny odstęp na górze i dołu oraz po bokach */
+    display: flex; /* Umożliwia umieszczenie elementów w jednym rzędzie */
+    justify-content: space-between; /* Rozstawia elementy po bokach navbara */
+    align-items: center; /* Wyśrodkowanie w pionie */
+    font-family: 'Arial', sans-serif; /* Ustawienie rodziny czcionek */
+}
+
+.nav-list {
+    list-style-type: none; /* Usunięcie standardowych punktorów listy */
+    margin: 0;
+    padding: 0;
+}
+
+.nav-list li {
+    display: inline-block; /* Wyświetlanie elementów listy w jednej linii */
+    margin-right: 15px; /* Odstęp między elementami */
+}
+
+.nav-list li:last-child {
+    margin-right: 0; /* Brak marginesu po ostatnim elemencie */
+}
+
+.nav-list li a {
+    color: #ffffff; /* Biały kolor tekstu linków */
+    text-decoration: none; /* Usunięcie podkreślenia */
+    font-size: 16px; /* Rozmiar tekstu */
+    padding: 12px 20px; /* Większe wewnętrzne odstępy dla linków */
+    border-radius: 5px; /* Zaokrąglenie rogów */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Płynne przejścia tła i animacja transformacji */
+}
+
+.nav-list li a:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Przezroczyste tło po najechaniu */
+    transform: translateY(-3px); /* Efekt lekkiego uniesienia */
+}
+
+.login-button {
+    background-color: #ffffff; /* Biały kolor tła przycisku */
+    color: #333333; /* Ciemny kolor tekstu */
+    border: none; /* Brak obramowania */
+    padding: 10px 20px; /* Wewnętrzne odstępy */
+    font-size: 16px; /* Rozmiar tekstu */
+    border-radius: 5px; /* Zaokrąglenie rogów */
+    cursor: pointer; /* Zmiana kursora na wskaźnik */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Płynne przejścia */
+}
+
+.login-button:hover {
+    background-color: #f0f0f0; /* Jasny kolor tła po najechaniu */
+    color: #555555; /* Ciemniejszy kolor tekstu po najechaniu */
+}
