@@ -1,3 +1,27 @@
 .selectable:hover {
     cursor: pointer;
 }
+
+.container {
+    display: flex;
+  }
+  
+  .left-panel {
+    flex: 1;
+    margin-top: 15px;
+    margin-left: 10px;
+  }
+  
+  .right-panel {
+    flex: 4;
+  }
+  
+  .example-form {
+    margin-bottom: 10px; /* odstęp między formularzami */
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+  
+  

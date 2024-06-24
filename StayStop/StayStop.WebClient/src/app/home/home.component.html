@@ -1,14 +1,54 @@
-<h1>Home Page</h1>
+<body>
 
-<br>
-<div *ngIf="isUserAuthenticated()" style="color:blue;">
-  <h2>
-    YOU ARE LOGGED IN
-  </h2>
-</div>
+  <form #studentForm="ngForm" class="center-form">
 
-<br>
-<ul>
-  <li *ngIf="!isUserAuthenticated()"><a routerLink="/login">Login</a></li>
-  <li *ngIf="isUserAuthenticated()"><a class="clickable-text" (click)="logOut()">Logout</a></li>
-</ul>
+    <div class="form-row">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Location</mat-label>
+        <input matInput name="searchHotel" [(ngModel)]="searchPhrase">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+  
+    <div class="form-row">
+      <mat-form-field appearance="fill" class="half-width">
+        <mat-label>Number of kids</mat-label>
+        <input 
+        matInput type="number" 
+        name="numberOfKids" 
+        [min]="0" 
+        [(ngModel)]="numberOfKids"
+        required>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill" class="half-width">
+        <mat-label>Number of adults</mat-label>
+        <input 
+        matInput type="number" 
+        name="numberOfAdults" 
+        [min]="0" 
+        [(ngModel)]="numberOfAdults"
+        required>
+      </mat-form-field>
+    </div>
+  
+    <div class="form-row">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Number of rooms</mat-label>
+        <input 
+        matInput type="number" 
+        name="numberOfRooms" 
+        [min]="1" 
+        [(ngModel)]="numberOfRooms"
+        required>
+      </mat-form-field>
+    </div>
+  
+    <div class="form-row">
+      <button type="button" id="clear" class="form-button" (click)="resetForm()">Clear</button>
+      <button type="submit" id="submit" [disabled]="studentForm.invalid" class="form-button" (click)="search()">Search</button>
+    </div>
+  
+  </form>
+
+</body>
