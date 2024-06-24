@@ -24,6 +24,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon';
 import { RoomDetailsComponent } from './hotels/room-details/room-details.component';
+import { MatButtonModule } from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
 import { HotelManagementComponent } from './hotels/hotel-management/hotel-management.component';
 import { ManageHotelComponent } from './hotels/hotel-management/manage-hotel/manage-hotel.component';
@@ -63,6 +64,7 @@ export function tokenGetter() {
     MatGridListModule,
     MatDividerModule,
     MatIconModule,
+    MatButtonModule,
     MatTableModule,
     JwtModule.forRoot({
       config: {

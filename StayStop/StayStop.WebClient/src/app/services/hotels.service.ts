@@ -13,7 +13,11 @@ export class HotelsService {
     constructor(private httpClient: HttpClient){}
     public getAll(pagination: HotelPagination): Observable<PageResult<HotelResponseDto>>
     {
-        const httpParams=new HttpParams().append("pageNumber",pagination.pageNumber).append("pageSize", pagination.pageSize).append("searchPhrase",pagination.searchPhrase ?? "").append("sortBy",pagination.hotelsSortBy ?? "").append("sortDirection",pagination.sortDirection);
+        const httpParams=new HttpParams().append("pageNumber",pagination.pageNumber)
+        .append("pageSize", pagination.pageSize).append("searchPhrase",pagination.searchPhrase ?? "")
+        .append("sortBy",pagination.hotelsSortBy ?? "")
+        .append("sortDirection",pagination.sortDirection ?? "");
+
         const params = httpParams;
         return this.httpClient.get<PageResult<HotelResponseDto>>(this.apiUrl, {params: params});
     }

@@ -5,6 +5,9 @@ import { HotelResponseDto } from '../models/hotel-response';
 import { HotelsService } from '../services/hotels.service';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { HotelsDataService } from '../services/hotels-data.service';
+import { MatButtonModule } from '@angular/material/button';
+
 @Component({
   selector: 'app-hotels',
   templateUrl: './hotels.component.html',
@@ -18,8 +21,15 @@ export class HotelsComponent {
   public sortDirection: SortDirection = SortDirection.ASC;
   public result: PageResult<HotelResponseDto> | null = null;
   public pageSizeOptions: number[] = [5,10,15];
-  constructor(private hotelsService: HotelsService, private router: Router){
-    this.laodHotels();
+
+  constructor(private hotelsService: HotelsService, private router: Router, private hotelsData: HotelsDataService){
+    if(hotelsData.getHotelsData() != null) {
+      this.result = hotelsData.getHotelsData();
+      if(hotelsData.getSearchPhrase() != null)
+        this.searchPhrase = hotelsData.getSearchPhrase();
+    }
+    else
+      this.laodHotels();
   }
   private laodHotels():void {
     this.hotelsService.getAll({pageSize: this.pageSize, pageNumber:this.pageNumber, searchPhrase: this.searchPhrase, hotelsSortBy: this.sortBy, sortDirection: this.sortDirection}).subscribe(
