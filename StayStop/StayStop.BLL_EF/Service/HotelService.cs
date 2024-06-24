@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using StayStop.BLL.Authorization;
 using StayStop.BLL.Dtos.Hotel;
 using StayStop.BLL.Dtos.Hotel.HotelOpinion;
+using StayStop.BLL.Dtos.User;
 using StayStop.BLL.Exceptions;
 using StayStop.BLL.IService;
 using StayStop.BLL.Pagination;
@@ -237,6 +238,20 @@ namespace StayStop.BLL_EF.Service
             };
 
             return response;
+        }
+
+        public List<UserResponseDto> GetManagers(int hotelId)
+        {
+            var hotel = GetHotelById(hotelId);
+
+            if (hotel.Managers.Count == 0)
+            {
+                throw new InvalidDataException($"Provided hotel with id: {hotelId} does not have mangaers");
+            }
+
+            var managers = _mapper.Map<List<UserResponseDto>>(hotel.Managers);
+
+            return managers;
         }
     }
 }

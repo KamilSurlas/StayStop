@@ -39,14 +39,4 @@
   <ng-template #loading>
     <mat-spinner></mat-spinner>
   </ng-template>
- 
-<!--Ponizej dla admin/wlasciciela hotelu-->
-<button mat-raised-button color="warn" class="delete-button" (click)="deleteHotel()">Delete Hotel</button>
-<div *ngIf="error">
-    <mat-card class="error-card">
-      <mat-card-title>Error</mat-card-title>
-      <mat-card-content>
-        <p>{{ error }}</p>
-      </mat-card-content>
-    </mat-card>
-  </div>
+

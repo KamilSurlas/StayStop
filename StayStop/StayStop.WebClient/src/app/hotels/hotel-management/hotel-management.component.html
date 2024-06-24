@@ -1,0 +1,19 @@
+
+ <table class="table table-striped" border="1">
+    <thead>
+      <th>Hotel name</th>
+      <th>City</th>
+      <th>Country</th>
+      <th>Address</th>
+      <th>Hotel email address</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let h of result?.items" class="selectable" [app-hotel-management-row]="h" (click)="manageHotel(h.hotelId)"></tr>
+    </tbody>
+  </table>
+
+  <mat-paginator [length]="result?.totalItemsCount"
+                 [pageSize]="pageSize"
+                 [pageSizeOptions]="pageSizeOptions"
+                 (page)="handlePageEvent($event)">
+  </mat-paginator>

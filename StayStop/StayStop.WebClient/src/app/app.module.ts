@@ -24,6 +24,12 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon';
 import { RoomDetailsComponent } from './hotels/room-details/room-details.component';
+import {MatTableModule} from '@angular/material/table';
+import { HotelManagementComponent } from './hotels/hotel-management/hotel-management.component';
+import { ManageHotelComponent } from './hotels/hotel-management/manage-hotel/manage-hotel.component';
+import { HotelManagementRowComponent } from './hotels/hotel-management/hotel-management-row/hotel-management-row.component';
+import { ManageRoomComponent } from './hotels/hotel-management/manage-hotel/manage-room/manage-room.component';
+
 export function tokenGetter() { 
   return localStorage.getItem("accessToken"); 
 }
@@ -36,7 +42,11 @@ export function tokenGetter() {
     HotelsComponent,
     HotelRowComponent,
     DetailsComponent,
-    RoomDetailsComponent
+    RoomDetailsComponent,
+    HotelManagementComponent,
+    ManageHotelComponent,
+    HotelManagementRowComponent,
+    ManageRoomComponent
   ],
   imports: [
     BrowserModule,
@@ -53,6 +63,7 @@ export function tokenGetter() {
     MatGridListModule,
     MatDividerModule,
     MatIconModule,
+    MatTableModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

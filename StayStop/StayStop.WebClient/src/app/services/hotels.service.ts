@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { PageResult } from "../models/page-result";
 import { HotelResponseDto } from "../models/hotel-response";
 import { Injectable } from "@angular/core";
+import { UserResponseDto } from "../models/user-response";
 @Injectable({
     providedIn: 'root'
   })
@@ -21,5 +22,8 @@ export class HotelsService {
       }
       public delete(hotelId:number):Observable<void>{
         return this.httpClient.delete<void>(this.apiUrl + hotelId);
+      }
+      public getManagers(hotelId: number):Observable<UserResponseDto[]>{
+        return this.httpClient.get<UserResponseDto[]>(`${this.apiUrl + hotelId}/managers`);
       }
 }

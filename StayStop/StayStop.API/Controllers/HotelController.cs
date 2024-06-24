@@ -80,5 +80,13 @@ namespace StayStop.API.Controllers
 
             return Ok();
         }
+        [AllowAnonymous]
+        [HttpGet("{hotelId}/managers")]
+        public ActionResult GetManagers([FromRoute] int hotelId)
+        {
+            var managers = _hotelService.GetManagers(hotelId);
+
+            return Ok(managers);
+        }
     }
 }
