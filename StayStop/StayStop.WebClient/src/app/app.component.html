@@ -1,9 +1,10 @@
 
 <nav class="navbar">
     <ul class="nav-list">
-        <li><a href="#">Home</a></li>
+        <li><a href="">Home</a></li>
     </ul>
-    <button class="login-button">Sign in</button>
+    <button *ngIf="!this.isUserAuthenticated()" class="login-button" routerLink="/login">Sign in</button>
+    <button *ngIf="this.isUserAuthenticated()" class="login-button" (click)="logOut()">Log out</button>
 </nav>
   
 
