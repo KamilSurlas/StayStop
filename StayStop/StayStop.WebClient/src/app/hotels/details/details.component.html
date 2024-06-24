@@ -19,7 +19,7 @@
         <h3>Available rooms</h3>
         <mat-grid-list cols="3" rowHeight="2:1">
             <mat-grid-tile *ngFor="let room of hotel.rooms">
-            <img class="selectable" *ngIf="room.isAvailable" (click)="onRoomChoosed(room.roomId)" [src]="room.images[0]" alt="Room image"><br>
+            <img class="selectable" *ngIf="room.isAvailable" (click)="onRoomChoosed(room.roomId)" [src]="room.coverImage" alt="Room image"><br>
             <mat-grid-tile-footer>
                 <h3>{{ room.roomType}} Room for {{room.numberOfAdults + room.numberOfChildren}} people</h3>
               </mat-grid-tile-footer>

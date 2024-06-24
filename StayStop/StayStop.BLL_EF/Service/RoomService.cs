@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using StayStop.BLL.Authorization;
 using StayStop.BLL.Dtos.Room;
 using StayStop.BLL.Exceptions;
 using StayStop.BLL.IService;
 using StayStop.BLL_EF.Exceptions;
+using StayStop.BLL_EF.Service;
 using StayStop.DAL.Context;
 using StayStop.Model;
 
@@ -17,13 +19,17 @@ namespace StayStop.BLL_EF.Service
         private readonly IMapper _mapper;
         private readonly IUserContextService _userContextService;
         private readonly IAuthorizationService _authorizationService;
+        private readonly IImageService _imageService;
 
-        public RoomService(StayStopDbContext context, IMapper mapper, IUserContextService userContextService, IAuthorizationService authorizationService)
+        public RoomService(StayStopDbContext context, IMapper mapper, 
+            IUserContextService userContextService, IAuthorizationService authorizationService, 
+            IImageService imageService)
         {
             _context = context;
             _mapper = mapper;
             _userContextService = userContextService;
             _authorizationService = authorizationService;
+            _imageService = imageService;
         }
 
         private Hotel GetHotelById(int hotelId)
@@ -160,5 +166,41 @@ namespace StayStop.BLL_EF.Service
 
             _context.SaveChanges();
         }
+
+        public void UploadCoverImage(int hotelId, int roomId, IFormFile coverImage)
+        {
+            if (coverImage != null && coverImage.Length > 0)
+            {
+                var hotel = GetHotelById(hotelId);
+                var room = GetRoomById(roomId);
+                if (room.HotelId != hotelId)
+                    throw new ContentNotFoundException($"Provided hotel id is wrong (hotel id: {hotelId})");
+                var roomOldCoverImage = room.CoverImage;
+                if (roomOldCoverImage is not null && !room.Images.Contains(coverImage.FileName))
+                {
+                    room.Images.Add(coverImage.FileName);
+                }
+                room.CoverImage = _imageService.UploadImage(coverImage);
+                _context.SaveChanges();
+            }
+        }
+
+        public void UploadImages(int hotelId, int roomId, IEnumerable<IFormFile> images)
+        {
+            var hotel = GetHotelById(hotelId);
+            var room = GetRoomById(roomId);
+            if (room.HotelId != hotelId)
+                throw new ContentNotFoundException($"Provided hotel id is wrong (hotel id: {hotelId})");
+            foreach (var image in images)
+            {
+                if (!room.Images.Contains(image.FileName))
+                {
+                    room.Images.Add(_imageService.UploadImage(image));
+                }
+
+            }
+            _context.SaveChanges();
+        }
     }
 }
+

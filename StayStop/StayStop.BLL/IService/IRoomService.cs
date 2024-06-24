@@ -1,4 +1,5 @@
-﻿using StayStop.BLL.Dtos.Room;
+﻿using Microsoft.AspNetCore.Http;
+using StayStop.BLL.Dtos.Room;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,7 @@ namespace StayStop.BLL.IService
         RoomResponseDto GetById(int hotelId, int roomId);
         void Update(int hotelId, int roomId, RoomUpdateRequestDto roomDto);
         void SetRoomActivity(int hotelId, int roomId);
+        void UploadCoverImage(int hotelId, int roomId, IFormFile coverImage);
+        void UploadImages(int hotelId, int roomId, IEnumerable<IFormFile> images);
     }
 }

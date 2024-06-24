@@ -23,7 +23,7 @@
       <h3>Rooms</h3>
       <mat-grid-list cols="3" rowHeight="2:1">
            <mat-grid-tile *ngFor="let room of hotel.rooms">
-      <img class="selectable" [src]="room.images[0]" (click)="onManageRoomClicked(room.roomId)"><br>
+      <img class="selectable" [src]="room.coverImage" (click)="onManageRoomClicked(room.roomId)"><br>
       </mat-grid-tile>
       </mat-grid-list>
     <mat-divider></mat-divider>

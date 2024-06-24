@@ -71,6 +71,7 @@ builder.Services.AddScoped<IHotelService, HotelService>();
 builder.Services.AddScoped<IRoomService, RoomService>();
 builder.Services.AddScoped<IOpinionService, OpinionService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IReservationPositionService, ReservationPositionService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<DbSeeder>();
