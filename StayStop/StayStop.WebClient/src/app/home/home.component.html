@@ -1,6 +1,6 @@
 <body>
 
-  <form #studentForm="ngForm" class="center-form">
+  <form #searchingHotelsForm="ngForm" class="center-form">
 
     <div class="form-row">
       <mat-form-field appearance="fill" class="full-width">
@@ -46,7 +46,7 @@
   
     <div class="form-row">
       <button type="button" id="clear" class="form-button" (click)="resetForm()">Clear</button>
-      <button type="submit" id="submit" [disabled]="studentForm.invalid" class="form-button" (click)="search()">Search</button>
+      <button type="submit" id="submit" [disabled]="searchingHotelsForm.invalid" class="form-button" (click)="search()">Search</button>
     </div>
   
   </form>

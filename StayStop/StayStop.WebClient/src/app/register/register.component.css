@@ -86,16 +86,3 @@ body {
     border: 0;
 }
 
-.register-link {
-    color: #007bff; /* Blue text color */
-    text-decoration: none; /* Remove underline */
-    font-size: 14px; /* Font size */
-    display: block; /* Make it block to apply margin correctly */
-    text-align: center; /* Center align the link */
-    margin-top: 10px; /* Margin above the link */
-    transition: color 0.3s ease; /* Smooth transition for color */
-}
-
-.register-link:hover {
-    color: #0056b3; /* Darker text color on hover */
-}

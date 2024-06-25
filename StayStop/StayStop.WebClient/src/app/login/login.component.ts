@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
@@ -13,8 +13,15 @@ import { AuthenticatedResponse } from '../models/authenticated-response';
 export class LoginComponent {
   invalidLogin: boolean = false; //dodany !
   credentials: LoginModel = {emailAddress:'', password:''};
+  showRegistrationMessage = false;
 
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) { 
+    this.route.queryParams.subscribe(params => {
+      if (params['registered'] === 'true') {
+        this.showRegistrationMessage = true;
+      }
+    });
+  }
 
   login = ( form: NgForm) => {
     if (form.valid) {

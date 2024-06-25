@@ -66,6 +66,7 @@ builder.Services.AddScoped<IValidator<HotelRequestDto>,HotelRequestDtoValidator>
 builder.Services.AddScoped<IValidator<HotelUpdateRequestDto>,HotelUpdateRequestDtoValidator>();
 builder.Services.AddScoped<IValidator<RoomRequestDto>, RoomRequestDtoValidator>();
 builder.Services.AddScoped<IValidator<RoomUpdateRequestDto>, RoomUpdateRequestDtoValidator>();
+builder.Services.AddScoped<IValidator<UserUpdateRequestDto>, UserUpdateDtoValidator>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<IHotelService, HotelService>();
 builder.Services.AddScoped<IRoomService, RoomService>();
@@ -101,6 +102,8 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authSettings.JwtKey))
     };
 });
+
+ValidatorOptions.Global.LanguageManager.Enabled = false;
 
 var app = builder.Build();
 var scope = app.Services.CreateScope();

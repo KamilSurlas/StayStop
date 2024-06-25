@@ -147,8 +147,9 @@ namespace StayStop.BLL_EF.Service
             .Take(pagination.PageSize)
             .ToList();
 
+            //FILTROWANIE
             var hotelResults = _mapper.Map<List<HotelResponseDto>>(hotels);
-
+            
             var result = new PageResult<HotelResponseDto>(hotelResults, baseQuery.Count(), 
                 pagination.PageSize, pagination.PageNumber);
 

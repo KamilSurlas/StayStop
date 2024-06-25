@@ -25,6 +25,8 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon';
 import { RoomDetailsComponent } from './hotels/room-details/room-details.component';
 import { MatButtonModule } from '@angular/material/button';
+import { RegisterComponent } from './register/register.component';
+import { AccountComponent } from './account/account.component';
 export function tokenGetter() { 
   return localStorage.getItem("accessToken"); 
 }
@@ -37,7 +39,9 @@ export function tokenGetter() {
     HotelsComponent,
     HotelRowComponent,
     DetailsComponent,
-    RoomDetailsComponent
+    RoomDetailsComponent,
+    RegisterComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,

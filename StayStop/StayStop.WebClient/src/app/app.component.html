@@ -1,12 +1,18 @@
-
 <nav class="navbar">
     <ul class="nav-list">
         <li><a href="">Home</a></li>
+        <li *ngIf="this.isUserAuthenticated()"><a href="/account">Account</a></li>
+        <li *ngIf="this.isRoleUser()"><a href="#">Manage hotels</a></li>
     </ul>
-    <button *ngIf="!this.isUserAuthenticated()" class="login-button" routerLink="/login">Sign in</button>
-    <button *ngIf="this.isUserAuthenticated()" class="login-button" (click)="logOut()">Log out</button>
+
+    <div class="login-container">
+            <label *ngIf="this.getUserName() != null">Hi, {{this.getUserName()}}</label>
+            <button *ngIf="!this.isUserAuthenticated()" class="login-button" routerLink="/login">Sign in</button>
+            <button *ngIf="!this.isUserAuthenticated()" class="login-button" routerLink="/register">Register</button>
+            <button *ngIf="this.isUserAuthenticated()" class="login-button" (click)="logOut()">Log out</button>
+    </div>
 </nav>
-  
+
 
   
 <router-outlet></router-outlet>
