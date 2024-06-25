@@ -26,16 +26,7 @@ constructor(private route: ActivatedRoute,private hotelsService: HotelsService,p
 getStars(starCount: number): any[] {
   return new Array(starCount);
 }
-public deleteHotel():void{
-  this.hotelsService.delete(this.hotelId).subscribe({
-    next: () => {
-      this.router.navigateByUrl('/hotels');
-    },
-    error: (deleteError) => {
-      this.error = deleteError.error;
-    }
-  })
-}
+
 public onRoomChoosed(roomId:number){
   this.router.navigateByUrl(`/hotels/${this.hotelId}/rooms/${roomId}`);
 }

@@ -80,5 +80,30 @@ namespace StayStop.API.Controllers
 
             return Ok();
         }
+        [AllowAnonymous]
+        [HttpGet("{hotelId}/managers")]
+        public ActionResult GetManagers([FromRoute] int hotelId)
+        {
+            var managers = _hotelService.GetManagers(hotelId);
+
+            return Ok(managers);
+        }
+        [AllowAnonymous]
+        [HttpPost("{hotelId}/images/cover")]
+        public ActionResult UploadCoverImage([FromRoute] int hotelId, [FromForm] IFormFile coverImage)
+        {
+            _hotelService.UploadCoverImage(hotelId, coverImage);
+
+            return Ok();
+
+        }
+        [AllowAnonymous]
+        [HttpPost("{hotelId}/images/all")]
+        public ActionResult UploadImage([FromRoute] int hotelId, [FromForm] IEnumerable<IFormFile> images)
+        {
+            _hotelService.UploadImages(hotelId, images);
+
+            return Ok();
+        }
     }
 }

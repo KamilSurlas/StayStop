@@ -1,0 +1,73 @@
+<div class="hotel-manage-container" *ngIf="hotel;">
+    <h3>Hotel {{hotel.name}} Details</h3>
+        <form style="display: flex; flex-direction: column;">
+          <mat-form-field>
+            <mat-label>City</mat-label>
+            <input matInput name="city" [(ngModel)]="hotel.city">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Country</mat-label>
+            <input matInput name="country" [(ngModel)]="hotel.country">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Hotel type</mat-label>
+            <input matInput name="hoteltype" [(ngModel)]="hotel.hotelType">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Street</mat-label>
+            <input matInput name="street" [(ngModel)]="hotel.street">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Zip code</mat-label>
+            <input matInput name="zipcode" [(ngModel)]="hotel.zipCode">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Email address</mat-label>
+            <input matInput name="email" [(ngModel)]="hotel.emailAddress">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Phone</mat-label>
+            <input matInput name="phone" [(ngModel)]="hotel.phoneNumber">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Description</mat-label>
+            <input matInput name="description" [(ngModel)]="hotel.description">
+          </mat-form-field>
+          <div class="form-row">
+            <button type="button" id="clear" class="form-button" (click)="resetForm()">Clear</button>
+            <button type="submit" id="submit"class="form-button" (click)="editHotel()">Edit hotel</button>
+          </div>
+        </form>   
+        <h3>Managers</h3> 
+        <table border="1">       
+        <tr *ngFor="let manager of hotelManagers">
+            <td>
+                {{manager.name}} {{manager.lastName}} [{{manager.email}}] 
+            </td>
+              <td>
+                  <button class="remove-manager-button" (click)="removeManagerFromHotel(manager.userId)">Remove manager from this hotel</button>
+              </td>
+        </tr>
+      </table>
+      <button class="add-manager-button" (click)="onAssignManagerClicked()">Assign new manager to this hotel</button> 
+      <div *ngIf="assignManager">
+        <h2>Assign manager to {{hotel.name}} hotel</h2>
+        <app-assign-manager-form 
+          [hotelId]="hotelId" 
+          (submit)="onManagerAssigned()" 
+          (cancel)="onCancel()">
+        </app-assign-manager-form>
+      </div>
+      <mat-divider></mat-divider>
+      <h3>Rooms</h3>
+      <mat-grid-list cols="3" rowHeight="2:1">
+           <mat-grid-tile *ngFor="let room of hotel.rooms">
+      <img class="selectable" [src]="room.coverImage" (click)="onManageRoomClicked(room.roomId)"><br>
+      </mat-grid-tile>
+      </mat-grid-list>
+    <mat-divider></mat-divider>
+</div>
+
+  <ng-template #loading>
+    <mat-spinner></mat-spinner>
+  </ng-template>

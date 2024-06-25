@@ -1,5 +1,6 @@
 import { HotelType } from "./hotel-type";
 import { RoomResponseDto } from "./room-response";
+import { UserResponseDto } from "./user-response";
 
 export interface HotelResponseDto {
     hotelId: number;

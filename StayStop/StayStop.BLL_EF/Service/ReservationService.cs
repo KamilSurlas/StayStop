@@ -66,7 +66,7 @@ namespace StayStop.BLL_EF.Service
             var user = GetUserById(_userContextService.GetUserId ?? throw new InvalidDataException("User id was not found"));
 
             var reservation = _mapper.Map<Reservation>(reservationDto);
-            // tutaj mozna sprobowac zrobic to w mapperze
+         
             reservation.Price = CalculatePrice(reservation);
 
             reservation.User = user;
@@ -89,6 +89,10 @@ namespace StayStop.BLL_EF.Service
         public void DeleteById(int reservationId)
         {
             var reservation = GetReservationById(reservationId);
+            foreach (var rp in reservation.ReservationPositions)
+            {
+                rp.Room.IsAvailable = true;
+            }
             _context.Reservations.Remove(reservation);
             _context.SaveChanges();
         }

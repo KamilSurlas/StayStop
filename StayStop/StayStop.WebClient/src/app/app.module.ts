@@ -27,6 +27,14 @@ import { RoomDetailsComponent } from './hotels/room-details/room-details.compone
 import { MatButtonModule } from '@angular/material/button';
 import { RegisterComponent } from './register/register.component';
 import { AccountComponent } from './account/account.component';
+import {MatTableModule} from '@angular/material/table';
+import { HotelManagementComponent } from './hotels/hotel-management/hotel-management.component';
+import { ManageHotelComponent } from './hotels/hotel-management/manage-hotel/manage-hotel.component';
+import { HotelManagementRowComponent } from './hotels/hotel-management/hotel-management-row/hotel-management-row.component';
+import { ManageRoomComponent } from './hotels/hotel-management/manage-hotel/manage-room/manage-room.component';
+import { AssignManagerFormComponent } from './hotels/hotel-management/manage-hotel/assign-manager-form/assign-manager-form.component';
+
+
 export function tokenGetter() { 
   return localStorage.getItem("accessToken"); 
 }
@@ -42,6 +50,11 @@ export function tokenGetter() {
     RoomDetailsComponent,
     RegisterComponent,
     AccountComponent
+    HotelManagementComponent,
+    ManageHotelComponent,
+    HotelManagementRowComponent,
+    ManageRoomComponent,
+    AssignManagerFormComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +72,7 @@ export function tokenGetter() {
     MatDividerModule,
     MatIconModule,
     MatButtonModule,
+    MatTableModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

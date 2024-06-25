@@ -14,4 +14,7 @@ export class RoomsService {
       public deleteById(hotelId: number, roomId:number):Observable<void>{
         return this.httpClient.delete<void>(`${this.apiUrl}${hotelId}/room/${roomId}`);
       }
+      public getAllRoomsFromHotel(hotelId: number):Observable<RoomResponseDto[]>{
+        return this.httpClient.get<RoomResponseDto[]>(`${this.apiUrl}${hotelId}/room`);
+      }
 }

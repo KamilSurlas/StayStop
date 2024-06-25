@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using StayStop.BLL.Dtos.Room;
 using StayStop.BLL.IService;
+using StayStop.BLL_EF.Service;
 using StayStop.Model.Constants;
 
 namespace StayStop.API.Controllers
@@ -62,6 +63,23 @@ namespace StayStop.API.Controllers
         public ActionResult SetRoomActivity([FromRoute] int hotelId, [FromRoute] int roomId)
         {
             _roomService.SetRoomActivity(hotelId, roomId);
+
+            return Ok();
+        }
+        [AllowAnonymous]
+        [HttpPost("{roomId}/images/cover")]
+        public ActionResult UploadCoverImage([FromRoute]int roomId,[FromRoute] int hotelId, [FromForm] IFormFile coverImage)
+        {
+            _roomService.UploadCoverImage(hotelId,roomId, coverImage);
+
+            return Ok();
+
+        }
+        [AllowAnonymous]
+        [HttpPost("{roomId}/images/all")]
+        public ActionResult UploadImage([FromRoute]int roomId, [FromRoute] int hotelId, [FromForm] IEnumerable<IFormFile> images)
+        {
+            _roomService.UploadImages(hotelId,roomId, images);
 
             return Ok();
         }
