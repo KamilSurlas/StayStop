@@ -30,6 +30,8 @@ import { HotelManagementComponent } from './hotels/hotel-management/hotel-manage
 import { ManageHotelComponent } from './hotels/hotel-management/manage-hotel/manage-hotel.component';
 import { HotelManagementRowComponent } from './hotels/hotel-management/hotel-management-row/hotel-management-row.component';
 import { ManageRoomComponent } from './hotels/hotel-management/manage-hotel/manage-room/manage-room.component';
+import { AssignManagerFormComponent } from './hotels/hotel-management/manage-hotel/assign-manager-form/assign-manager-form.component';
+
 
 export function tokenGetter() { 
   return localStorage.getItem("accessToken"); 
@@ -47,7 +49,8 @@ export function tokenGetter() {
     HotelManagementComponent,
     ManageHotelComponent,
     HotelManagementRowComponent,
-    ManageRoomComponent
+    ManageRoomComponent,
+    AssignManagerFormComponent
   ],
   imports: [
     BrowserModule,

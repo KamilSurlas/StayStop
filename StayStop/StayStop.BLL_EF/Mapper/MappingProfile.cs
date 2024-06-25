@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.IdentityModel.Tokens;
 using StayStop.BLL.DateTimeExtension;
 using StayStop.BLL.Dtos;
 using StayStop.BLL.Dtos.Hotel;
@@ -22,7 +23,8 @@ namespace StayStop.BLL_EF.Mapper
         public MappingProfile()
         {
             // Nullable types
-            CreateMap<List<string>?, List<string>>().ConvertUsing((src, dest) => src ?? dest);
+            CreateMap<List<string>?, List<string>>().ConvertUsing((src, dest) => src is null || src.IsNullOrEmpty() ? dest : src);
+            CreateMap<string?, string>().ConvertUsing((src, dest) => src is null || src.Length == 0 ? dest : src);
             CreateMap<int?,int>().ConvertUsing((src, dest) => src ?? dest);
             CreateMap<decimal?, decimal>().ConvertUsing((src, dest) => src ?? dest);
             CreateMap<DateTime?, DateTime>().ConvertUsing((src, dest) => src ?? dest);

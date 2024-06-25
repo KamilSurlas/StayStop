@@ -18,7 +18,7 @@ namespace StayStop.BLL.Validators
             _context = context;
 
             RuleFor(x => x.Stars).InclusiveBetween(1, 5);
-            RuleFor(x => x.PhoneNumber).MinimumLength(9).MaximumLength(13).Custom((value, context) =>
+            RuleFor(x => x.PhoneNumber).MinimumLength(11).MaximumLength(15).Custom((value, context) =>
             {
                 var existingPhoneNumber = _context.Users.Any(u => u.PhoneNumber == value);
                 if (existingPhoneNumber)

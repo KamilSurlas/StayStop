@@ -1,0 +1,12 @@
+ <form style="display: flex; flex-direction: column;" (ngSubmit)="onSubmit($event)">
+    <mat-form-field>
+        <mat-label>Please provide manager email</mat-label>
+        <input matInput name="email" type="text" [(ngModel)]="email">
+        </mat-form-field>
+        <input type="button" name="cancel" id="cancel" value="Cancel" class="form-button" (click)="cancel.emit()"/>
+        <input 
+            type="submit" 
+            name="submit" 
+            id="submit" class="form-button"
+            value="Save">
+    </form>   

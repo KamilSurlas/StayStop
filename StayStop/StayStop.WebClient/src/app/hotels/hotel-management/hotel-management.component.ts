@@ -34,6 +34,7 @@ export class HotelManagementComponent {
       error: (err) => console.log(err)
     });
   }
+  
   public manageHotel(hotelId: number):void{
     this.router.navigateByUrl(`hotels/management/${hotelId}`);
   }

@@ -178,12 +178,12 @@ namespace StayStop.BLL_EF.Service
             {
                 throw new ForbiddenException("Permission denied");
             }
-            var hotelImagesFromDb = hotelToUpdate.Images;
-            if (hotelDto.Images?.Count > 0)
-            {        
-               hotelImagesFromDb.AddRange(hotelDto.Images);
-            }
-            hotelDto.Images = hotelImagesFromDb;
+            //var hotelImagesFromDb = hotelToUpdate.Images;
+            //if (hotelDto.Images?.Count > 0)
+            //{        
+            //   hotelImagesFromDb.AddRange(hotelDto.Images);
+            //}
+            //hotelDto.Images = hotelImagesFromDb;
             _mapper.Map(hotelDto, hotelToUpdate);
             _context.SaveChanges();
         }
@@ -191,11 +191,11 @@ namespace StayStop.BLL_EF.Service
         public void AddManager(int hotelId, string managerEmail)
         {
             var hotel = GetHotelById(hotelId);
-            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, hotel, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
-            if (!authorizationResult.Succeeded)
-            {
-                throw new ForbiddenException("Permission denied");
-            }
+            //var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, hotel, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
+            //if (!authorizationResult.Succeeded)
+            //{
+            //    throw new ForbiddenException("Permission denied");
+            //}
             var manager = GetUserByMail(managerEmail);
 
             if (manager.RoleId == 3)
