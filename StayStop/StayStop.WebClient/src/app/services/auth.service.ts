@@ -5,12 +5,15 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   providedIn: 'root'
 })
 export class AuthService {
-
   constructor(private jwtHelper: JwtHelperService) { }
+  
+  
 
   isUserAuthenticated(): boolean {
     const token = localStorage.getItem("accessToken");
+    
     if (token && !this.jwtHelper.isTokenExpired(token)) {
+      console.log(this.jwtHelper.decodeToken(token))
       return true;
     }
     return false;
@@ -20,4 +23,60 @@ export class AuthService {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
   }
+
+
+  getUserName() : string | null {
+    const token = localStorage.getItem("accessToken");
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      const decodeToken = this.jwtHelper.decodeToken(token);
+
+      return (decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name']);
+    }
+    return null;
+  }
+
+  isRoleUser = (): boolean => {
+    const token = localStorage.getItem("accessToken");
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      const decodeToken = this.jwtHelper.decodeToken(token);
+      
+      return (decodeToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] != "User");
+    }
+    return false;
+  }
+ 
+
+  getUserEmail() : string | null {
+    const token = localStorage.getItem("accessToken");
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      const decodeToken = this.jwtHelper.decodeToken(token);
+      
+      return (decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress']);
+    }
+    
+    return null;
+  }
+
+  getUserLastName() : string | null {
+    const token = localStorage.getItem("accessToken");
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      const decodeToken = this.jwtHelper.decodeToken(token);
+      
+      return (decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname']);
+    }
+    
+    return null;
+  }
+
+  getUserPhoneNumber() : string | null {
+    const token = localStorage.getItem("accessToken");
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      const decodeToken = this.jwtHelper.decodeToken(token);
+      
+      return (decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/mobilephone']);
+    }
+    
+    return null;
+  }
+
 }

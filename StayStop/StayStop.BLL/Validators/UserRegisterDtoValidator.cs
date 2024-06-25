@@ -13,7 +13,8 @@ namespace StayStop.BLL.Validators
 
             RuleFor(x => x.Email).NotEmpty().EmailAddress();
             RuleFor(x => x.Password).NotEmpty().MinimumLength(8);
-            RuleFor(x => x.ConfirmPassword).Equal(u => u.Password);
+            RuleFor(x => x.ConfirmPassword).Equal(u => u.Password)
+                .WithMessage("Passwords aren't the same");
             RuleFor(x => x.Email).Custom((value, context) =>
             {
                 var existingEmail = _context.Users.Any(u => u.Email == value);

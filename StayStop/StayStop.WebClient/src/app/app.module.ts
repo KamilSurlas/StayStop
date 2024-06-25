@@ -25,6 +25,8 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon';
 import { RoomDetailsComponent } from './hotels/room-details/room-details.component';
 import { MatButtonModule } from '@angular/material/button';
+import { RegisterComponent } from './register/register.component';
+import { AccountComponent } from './account/account.component';
 import {MatTableModule} from '@angular/material/table';
 import { HotelManagementComponent } from './hotels/hotel-management/hotel-management.component';
 import { ManageHotelComponent } from './hotels/hotel-management/manage-hotel/manage-hotel.component';
@@ -46,6 +48,8 @@ export function tokenGetter() {
     HotelRowComponent,
     DetailsComponent,
     RoomDetailsComponent,
+    RegisterComponent,
+    AccountComponent
     HotelManagementComponent,
     ManageHotelComponent,
     HotelManagementRowComponent,

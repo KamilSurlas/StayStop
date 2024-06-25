@@ -12,6 +12,7 @@ namespace StayStop.BLL.IService
     {
         UserTokenResponse LoginUser(UserLoginDto dto, bool populateExp);
         UserTokenResponse RefreshToken(UserTokenResponse token);
-        void RegisterUser(UserRegisterDto dto); 
+        void RegisterUser(UserRegisterDto dto);
+        void UpdateUser(UserUpdateRequestDto dto);
     }
 }

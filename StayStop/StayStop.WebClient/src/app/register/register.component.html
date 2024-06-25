@@ -1,0 +1,33 @@
+<body>
+    <div class="container">
+        <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+            <h2 class="form-signin-heading">Register</h2>
+            <div *ngIf="invalidRegister" class="alert alert-danger">
+                <p *ngIf="validationErrors?.title">{{ validationErrors.title }}</p>
+                <div *ngFor="let error of validationErrors?.Email">{{ error }}</div>
+                <div *ngFor="let error of validationErrors?.Password">{{ error }} </div>
+                <div *ngFor="let error of validationErrors?.ConfirmPassword"> {{ error }}</div>
+            </div>
+
+            <input type="email" id="email" name="email" [(ngModel)]="credentials.email" 
+            class="form-control" placeholder="Email Address" required>
+
+            <input type="password" id="password" name="password" [(ngModel)]="credentials.password" 
+            class="form-control" placeholder="Password" required>
+
+            <input type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="credentials.confirmPassword" 
+            class="form-control" placeholder="Confirm Password" required>
+    
+            <input type="text" id="name" name="name" [(ngModel)]="credentials.name" 
+            class="form-control" placeholder="Name" required>
+
+            <input type="text" id="lastName" name="lastName" [(ngModel)]="credentials.lastName" 
+            class="form-control" placeholder="Last Name" required>
+
+            <input type="tel" id="phoneNumber" name="phoneNumber" [(ngModel)]="credentials.phoneNumber" 
+            class="form-control" placeholder="Phone Number" required>
+
+            <button class="btn btn-lg btn-primary" type="submit" [disabled]="!registerForm.valid">Register</button>
+        </form>
+    </div>
+</body>

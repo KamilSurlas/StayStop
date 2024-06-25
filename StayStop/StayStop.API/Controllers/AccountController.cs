@@ -26,6 +26,13 @@ namespace StayStop.API.Controllers
             var response = _accountService.LoginUser(dto, populateExp: true);
             return Ok(response);
         }
+
+        [HttpPut("update")]
+        public ActionResult UpdateAccount([FromBody] UserUpdateRequestDto dto) {
+            _accountService.UpdateUser(dto);
+            return Ok();
+        }
+
         [HttpPost("refresh")]
         public ActionResult Refresh([FromBody] UserTokenResponse token)
         {

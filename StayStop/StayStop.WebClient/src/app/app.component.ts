@@ -19,4 +19,12 @@ export class AppComponent {
   logOut() {
     this.authService.logOut();
   }
+
+  getUserName(): string | null  {
+    return this.authService.getUserName();
+  }
+
+  isRoleUser = (): boolean => {
+    return this.authService.isRoleUser();
+  }
 }

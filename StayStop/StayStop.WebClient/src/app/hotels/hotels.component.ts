@@ -6,7 +6,6 @@ import { HotelsService } from '../services/hotels.service';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { HotelsDataService } from '../services/hotels-data.service';
-import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-hotels',

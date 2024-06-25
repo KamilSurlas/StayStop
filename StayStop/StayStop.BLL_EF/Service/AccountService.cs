@@ -11,6 +11,7 @@ using StayStop.DAL.Context;
 using StayStop.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -26,12 +27,16 @@ namespace StayStop.BLL_EF.Service
         private readonly IMapper _mapper;
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly AuthenticationSettings _authenticationSettings;
-        public AccountService(StayStopDbContext context, IMapper mapper, IPasswordHasher<User> passwordHasher, AuthenticationSettings authenticationSettings)
+        private readonly IUserContextService _userContextService;
+
+        public AccountService(StayStopDbContext context, IMapper mapper, IPasswordHasher<User> passwordHasher, 
+            AuthenticationSettings authenticationSettings, IUserContextService userContextService)
         {
             _context = context;
             _mapper = mapper;
             _passwordHasher = passwordHasher;
             _authenticationSettings = authenticationSettings;
+            _userContextService = userContextService;
         }
         private string GetToken(User user)
         {
@@ -40,7 +45,8 @@ namespace StayStop.BLL_EF.Service
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-                new Claim(ClaimTypes.Name, $"{user.Name}{user.LastName}"),
+                new Claim(ClaimTypes.Name, $"{user.Name}"),
+                new Claim(ClaimTypes.Surname, $"{user.LastName}"),
                 new Claim(ClaimTypes.Role, $"{user.Role.RoleName}"),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.MobilePhone, user.PhoneNumber)
@@ -150,6 +156,13 @@ namespace StayStop.BLL_EF.Service
             }
 
             return CreateToken(user, false);
+        }
+
+        public void UpdateUser(UserUpdateRequestDto dto)
+        {
+            var user = _userContextService.User;
+            Debug.WriteLine("XD");
+            //user.Claims.
         }
     }
 }
