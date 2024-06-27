@@ -37,7 +37,13 @@
             <button type="button" id="clear" class="form-button" (click)="resetForm()">Clear</button>
             <button type="submit" id="submit"class="form-button" (click)="editHotel()">Edit hotel</button>
           </div>
-        </form>   
+        </form>  
+        <button class="manage-hotel-properties-button"  (click)="onChooseCoverImage()">Choose cover image</button> 
+        <div *ngIf="chooseCoverImage">
+          <app-single-file-upload [hotelId]=hotelId endpointUrl={{hotelId}}></app-single-file-upload><br>
+            <button class="manage-hotel-properties-button" (click)="onChooseCoverImage()"><mat-icon>done</mat-icon>Finish</button>
+        </div>
+        <mat-divider></mat-divider>
         <h3>Managers</h3> 
         <table border="1">       
         <tr *ngFor="let manager of hotelManagers">
@@ -49,7 +55,7 @@
               </td>
         </tr>
       </table>
-      <button class="add-manager-button" (click)="onAssignManagerClicked()">Assign new manager to this hotel</button> 
+      <button class="manage-hotel-properties-button" (click)="onAssignManagerClicked()">Assign new manager to this hotel</button> 
       <div *ngIf="assignManager">
         <h2>Assign manager to {{hotel.name}} hotel</h2>
         <app-assign-manager-form 
@@ -59,6 +65,19 @@
         </app-assign-manager-form>
       </div>
       <mat-divider></mat-divider>
+      <button class="manage-hotel-properties-button"  (click)="onChooseImages()">Upload images</button> 
+      <div *ngIf="chooseImages">
+        <app-multiple-file-upload [hotelId]="hotelId" endpointUrl={{hotelId}}></app-multiple-file-upload>
+          <button class="manage-hotel-properties-button" (click)="onChooseImages()"><mat-icon>done</mat-icon>Finish</button>
+      </div>
+      <h3>Hotel gallery</h3>
+      <mat-grid-list cols="3" rowHeight="2:1">
+        <mat-grid-tile *ngFor="let image of hotel.images">
+   <img [src]="image">
+   <mat-icon (click)="onImageDelete(image)">delete</mat-icon>
+   </mat-grid-tile>
+   </mat-grid-list>
+      <mat-divider></mat-divider>
       <h3>Rooms</h3>
       <mat-grid-list cols="3" rowHeight="2:1">
            <mat-grid-tile *ngFor="let room of hotel.rooms">
@@ -67,6 +86,10 @@
       </mat-grid-list>
     <mat-divider></mat-divider>
 </div>
+
+
+
+
 
   <ng-template #loading>
     <mat-spinner></mat-spinner>

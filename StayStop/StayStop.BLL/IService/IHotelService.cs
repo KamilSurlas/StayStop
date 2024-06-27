@@ -25,5 +25,6 @@ namespace StayStop.BLL.IService
         List<UserResponseDto> GetManagers(int hotelId);
         void UploadCoverImage(int hotelId, IFormFile coverImage);
         void UploadImages(int hotelId, IEnumerable<IFormFile> images);
+        void DeleteImage(int hotelId,string imagePath);
     }
 }

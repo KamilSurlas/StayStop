@@ -1,0 +1,23 @@
+<input type="file" class="file-input" (change)="onChange($event)" #fileUpload />
+
+<div *ngIf="file">
+  <section class="file-info">
+    File details:
+    <ul>
+      <li>Name: {{file.name}}</li>
+      <li>Type: {{file.type}}</li>
+      <li>Size: {{file.size}} bytes</li>
+    </ul>
+  </section>
+
+  <h3>Click the button bellow to start uploading</h3>
+
+  <button (click)="onUpload()">Upload the image</button>
+
+  <section [ngSwitch]="status">
+    <p *ngSwitchCase="'uploading'">⏳ Uploading...</p>
+    <p *ngSwitchCase="'success'">✅ Done!</p>
+    <p *ngSwitchCase="'fail'">❌ Something went wrong! Try later</p>
+    <p *ngSwitchDefault>😶 Waiting to upload...</p>
+  </section>
+</div>

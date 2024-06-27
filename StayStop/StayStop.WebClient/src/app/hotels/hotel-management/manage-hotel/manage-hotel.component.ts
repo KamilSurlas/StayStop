@@ -15,6 +15,8 @@ import { HotelUpdateRequestDto } from '../../../models/hotel-update-request';
 })
 export class ManageHotelComponent {
 public assignManager: boolean = false;
+public chooseCoverImage: boolean = false;
+public chooseImages: boolean = false;
 public hotelId: number;
 public rooms: RoomResponseDto[] | null=null;
 public hotel: HotelResponseDto | null = null;
@@ -67,6 +69,23 @@ public editHotel():void {
     }
   })
 }
+
+public onImageDelete(imageToDeletePath: string) {
+  this.hotelsService.removeImage(imageToDeletePath,this.hotelId).subscribe({
+    next: () => {
+      this.loadHotel(this.hotelId);
+    },
+    error: (err) => {
+      console.log(err);
+    }
+  })
+
+ 
+}
+public onChooseImages() {
+    this.chooseImages=!this.chooseImages;
+    this.loadHotel(this.hotelId);
+}
 public onAssignManagerClicked():void{
   this.assignManager=!this.assignManager;
 }
@@ -93,6 +112,11 @@ public onManagerAssigned(): void {
       console.log(err);
     }
   })
+}
+
+public onChooseCoverImage() {
+  this.chooseCoverImage=!this.chooseCoverImage;
+  this.loadHotel(this.hotelId);
 }
 private mapHotelToUpdateDto(hotel: HotelResponseDto): HotelUpdateRequestDto {
   return {

@@ -192,11 +192,11 @@ namespace StayStop.BLL_EF.Service
         public void AddManager(int hotelId, string managerEmail)
         {
             var hotel = GetHotelById(hotelId);
-            //var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, hotel, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
-            //if (!authorizationResult.Succeeded)
-            //{
-            //    throw new ForbiddenException("Permission denied");
-            //}
+            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, hotel, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
+            if (!authorizationResult.Succeeded)
+            {
+                throw new ForbiddenException("Permission denied");
+            }
             var manager = GetUserByMail(managerEmail);
 
             if (manager.RoleId == 3)
@@ -290,6 +290,28 @@ namespace StayStop.BLL_EF.Service
                
             }
             _context.SaveChanges();
+        }
+
+        public void DeleteImage(int hotelId, string imagePath)
+        {
+            var hotel = GetHotelById(hotelId);
+
+            if (hotel.CoverImage == imagePath)
+            {
+                throw new InvalidDataException($"Image: {imagePath} is a hotel {hotelId} cover image. It can not be deleted");
+            }
+
+            if (!hotel.Images.Contains(imagePath))
+            {
+                throw new InvalidDataException($"Hotel with id: {hotelId} does not contains image {imagePath}");
+            }
+
+            _imageService.DeleteImage(imagePath);
+
+            hotel.Images.Remove(imagePath);
+
+            _context.SaveChanges();
+
         }
     }
 }

@@ -26,13 +26,25 @@
     background-color: #f0f0f0; /* Jasny kolor tła po najechaniu */
     color: #555555; /* Ciemniejszy kolor tekstu po najechaniu */
 }
-.add-manager-button {
+.manage-hotel-properties-button {
   font-size: 16px;
   padding: 10px 20px;
   background-color: #1176b1;
   color: white;
 }
 
-.add-manager-button:hover {
+.manage-hotel-properties-button:hover {
   background-color: #09496e;
+}
+.finish-icon {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.finish-icon mat-icon {
+  margin-right: 8px; /* Dostosuj odstęp między ikoną a tekstem */
+}
+.finish-icon:hover{
+  cursor: pointer;
 }

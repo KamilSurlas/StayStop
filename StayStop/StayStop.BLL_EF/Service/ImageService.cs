@@ -13,6 +13,13 @@ namespace StayStop.BLL_EF.Service
     {
         private readonly List<string> correctExtentions = [".jpg", ".png", ".jfif"];
         private readonly string rootPath = Directory.GetCurrentDirectory();
+
+        public void DeleteImage(string imagePath)
+        {
+            var fullPath = Path.Combine(rootPath, Path.Combine("Images", imagePath));
+            File.Delete(fullPath);
+        }
+
         public string UploadImage(IFormFile image)
         {
             string extention = Path.GetExtension(image.FileName);
@@ -20,8 +27,8 @@ namespace StayStop.BLL_EF.Service
             {
                 throw new InvalidDataException($"Provide file with extention: ({string.Join(',', correctExtentions)})");
             }
-          
-            var fullPath = $"{rootPath}/Images/{image.FileName}";
+
+            var fullPath = Path.Combine(rootPath, Path.Combine("Images", image.FileName));
             using (var stream = new FileStream(fullPath, FileMode.Create))
             {
                 image.CopyTo(stream);

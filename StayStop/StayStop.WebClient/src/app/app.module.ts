@@ -33,6 +33,9 @@ import { ManageHotelComponent } from './hotels/hotel-management/manage-hotel/man
 import { HotelManagementRowComponent } from './hotels/hotel-management/hotel-management-row/hotel-management-row.component';
 import { ManageRoomComponent } from './hotels/hotel-management/manage-hotel/manage-room/manage-room.component';
 import { AssignManagerFormComponent } from './hotels/hotel-management/manage-hotel/assign-manager-form/assign-manager-form.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { SingleFileUploadComponent } from './single-file-upload/single-file-upload.component';
+import { MultipleFileUploadComponent } from './multiple-file-upload/multiple-file-upload.component';
 
 
 export function tokenGetter() { 
@@ -54,7 +57,9 @@ export function tokenGetter() {
     ManageHotelComponent,
     HotelManagementRowComponent,
     ManageRoomComponent,
-    AssignManagerFormComponent
+    AssignManagerFormComponent,
+    SingleFileUploadComponent,
+    MultipleFileUploadComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,6 +78,7 @@ export function tokenGetter() {
     MatIconModule,
     MatButtonModule,
     MatTableModule,
+    MatProgressBarModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

@@ -45,5 +45,15 @@ export class HotelsService {
         const body = JSON.stringify(email);
         return this.httpClient.post<void>(url, body, { headers });
       }
-      
+      public removeImage(imageUrl: string, hotelId:number):Observable<void>{
+        const url = `${this.apiUrl}${hotelId}/images/all`;
+        const headers = new HttpHeaders({
+          'Content-Type': 'application/json'
+        });
+        const body = JSON.stringify(imageUrl);
+        const options = {
+          headers: headers,
+          body: body}
+        return this.httpClient.delete<void>(url, options);
+      }
     }
