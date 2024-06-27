@@ -21,12 +21,13 @@ const routes: Routes = [
   { path: 'hotels/:hotelid', component: DetailsComponent },
   { path: `hotels/:hotelid/rooms/:roomid`,component: RoomDetailsComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'account', component: AccountComponent }
-  { path: 'hotels/management', component: HotelManagementComponent }, 
+  { path: 'account', component: AccountComponent },
+  //{ path: 'hotels/management', component: HotelManagementComponent }, 
+  { path: 'hotels/management', component: HotelManagementComponent},
   { path: 'hotels/:hotelid/rooms/:roomid', component: RoomDetailsComponent },
   { path: 'hotels/:hotelid', component: DetailsComponent },
   { path: 'hotels', component: HotelsComponent },
-  {path:  'hotels/management/:hotelid', component:ManageHotelComponent},
+  { path:  'hotels/management/:hotelid', component:ManageHotelComponent},
   {path:  'hotels/management/:hotelid/rooms/:roomid', component: ManageRoomComponent}
 ];
 

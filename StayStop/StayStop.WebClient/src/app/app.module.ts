@@ -49,7 +49,7 @@ export function tokenGetter() {
     DetailsComponent,
     RoomDetailsComponent,
     RegisterComponent,
-    AccountComponent
+    AccountComponent,
     HotelManagementComponent,
     ManageHotelComponent,
     HotelManagementRowComponent,
