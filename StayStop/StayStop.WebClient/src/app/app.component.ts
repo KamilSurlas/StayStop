@@ -8,7 +8,7 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
 
-  title = 'StayStop.WebClient';
+  title = 'StayStop';
 
   constructor(private authService: AuthService) {}
 
@@ -26,5 +26,9 @@ export class AppComponent {
 
   isRoleUser = (): boolean => {
     return this.authService.isRoleUser();
+  }
+
+  canUserManageHotel = () : boolean => {
+    return (this.authService.isRoleAdmin() || this.authService.isRoleHotelOwner() || this.authService.isRoleManager());
   }
 }

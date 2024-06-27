@@ -40,6 +40,9 @@ throw new Error('Method not implemented.');
         this.hotelsData.setHotelsData(res);
         if (this.searchPhrase != null)
           this.hotelsData.setSearchPhrase(this.searchPhrase);
+        this.hotelsData.setNumberOfAdults(this.numberOfAdults);
+        this.hotelsData.setNumberOfKids(this.numberOfKids);
+        this.hotelsData.setNumberOfRooms(this.numberOfRooms);
         this.router.navigate(['/hotels']);
       },
       error: (err) => console.log(err)

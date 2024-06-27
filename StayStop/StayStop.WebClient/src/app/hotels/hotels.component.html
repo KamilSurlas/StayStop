@@ -17,13 +17,18 @@
       </mat-form-field>
 
       <mat-form-field class="example-full-width">
+        <mat-label>Number of rooms</mat-label>
+        <input matInput type="number" name="fourthInput" [(ngModel)]="numberOfRooms" min="0" #fourthMessage maxlength="256">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
         <mat-label>Number of kids</mat-label>
-        <input matInput type="number" name="fourthInput" ngModel="numKids" min="0" #fourthMessage maxlength="256">
+        <input matInput type="number" name="fourthInput" [(ngModel)]="numberOfKids" min="0" #fourthMessage maxlength="256">
       </mat-form-field>
 
       <mat-form-field class="example-full-width">
         <mat-label>Number of adults</mat-label>
-        <input matInput type="number" name="fifthInput" ngModel="numAdults" min="0" #fifthMessage maxlength="256">
+        <input matInput type="number" name="fifthInput" [(ngModel)]="numberOfAdults" min="0" #fifthMessage maxlength="256">
       </mat-form-field>
 
       <mat-form-field class="example-full-width">
@@ -31,11 +36,9 @@
         <input matInput type="number" name="sixthInput" ngModel="numStars" min="1" max="5" #sixthMessage maxlength="256">
       </mat-form-field>
 
-      <button mat-flat-button class="mat-button mat-button-base mat-flat-button mat-primary">Basic</button>
+      <button mat-flat-button class="mat-button mat-button-base mat-flat-button mat-primary">Filter</button>
     </form>
   </div>
-
-
 
 
 

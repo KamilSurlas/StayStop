@@ -3,22 +3,39 @@
         <form #editAccountForm="ngForm" (ngSubmit)="update(editAccountForm)">
             <h2 class="form-signin-heading">Edit your profile</h2>
             
-            <input type="email" id="email" name="email" [(ngModel)]="this.credentials.emailAddress" 
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" [(ngModel)]="credentials.emailAddress" 
             class="form-control" placeholder="Email Address" required>
 
             <label for="name">Name</label>
-            <input type="text" id="name" name="name" [(ngModel)]="this.credentials.name" 
+            <input type="text" id="name" name="name" [(ngModel)]="credentials.name" 
             class="form-control" placeholder="Name" required>
 
             <label for="lastName">Last name</label>
-            <input type="text" id="lastName" name="lastName" [(ngModel)]="this.credentials.lastName" 
+            <input type="text" id="lastName" name="lastName" [(ngModel)]="credentials.lastName" 
             class="form-control" placeholder="Last Name" required>
 
             <label for="phoneNumber">Phone Number</label>
-            <input type="text" id="phoneNumber" name="phoneNumber" [(ngModel)]="this.credentials.phoneNumber" 
-            class="form-control" placeholder="Phone Number" required>
+            <input type="text" id="phoneNumber" name="phoneNumber" [(ngModel)]="credentials.phoneNumber" 
+            class="form-control" placeholder="Phone Number">
 
-            <button class="btn btn-lg btn-primary" type="submit" [disabled]="!editAccountForm.valid">Edit</button>
+            <label for="currentPassword">Current Password</label>
+            <input type="password" id="currentPassword" name="currentPassword" [(ngModel)]="credentials.currentPassword" 
+            class="form-control" placeholder="Current Password">
+
+            <label for="newPassword">New Password</label>
+            <input type="password" id="newPassword" name="newPassword" [(ngModel)]="credentials.password" 
+            class="form-control" placeholder="New Password" (input)="onPasswordChange()">
+
+            <label for="confirmNewPassword">Confirm New Password</label>
+            <input type="password" id="confirmNewPassword" name="confirmNewPassword" [(ngModel)]="confirmNewPassword"
+            class="form-control" placeholder="Confirm New Password" [class.is-invalid]="!passwordsMatch" (input)="onPasswordChange()">
+
+            <div *ngIf="!passwordsMatch" class="invalid-feedback">
+                Passwords do not match.
+            </div>
+
+            <button class="btn btn-lg btn-primary" type="submit" [disabled]="!editAccountForm.valid || !passwordsMatch">Edit</button>
         </form>
     </div>
 </body>

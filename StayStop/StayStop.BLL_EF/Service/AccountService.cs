@@ -158,11 +158,25 @@ namespace StayStop.BLL_EF.Service
             return CreateToken(user, false);
         }
 
-        public void UpdateUser(UserUpdateRequestDto dto)
+        public UserTokenResponse UpdateUser(UserUpdateRequestDto dto)
         {
-            var user = _userContextService.User;
-            Debug.WriteLine("XD");
-            //user.Claims.
+            var claims = _userContextService.User;
+            var userIdClaim = claims?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            if (userIdClaim is null)
+            {
+                throw new SecurityTokenException("UserId was not found");
+            }
+
+            var userId = int.Parse(userIdClaim.Value);
+            var user = _context.Users.Include(u => u.Role).FirstOrDefault(u => u.UserId == userId);
+            if (user is null)
+            {
+                throw new UserNotFoundException("User does not exist");
+            }
+
+            _mapper.Map(dto, user);
+            _context.SaveChanges();
+            return CreateToken(user, true);
         }
     }
 }

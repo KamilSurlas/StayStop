@@ -66,7 +66,12 @@ namespace StayStop.BLL_EF.Mapper
 
             // ReservationPosition
             CreateMap<ReservationPosition, ReservationPositionResponseDto>();
-            CreateMap<ReservationPositionRequestDto, ReservationPosition>();     
+            CreateMap<ReservationPositionRequestDto, ReservationPosition>();
+
+
+            //UpdateAcc
+            CreateMap<UserUpdateRequestDto, User>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         }
     }
 }
