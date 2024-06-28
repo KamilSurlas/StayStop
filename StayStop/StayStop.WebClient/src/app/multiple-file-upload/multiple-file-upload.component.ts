@@ -15,7 +15,7 @@ export class MultipleFileUploadComponent {
   @Input()
   hotelId!:number;
   @Input()
-  endpointUrl!:string;
+  roomId :number | null = null;
   ngOnInit(): void {}
 
   onChange(event: any) {
@@ -26,7 +26,15 @@ export class MultipleFileUploadComponent {
       this.images = files;
     }
   }
-
+  private buildUrl():string{
+    let url = `${this.apiUrl +this.hotelId}`;
+    if(this.roomId != null){
+     url += `/room/${this.roomId}`;
+    }
+    url += '/images/cover';
+ 
+    return url;
+   }
   onUpload() {
     if (this.images.length) {
       const formData = new FormData();
@@ -35,7 +43,7 @@ export class MultipleFileUploadComponent {
         formData.append("images", file, file.name);
       });
 
-      const upload$ = this.http.post(`${this.apiUrl + this.endpointUrl}/images/all`, formData);
+      const upload$ = this.http.post(this.buildUrl(), formData);
 
       this.status = "uploading";
 

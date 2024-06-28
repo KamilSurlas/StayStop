@@ -40,7 +40,7 @@
         </form>  
         <button class="manage-hotel-properties-button"  (click)="onChooseCoverImage()">Choose cover image</button> 
         <div *ngIf="chooseCoverImage">
-          <app-single-file-upload [hotelId]=hotelId endpointUrl={{hotelId}}></app-single-file-upload><br>
+          <app-single-file-upload [hotelId]=hotelId></app-single-file-upload><br>
             <button class="manage-hotel-properties-button" (click)="onChooseCoverImage()"><mat-icon>done</mat-icon>Finish</button>
         </div>
         <mat-divider></mat-divider>
@@ -67,7 +67,7 @@
       <mat-divider></mat-divider>
       <button class="manage-hotel-properties-button"  (click)="onChooseImages()">Upload images</button> 
       <div *ngIf="chooseImages">
-        <app-multiple-file-upload [hotelId]="hotelId" endpointUrl={{hotelId}}></app-multiple-file-upload>
+        <app-multiple-file-upload [hotelId]="hotelId"></app-multiple-file-upload>
           <button class="manage-hotel-properties-button" (click)="onChooseImages()"><mat-icon>done</mat-icon>Finish</button>
       </div>
       <h3>Hotel gallery</h3>

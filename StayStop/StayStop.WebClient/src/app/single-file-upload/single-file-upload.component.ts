@@ -16,7 +16,7 @@ export class SingleFileUploadComponent {
   @Input()
   hotelId!:number;
   @Input()
-  endpointUrl!:string;
+  roomId :number | null = null;
   ngOnInit(): void {}
 
   // On file Select
@@ -28,14 +28,23 @@ export class SingleFileUploadComponent {
       this.file = file;
     }
   }
+  private buildUrl():string{
+   let url = `${this.apiUrl +this.hotelId}`;
+   if(this.roomId != null){
+    url += `/room/${this.roomId}`;
+   }
+   url += '/images/cover';
 
+   return url;
+  }
   onUpload() {
     if (this.file) {
       const formData = new FormData();
   
       formData.append('coverImage', this.file, this.file.name);
   
-      const upload$ = this.http.post(`${this.apiUrl + this.endpointUrl}/images/cover`, formData);
+     
+      const upload$ = this.http.post(this.buildUrl(), formData);
   
       this.status = 'uploading';
   

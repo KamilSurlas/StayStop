@@ -154,12 +154,7 @@ namespace StayStop.BLL_EF.Service
             
 
             var roomImagesFromDb = room.Images.ToList();
-            if (roomDto.Images?.Count>0)
-            {
-                roomImagesFromDb.AddRange(roomDto.Images);
-            }
-
-            roomDto.Images = roomImagesFromDb;
+          
             _mapper.Map(roomDto, room);
 
             room.HotelId = hotelId;
@@ -200,6 +195,31 @@ namespace StayStop.BLL_EF.Service
 
             }
             _context.SaveChanges();
+        }
+
+        public void DeleteImage(int hotelId, int roomId, string imagePath)
+        {
+            var hotel = GetHotelById(hotelId);
+            var room = GetRoomById(roomId);
+            if (room.HotelId != hotelId)
+                throw new ContentNotFoundException($"Provided hotel id is wrong (hotel id: {hotelId})");
+
+            if (room.CoverImage == imagePath)
+            {
+                throw new InvalidDataException($"Image: {imagePath} is a room {roomId} cover image. It can not be deleted");
+            }
+
+            if (!room.Images.Contains(imagePath))
+            {
+                throw new InvalidDataException($"Room with id: {roomId} does not contains image {imagePath}");
+            }
+
+            _imageService.DeleteImage(imagePath);
+
+            room.Images.Remove(imagePath);
+
+            _context.SaveChanges();
+
         }
     }
 }

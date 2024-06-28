@@ -19,5 +19,7 @@ namespace StayStop.BLL.IService
         void SetRoomActivity(int hotelId, int roomId);
         void UploadCoverImage(int hotelId, int roomId, IFormFile coverImage);
         void UploadImages(int hotelId, int roomId, IEnumerable<IFormFile> images);
+
+        void DeleteImage(int hotelId,int roomId, string imagePath);
     }
 }

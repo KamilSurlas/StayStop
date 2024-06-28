@@ -1,1 +1,66 @@
-<p>manage-room works!</p>
+<div class="room-manage-container" *ngIf="room;">
+    <h3>Room Details</h3>
+        <form style="display: flex; flex-direction: column;">
+          <mat-form-field>
+            <mat-label>Room type</mat-label>
+            <input matInput name="roomtype" [(ngModel)]="room.roomType">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Price for adult</mat-label>
+            <input matInput name="priceadult" [(ngModel)]="room.priceForAdult">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Price for child</mat-label>
+            <input matInput name="pricechild" [(ngModel)]="room.priceForChild">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Maximun number of adults</mat-label>
+            <input matInput name="maxnumberadults" [(ngModel)]="room.numberOfAdults">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Maximun number of adults</mat-label>
+            <input matInput name="maxnumberchildren" [(ngModel)]="room.numberOfChildren">
+          </mat-form-field>        
+          <mat-form-field>
+            <mat-label>Description</mat-label>
+            <input matInput name="description" [(ngModel)]="room.description">
+          </mat-form-field>
+          <div class="form-row">
+            <button type="button" id="clear" class="form-button" (click)="resetForm()">Clear</button>
+            <button type="submit" id="submit"class="form-button" (click)="editRoom()">Edit room</button>
+          </div>
+        </form>
+        <mat-divider>
+            <mat-label>
+                Room cover image
+            </mat-label>
+            <img [src]="room.coverImage">
+        </mat-divider>  
+        <button class="manage-room-properties-button"  (click)="onChooseCoverImage()">Choose cover image</button> 
+        <div *ngIf="chooseCoverImage">
+          <app-single-file-upload [hotelId]=hotelId [roomId]=roomId></app-single-file-upload><br>
+            <button class="manage-room-properties-button" (click)="onChooseCoverImage()"><mat-icon>done</mat-icon>Finish</button>
+        </div>
+        <mat-divider></mat-divider>      
+      <mat-divider></mat-divider>
+      <button class="manage-room-properties-button"  (click)="onChooseImages()">Upload images</button> 
+      <div *ngIf="chooseImages">
+        <app-multiple-file-upload [hotelId]="hotelId" [roomId]=roomId></app-multiple-file-upload>
+          <button class="manage-room-properties-button" (click)="onChooseImages()"><mat-icon>done</mat-icon>Finish</button>
+      </div>
+      <h3>Room gallery</h3>
+      <mat-grid-list cols="3" rowHeight="2:1">
+        <mat-grid-tile *ngFor="let image of room.images">
+   <img [src]="image">
+   <mat-icon (click)="onImageDelete(image)">delete</mat-icon>
+   </mat-grid-tile>
+   </mat-grid-list>
+</div>
+
+
+
+
+
+  <ng-template #loading>
+    <mat-spinner></mat-spinner>
+  </ng-template>
