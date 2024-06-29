@@ -22,12 +22,8 @@ namespace StayStop.BLL_EF.Mapper
 {
     public class MappingProfile : Profile
     {
-        private readonly IImageService _imageService;
-        public MappingProfile(IImageService imageService)
+        public MappingProfile()
         {
-            _imageService = imageService;
-
-
             // Nullable types
             CreateMap<List<string>?, List<string>>().ConvertUsing((src, dest) => src is null || src.IsNullOrEmpty() ? dest : src);
             CreateMap<string?, string>().ConvertUsing((src, dest) => src is null || src.Length == 0 ? dest : src);
