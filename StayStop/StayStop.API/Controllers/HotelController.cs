@@ -89,6 +89,14 @@ namespace StayStop.API.Controllers
 
             return Ok(managers);
         }
+        [AllowAnonymous]
+        [HttpDelete("{hotelId}/images")]
+        public ActionResult DeleteImage([FromRoute] int hotelId, [FromBody] string path)
+        {
+            _hotelService.DeleteImage(hotelId, path);
+
+            return NoContent();
+        }
        
     }
 }

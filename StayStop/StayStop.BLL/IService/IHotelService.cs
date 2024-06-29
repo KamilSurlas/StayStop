@@ -17,6 +17,6 @@ namespace StayStop.BLL.IService
         void RemoveManager(int hotelId, int userId);
         HotelOpinionResponseDto GetOpinion(int hotelId);
         List<UserResponseDto> GetManagers(int hotelId);
-        void DeleteImage(string path);
+        void DeleteImage(int hotelId, string path);
     }
 }

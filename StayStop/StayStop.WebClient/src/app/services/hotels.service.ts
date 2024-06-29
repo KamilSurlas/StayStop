@@ -38,7 +38,7 @@ export class HotelsService {
       public removeManagerFromHotel(hotelId: number, managerId:number):Observable<void>{
         return this.httpClient.delete<void>(`apiUrl/${hotelId}/managers/remove/${managerId}`);
       }
-      assignManagerToHotel(hotelId: number, email: string): Observable<void> {
+      public assignManagerToHotel(hotelId: number, email: string): Observable<void> {
         const url = `${this.apiUrl}${hotelId}/managers`;
         const headers = new HttpHeaders({
           'Content-Type': 'application/json',
@@ -46,7 +46,15 @@ export class HotelsService {
         const body = JSON.stringify(email);
         return this.httpClient.post<void>(url, body, { headers });
       }    
-      post(hotelData: FormData): Observable<any> {
+      public post(hotelData: FormData): Observable<any> {
         return this.httpClient.post<any>(`${this.apiUrl}`, hotelData);
+      }
+      public deleteImage(hotelId: number, path: string):Observable<void>{
+        const url = `${this.apiUrl}${hotelId}/images`;
+        const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+        });
+        const body = JSON.stringify(path);
+        return this.httpClient.post<void>(url, body, { headers });
       }
     }

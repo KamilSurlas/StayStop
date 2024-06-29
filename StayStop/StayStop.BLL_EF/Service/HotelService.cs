@@ -275,12 +275,15 @@ namespace StayStop.BLL_EF.Service
             return managers;
         }
 
-        public void DeleteImage(string path)
+        public void DeleteImage(int hotelId, string path)
         {
+            var hotel = GetHotelById(hotelId);
             if (path is not null)
             {
-                
+                hotel.Images.Remove(path);
             }
+
+            _context.SaveChanges();
         }
     }
 }
