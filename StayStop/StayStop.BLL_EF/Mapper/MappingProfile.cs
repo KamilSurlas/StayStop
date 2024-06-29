@@ -8,6 +8,8 @@ using StayStop.BLL.Dtos.Reservation;
 using StayStop.BLL.Dtos.ReservationPosition;
 using StayStop.BLL.Dtos.Room;
 using StayStop.BLL.Dtos.User;
+using StayStop.BLL.IService;
+using StayStop.BLL_EF.Service;
 using StayStop.Model;
 using System;
 using System.Collections.Generic;
@@ -20,8 +22,12 @@ namespace StayStop.BLL_EF.Mapper
 {
     public class MappingProfile : Profile
     {
-        public MappingProfile()
+        private readonly IImageService _imageService;
+        public MappingProfile(IImageService imageService)
         {
+            _imageService = imageService;
+
+
             // Nullable types
             CreateMap<List<string>?, List<string>>().ConvertUsing((src, dest) => src is null || src.IsNullOrEmpty() ? dest : src);
             CreateMap<string?, string>().ConvertUsing((src, dest) => src is null || src.Length == 0 ? dest : src);
@@ -38,6 +44,7 @@ namespace StayStop.BLL_EF.Mapper
 
             // Hotel
             CreateMap<HotelRequestDto, Hotel>();
+             
             CreateMap<HotelUpdateRequestDto, Hotel>()          
             .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
             

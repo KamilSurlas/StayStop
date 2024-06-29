@@ -22,7 +22,7 @@ namespace StayStop.BLL_EF.Service
         private readonly IMapper _mapper;
         private readonly IUserContextService _userContextService;
         private readonly IAuthorizationService _authorizationService;
-        private readonly IImageService _imageService;
+
 
         public HotelService(StayStopDbContext context, IMapper mapper, 
             IUserContextService userContextService, IAuthorizationService authorizationService,
@@ -32,7 +32,6 @@ namespace StayStop.BLL_EF.Service
             _mapper = mapper;
             _userContextService = userContextService;
             _authorizationService = authorizationService;
-            _imageService = imageService;
         }
         private bool CanHotelBeDeleted(Hotel hotel)
         {
@@ -179,12 +178,18 @@ namespace StayStop.BLL_EF.Service
             {
                 throw new ForbiddenException("Permission denied");
             }
-            //var hotelImagesFromDb = hotelToUpdate.Images;
-            //if (hotelDto.Images?.Count > 0)
-            //{        
-            //   hotelImagesFromDb.AddRange(hotelDto.Images);
-            //}
-            //hotelDto.Images = hotelImagesFromDb;
+           
+            if (hotelDto.CoverImage is not null && hotelToUpdate.CoverImage is not null)
+            {
+                hotelToUpdate.Images.Add(hotelToUpdate.CoverImage);
+                hotelDto.CoverImage = hotelToUpdate.CoverImage;
+            }
+            var images = hotelToUpdate.Images;
+            if (hotelDto.Images?.Any() ?? false)
+            {
+                images.AddRange(hotelDto.Images);
+            }
+            hotelDto.Images = images;
             _mapper.Map(hotelDto, hotelToUpdate);
             _context.SaveChanges();
         }
@@ -260,58 +265,6 @@ namespace StayStop.BLL_EF.Service
             return managers;
         }
 
-        public void UploadCoverImage(int hotelId, IFormFile coverImage)
-        {
-            if (coverImage != null && coverImage.Length > 0)
-            {
-                var hotel = GetHotelById(hotelId);
-                var hotelOldCoverImage = hotel.CoverImage;
-                if (hotelOldCoverImage is not null && !hotel.Images.Contains(coverImage.FileName))
-                {
-                    hotel.Images.Add(coverImage.FileName);
-                } 
-                hotel.CoverImage = _imageService.UploadImage(coverImage);
-                
-                
-                _context.SaveChanges();
-
-            }
-        }
        
-        public void UploadImages(int hotelId, IEnumerable<IFormFile> images)
-        {
-            var hotel = GetHotelById(hotelId);
-            foreach (var image in images)
-            {
-                if (!hotel.Images.Contains(image.FileName))
-                {         
-                    hotel.Images.Add(_imageService.UploadImage(image));
-                }
-               
-            }
-            _context.SaveChanges();
-        }
-
-        public void DeleteImage(int hotelId, string imagePath)
-        {
-            var hotel = GetHotelById(hotelId);
-
-            if (hotel.CoverImage == imagePath)
-            {
-                throw new InvalidDataException($"Image: {imagePath} is a hotel {hotelId} cover image. It can not be deleted");
-            }
-
-            if (!hotel.Images.Contains(imagePath))
-            {
-                throw new InvalidDataException($"Hotel with id: {hotelId} does not contains image {imagePath}");
-            }
-
-            _imageService.DeleteImage(imagePath);
-
-            hotel.Images.Remove(imagePath);
-
-            _context.SaveChanges();
-
-        }
     }
 }

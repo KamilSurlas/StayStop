@@ -151,10 +151,13 @@ namespace StayStop.BLL_EF.Service
             {
                 throw new ForbiddenException("Permission denied");
             }
-            
+            var roomsFromDb = room.Images.ToList();
+            if (roomDto.Images is not null && roomDto.Images.Any())
+            {
+                roomsFromDb.AddRange(roomDto.Images);
+            }
 
-            var roomImagesFromDb = room.Images.ToList();
-          
+            roomDto.Images = roomsFromDb;
             _mapper.Map(roomDto, room);
 
             room.HotelId = hotelId;
@@ -180,47 +183,7 @@ namespace StayStop.BLL_EF.Service
             }
         }
 
-        public void UploadImages(int hotelId, int roomId, IEnumerable<IFormFile> images)
-        {
-            var hotel = GetHotelById(hotelId);
-            var room = GetRoomById(roomId);
-            if (room.HotelId != hotelId)
-                throw new ContentNotFoundException($"Provided hotel id is wrong (hotel id: {hotelId})");
-            foreach (var image in images)
-            {
-                if (!room.Images.Contains(image.FileName))
-                {
-                    room.Images.Add(_imageService.UploadImage(image));
-                }
-
-            }
-            _context.SaveChanges();
-        }
-
-        public void DeleteImage(int hotelId, int roomId, string imagePath)
-        {
-            var hotel = GetHotelById(hotelId);
-            var room = GetRoomById(roomId);
-            if (room.HotelId != hotelId)
-                throw new ContentNotFoundException($"Provided hotel id is wrong (hotel id: {hotelId})");
-
-            if (room.CoverImage == imagePath)
-            {
-                throw new InvalidDataException($"Image: {imagePath} is a room {roomId} cover image. It can not be deleted");
-            }
-
-            if (!room.Images.Contains(imagePath))
-            {
-                throw new InvalidDataException($"Room with id: {roomId} does not contains image {imagePath}");
-            }
-
-            _imageService.DeleteImage(imagePath);
-
-            room.Images.Remove(imagePath);
-
-            _context.SaveChanges();
-
-        }
+      
     }
 }
 

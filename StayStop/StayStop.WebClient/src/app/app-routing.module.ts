@@ -12,6 +12,7 @@ import { AccountComponent } from './account/account.component';
 import { HotelManagementComponent } from './hotels/hotel-management/hotel-management.component';
 import { ManageHotelComponent } from './hotels/hotel-management/manage-hotel/manage-hotel.component';
 import { ManageRoomComponent } from './hotels/hotel-management/manage-hotel/manage-room/manage-room.component';
+//import { AddHotelComponent } from './hotels/add-hotel/add-hotel.component';
 
 
 const routes: Routes = [
@@ -21,14 +22,13 @@ const routes: Routes = [
   { path: 'hotels/:hotelid', component: DetailsComponent },
   { path: `hotels/:hotelid/rooms/:roomid`,component: RoomDetailsComponent },
   { path: 'register', component: RegisterComponent },
+ // {path: 'management/hotels/add',component: AddHotelComponent},
   { path: 'account', component: AccountComponent },
   //{ path: 'hotels/management', component: HotelManagementComponent }, 
-  { path: 'hotels/management', component: HotelManagementComponent},
-  { path: 'hotels/:hotelid/rooms/:roomid', component: RoomDetailsComponent },
-  { path: 'hotels/:hotelid', component: DetailsComponent },
+  { path: 'management/hotels', component: HotelManagementComponent},
   { path: 'hotels', component: HotelsComponent },
-  { path:  'hotels/management/:hotelid', component:ManageHotelComponent},
-  {path:  'hotels/management/:hotelid/rooms/:roomid', component: ManageRoomComponent}
+  { path:  'management/hotels/:hotelid', component:ManageHotelComponent},
+  {path:  'management/hotels/:hotelid/rooms/:roomid', component: ManageRoomComponent},
 ];
 
 @NgModule({

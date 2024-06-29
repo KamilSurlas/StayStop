@@ -6,6 +6,7 @@ import { HotelResponseDto } from "../models/hotel-response";
 import { Injectable } from "@angular/core";
 import { UserResponseDto } from "../models/user-response";
 import { HotelUpdateRequestDto } from "../models/hotel-update-request";
+import { HotelRequestDto } from "../models/hotel-request";
 @Injectable({
     providedIn: 'root'
   })
@@ -55,5 +56,8 @@ export class HotelsService {
           headers: headers,
           body: body}
         return this.httpClient.delete<void>(url, options);
+      }
+      post(hotelData: FormData): Observable<any> {
+        return this.httpClient.post<any>(`${this.apiUrl}`, hotelData);
       }
     }

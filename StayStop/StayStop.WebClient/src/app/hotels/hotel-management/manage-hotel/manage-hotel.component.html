@@ -2,6 +2,10 @@
     <h3>Hotel {{hotel.name}} Details</h3>
         <form style="display: flex; flex-direction: column;">
           <mat-form-field>
+            <mat-label>name</mat-label>
+            <input matInput name="name" [(ngModel)]="hotel.name">
+          </mat-form-field>
+          <mat-form-field>
             <mat-label>City</mat-label>
             <input matInput name="city" [(ngModel)]="hotel.city">
           </mat-form-field>
@@ -40,7 +44,7 @@
         </form>  
         <button class="manage-hotel-properties-button"  (click)="onChooseCoverImage()">Choose cover image</button> 
         <div *ngIf="chooseCoverImage">
-          <app-single-file-upload [hotelId]=hotelId></app-single-file-upload><br>
+          <app-single-file-upload (newImage)="saveNewCoverImage($event)"></app-single-file-upload><br>
             <button class="manage-hotel-properties-button" (click)="onChooseCoverImage()"><mat-icon>done</mat-icon>Finish</button>
         </div>
         <mat-divider></mat-divider>

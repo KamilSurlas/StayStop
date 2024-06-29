@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component,  EventEmitter,  Output } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { throwError } from "rxjs";
 
@@ -8,15 +8,11 @@ import { throwError } from "rxjs";
   styleUrls: ["./single-file-upload.component.css"],
 })
 export class SingleFileUploadComponent {
-
+  @Output() newImage = new EventEmitter<string>();
   status: "initial" | "uploading" | "success" | "fail" = "initial"; // Variable to store file status
   file: File | null = null; // Variable to store file
-  private apiUrl: string = 'http://localhost:5080/api/hotel/';
+  private apiUrl: string = 'http://localhost:5080/api/images';
   constructor(private http: HttpClient) {}
-  @Input()
-  hotelId!:number;
-  @Input()
-  roomId :number | null = null;
   ngOnInit(): void {}
 
   // On file Select
@@ -28,15 +24,6 @@ export class SingleFileUploadComponent {
       this.file = file;
     }
   }
-  private buildUrl():string{
-   let url = `${this.apiUrl +this.hotelId}`;
-   if(this.roomId != null){
-    url += `/room/${this.roomId}`;
-   }
-   url += '/images/cover';
-
-   return url;
-  }
   onUpload() {
     if (this.file) {
       const formData = new FormData();
@@ -44,12 +31,13 @@ export class SingleFileUploadComponent {
       formData.append('coverImage', this.file, this.file.name);
   
      
-      const upload$ = this.http.post(this.buildUrl(), formData);
+      const upload$ = this.http.post(this.apiUrl, formData);
   
       this.status = 'uploading';
   
       upload$.subscribe({
         next: () => {
+          this.newImage.emit(this.file?.name);
           this.status = 'success';
         },
         error: (error: any) => {

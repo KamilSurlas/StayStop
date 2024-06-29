@@ -10,5 +10,7 @@ namespace StayStop.BLL.Dtos.Room
         public bool? IsAvailable { get; set; }
         public decimal? PriceForAdult { get; set; }
         public decimal? PriceForChild { get; set; }
+        public string? CoverImage { get; set; }
+        public IEnumerable<string>? Images { get; set; }
     }
 }

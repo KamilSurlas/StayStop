@@ -23,8 +23,5 @@ namespace StayStop.BLL.IService
         void RemoveManager(int hotelId, int userId);
         HotelOpinionResponseDto GetOpinion(int hotelId);
         List<UserResponseDto> GetManagers(int hotelId);
-        void UploadCoverImage(int hotelId, IFormFile coverImage);
-        void UploadImages(int hotelId, IEnumerable<IFormFile> images);
-        void DeleteImage(int hotelId,string imagePath);
     }
 }

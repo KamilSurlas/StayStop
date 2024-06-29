@@ -12,6 +12,8 @@
     </tbody>
   </table>
 
+  <mat-divider></mat-divider>
+  <button (click)="addNewHotel()">Add new hotel</button>
   <mat-paginator [length]="result?.totalItemsCount"
                  [pageSize]="pageSize"
                  [pageSizeOptions]="pageSizeOptions"

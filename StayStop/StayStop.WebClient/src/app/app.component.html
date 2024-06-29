@@ -3,7 +3,7 @@
         <li><a href="">Home</a></li>
         <li *ngIf="this.isUserAuthenticated()"><a href="/account">Account</a></li>
         <li><a routerLink="hotels">Hotels</a></li>
-        <li *ngIf="this.canUserManageHotel()"><a routerLink="hotels/management">Manage hotels</a></li>
+        <li *ngIf="this.canUserManageHotel()"><a routerLink="management/hotels">Manage hotels</a></li>
     </ul>
 
     <div class="login-container">

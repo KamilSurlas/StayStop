@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace StayStop.BLL.Dtos.Hotel
 {
@@ -15,6 +16,6 @@ namespace StayStop.BLL.Dtos.Hotel
         public required string Name { get; set; }
         public required string Description { get; set; }
         public required string CoverImage { get; set; }
-        public required List<string> Images { get; set; }
+        public required IEnumerable<string> Images { get; set; }
     }
 }

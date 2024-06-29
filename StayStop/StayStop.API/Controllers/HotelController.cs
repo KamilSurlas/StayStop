@@ -50,7 +50,7 @@ namespace StayStop.API.Controllers
         public ActionResult Create([FromBody] HotelRequestDto hotelDto)
         {
             var id = _hotelService.Create(hotelDto);
-            return Created($"/api/hotel/{id}", null);
+            return Created($"/api/hotel/{id}", new { newId = id });
         }
         [HttpDelete("{hotelId}")]
         public ActionResult DeleteById([FromRoute] int hotelId)
@@ -60,6 +60,7 @@ namespace StayStop.API.Controllers
             return NoContent();
         }
         [HttpPut("{hotelId}")]
+        [AllowAnonymous]
         public ActionResult Update([FromRoute] int hotelId, [FromBody] HotelUpdateRequestDto hotelDto)
         {
             _hotelService.Update(hotelId, hotelDto);
@@ -88,31 +89,6 @@ namespace StayStop.API.Controllers
 
             return Ok(managers);
         }
-        [AllowAnonymous]
-        [HttpPost("{hotelId}/images/cover")]
-        public ActionResult UploadCoverImage([FromRoute] int hotelId, [FromForm] IFormFile coverImage)
-        {
-            _hotelService.UploadCoverImage(hotelId, coverImage);
-
-            return Ok();
-
-        }
-        [AllowAnonymous]
-        [HttpPost("{hotelId}/images/all")]
-        public ActionResult UploadImage([FromRoute] int hotelId, [FromForm] IEnumerable<IFormFile> images)
-        {
-            _hotelService.UploadImages(hotelId, images);
-
-            return Ok();
-        }
-        [AllowAnonymous]
-        [HttpDelete("{hotelId}/images/all")]
-        public ActionResult DeleteImage([FromRoute] int hotelId, [FromBody] string imagePath)
-        {
-            _hotelService.DeleteImage(hotelId, imagePath);
-
-            return NoContent();
-
-        }
+       
     }
 }

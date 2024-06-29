@@ -17,9 +17,6 @@ namespace StayStop.BLL.IService
         RoomResponseDto GetById(int hotelId, int roomId);
         void Update(int hotelId, int roomId, RoomUpdateRequestDto roomDto);
         void SetRoomActivity(int hotelId, int roomId);
-        void UploadCoverImage(int hotelId, int roomId, IFormFile coverImage);
-        void UploadImages(int hotelId, int roomId, IEnumerable<IFormFile> images);
-
-        void DeleteImage(int hotelId,int roomId, string imagePath);
+       
     }
 }

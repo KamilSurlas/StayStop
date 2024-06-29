@@ -11,4 +11,6 @@ export interface HotelUpdateRequestDto {
     phoneNumber: string | null;
     name: string | null;
     description: string | null;
+    coverImage: string | null;
+    images: string | null;
 }

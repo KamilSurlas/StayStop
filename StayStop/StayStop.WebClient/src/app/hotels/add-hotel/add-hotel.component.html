@@ -1,0 +1,54 @@
+<div class="add-hotel-container">
+    <h3>Add new hotel</h3>
+        <form #newHotelForm="ngForm" style="display: flex; flex-direction: column;" >
+            <mat-form-field>
+                <mat-label>Name</mat-label>
+                <input matInput name="name" [(ngModel)]="newHotel.name">
+              </mat-form-field>
+          <mat-form-field>
+            <mat-label>City</mat-label>
+            <input matInput name="city" [(ngModel)]="newHotel.city" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Country</mat-label>
+            <input matInput name="country" [(ngModel)]="newHotel.country" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Hotel type</mat-label>
+            <input matInput name="hoteltype" [(ngModel)]="newHotel.hotelType" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Street</mat-label>
+            <input matInput name="street" [(ngModel)]="newHotel.street" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Zip code</mat-label>
+            <input matInput name="zipcode" [(ngModel)]="newHotel.zipCode" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Email address</mat-label>
+            <input matInput name="email" [(ngModel)]="newHotel.emailAddress" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Phone</mat-label>
+            <input matInput name="phone" [(ngModel)]="newHotel.phoneNumber" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Description</mat-label>
+            <input matInput name="description" [(ngModel)]="newHotel.description" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Starts</mat-label>
+            <input matInput name="stars" [(ngModel)]="newHotel.stars" required>
+          </mat-form-field>
+          <label>
+            <input type="file" name="coverImage" (change)="onCoverImageSelected($event)" required>
+          </label>
+          <label>
+            <input type="file" name="images" multiple (change)="onImagesSelected($event)" required>
+          </label>
+          <div class="form-row">
+            <button type="button" id="clear" class="form-button" (click)="cancelForm()">Cancel</button>
+            <button type="submit" id="submit"class="form-button" [disabled]="newHotelForm.invalid" (click)="onSubmit()">Add hotel</button>
+          </div>
+        </form>  

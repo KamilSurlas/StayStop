@@ -54,7 +54,7 @@ constructor(private route: ActivatedRoute,private hotelsService: HotelsService,p
   })
 }
 public onManageRoomClicked(roomId: number):void{
-  this.router.navigateByUrl(`hotels/management/${this.hotelId}/rooms/${roomId}`);
+  this.router.navigateByUrl(`management/hotels/${this.hotelId}/rooms/${roomId}`);
 }
 public resetForm(): void {
   this.loadHotel(this.hotelId);
@@ -118,6 +118,11 @@ public onChooseCoverImage() {
   this.chooseCoverImage=!this.chooseCoverImage;
   this.loadHotel(this.hotelId);
 }
+
+public saveNewCoverImage(fileName: string): void {
+  this.hotel!.coverImage = fileName;
+  this.editHotel();
+}
 private mapHotelToUpdateDto(hotel: HotelResponseDto): HotelUpdateRequestDto {
   return {
     hotelType: hotel.hotelType,
@@ -129,7 +134,9 @@ private mapHotelToUpdateDto(hotel: HotelResponseDto): HotelUpdateRequestDto {
     emailAddress: hotel.emailAddress,
     phoneNumber: hotel.phoneNumber,
     name: hotel.name,
-    description: hotel.description
+    description: hotel.description,
+    coverImage: null,
+    images: null
   };
 }
 }

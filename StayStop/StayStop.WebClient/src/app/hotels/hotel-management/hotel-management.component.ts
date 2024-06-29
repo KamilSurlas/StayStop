@@ -36,7 +36,11 @@ export class HotelManagementComponent {
   }
   
   public manageHotel(hotelId: number):void{
-    this.router.navigateByUrl(`hotels/management/${hotelId}`);
+    this.router.navigateByUrl(`management/hotels/${hotelId}`);
+  }
+
+  public addNewHotel() {
+    this.router.navigateByUrl('management/hotels/add');
   }
   public handlePageEvent(e: PageEvent) {
     this.result!.totalItemsCount = e.length;
