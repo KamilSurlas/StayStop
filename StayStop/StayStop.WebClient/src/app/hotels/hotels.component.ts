@@ -23,7 +23,7 @@ export class HotelsComponent {
   public numberOfKids: number | null = null;
   public numberOfRooms: number | null = null;
   public pageSizeOptions: number[] = [5,10,15];
-
+  public stars: number | null = null;
   constructor(private hotelsService: HotelsService, private router: Router, private hotelsData: HotelsDataService){
     if(hotelsData.getHotelsData() != null) {
       this.result = hotelsData.getHotelsData();
@@ -38,7 +38,7 @@ export class HotelsComponent {
       this.laodHotels();
   }
   private laodHotels():void {
-    this.hotelsService.getAll({pageSize: this.pageSize, pageNumber:this.pageNumber, searchPhrase: this.searchPhrase, hotelsSortBy: this.sortBy, sortDirection: this.sortDirection}).subscribe(
+    this.hotelsService.getAll({pageSize: this.pageSize, pageNumber:this.pageNumber, searchPhrase: this.searchPhrase, hotelsSortBy: this.sortBy, sortDirection: this.sortDirection, stars:this.stars}).subscribe(
       {
       next: (res) => {
         this.result= res

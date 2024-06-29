@@ -18,7 +18,6 @@ namespace StayStop.API.Controllers
         }
        
         [HttpPost]
-        [AllowAnonymous]
         public ActionResult UploadImage([FromForm] IFormFile image)
         {
             var path = _imageService.UploadImage(image);
@@ -27,7 +26,6 @@ namespace StayStop.API.Controllers
 
         }
         [HttpPost("multiple")]
-        [AllowAnonymous]
         public ActionResult UploadImages([FromForm] IEnumerable<IFormFile> images)
         {
             var paths = _imageService.UploadImages(images);

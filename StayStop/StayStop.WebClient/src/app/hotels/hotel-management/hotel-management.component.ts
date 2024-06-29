@@ -26,7 +26,8 @@ export class HotelManagementComponent {
       pageNumber: this.pageNumber,
       searchPhrase: null,
       hotelsSortBy: null,
-      sortDirection: SortDirection.ASC
+      sortDirection: SortDirection.ASC,
+      stars:null
     }).subscribe({
       next: (res) => {
         this.result = res;

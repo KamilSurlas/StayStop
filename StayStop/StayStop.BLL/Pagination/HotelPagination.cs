@@ -8,5 +8,6 @@ namespace StayStop.BLL.Pagination
         public int PageSize { get; set; }
         public string? HotelsSortBy { get; set; }
         public SortDirection SortDirection { get; set; }
+        public int? Stars { get; set; }
     }
 }

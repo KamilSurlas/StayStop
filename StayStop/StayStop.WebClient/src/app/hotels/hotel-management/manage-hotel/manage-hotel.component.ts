@@ -157,8 +157,7 @@ private mapHotelToUpdateDto(hotel: HotelResponseDto): HotelUpdateRequestDto {
     name: hotel.name,
     description: hotel.description,
     coverImage: hotel.coverImage,
-    images: hotel.images,
-    imageToDelete: this.imageToDelete
+    images: hotel.images
   };
 }
 }

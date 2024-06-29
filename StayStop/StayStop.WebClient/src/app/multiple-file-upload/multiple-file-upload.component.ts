@@ -24,28 +24,34 @@ export class MultipleFileUploadComponent {
     }
   }
   
-  onUpload() {
-    if (this.images.length) {
-      const formData = new FormData();
-
-      [...this.images].forEach((file) => {
-        formData.append("images", file, file.name);
-      });
-
-      const upload$ = this.http.post(this.apiUrl, formData);
-
-      this.status = "uploading";
-
-      upload$.subscribe({
-        next: (res:any) => {
-          this.newImages.emit(res);
-          this.status = "success";
-        },
-        error: (error: any) => {
-          this.status = "fail";
-          return throwError(() => error);
-        },
-      });
-    }
+  onUpload(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      if (this.images.length) {
+        const formData = new FormData();
+  
+        [...this.images].forEach((file) => {
+          formData.append("images", file, file.name);
+        });
+  
+        const upload$ = this.http.post(this.apiUrl, formData);
+  
+        this.status = "uploading";
+  
+        upload$.subscribe({
+          next: (res: any) => {
+            this.newImages.emit(res);
+            this.status = "success";
+            resolve(); 
+          },
+          error: (error: any) => {
+            this.status = "fail";
+            reject(error); 
+          }
+        });
+      } else {
+        resolve(); 
+      }
+    });
   }
+  
 }

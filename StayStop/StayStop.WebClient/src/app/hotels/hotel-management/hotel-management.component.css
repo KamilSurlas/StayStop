@@ -27,13 +27,4 @@
   .table-striped tbody tr:nth-child(odd) {
     background-color: #ffffff;
   }
-  .add-hotel-button {
-    font-size: 16px;
-    padding: 10px 20px;
-    background-color: #1176b1;
-    color: white;
-  }
   
-  .add-hotel-button:hover {
-    background-color: #09496e;
-  }

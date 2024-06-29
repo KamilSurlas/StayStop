@@ -26,16 +26,7 @@
     background-color: #f0f0f0; /* Jasny kolor tła po najechaniu */
     color: #555555; /* Ciemniejszy kolor tekstu po najechaniu */
 }
-.manage-hotel-properties-button {
-  font-size: 16px;
-  padding: 10px 20px;
-  background-color: #1176b1;
-  color: white;
-}
 
-.manage-hotel-properties-button:hover {
-  background-color: #09496e;
-}
 .finish-icon {
   display: flex;
   align-items: center;
@@ -55,15 +46,7 @@
   color: white;
 }
 
-.delete-button:hover {
-  background-color: #b71c1c;
-}
-.delete-button {
-  font-size: 16px;
-  padding: 10px 20px;
-  background-color: #d32f2f;
-  color: white;
-}
+
 
 .delete-button:hover {
   background-color: #b71c1c;

@@ -36,7 +36,7 @@ import { AssignManagerFormComponent } from './hotels/hotel-management/manage-hot
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { SingleFileUploadComponent } from './single-file-upload/single-file-upload.component';
 import { MultipleFileUploadComponent } from './multiple-file-upload/multiple-file-upload.component';
-//import { AddHotelComponent } from './hotels/add-hotel/add-hotel.component';
+import { AddHotelComponent } from './hotels/add-hotel/add-hotel.component';
 
 
 
@@ -62,7 +62,7 @@ export function tokenGetter() {
     AssignManagerFormComponent,
     SingleFileUploadComponent,
     MultipleFileUploadComponent,
-    //AddHotelComponent
+    AddHotelComponent
   ],
   imports: [
     BrowserModule,

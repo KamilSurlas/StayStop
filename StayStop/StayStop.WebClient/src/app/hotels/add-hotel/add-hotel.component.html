@@ -42,10 +42,10 @@
             <input matInput name="stars" [(ngModel)]="newHotel.stars" required>
           </mat-form-field>
           <label>
-            <input type="file" name="coverImage" (change)="onCoverImageSelected($event)" required>
+            <app-single-file-upload #coverImageUpload (newImage)="addNewCoverImage($event)" ></app-single-file-upload><br>
           </label>
           <label>
-            <input type="file" name="images" multiple (change)="onImagesSelected($event)" required>
+            <app-multiple-file-upload #imagesUpload (newImages)="addNewImages($event)" ></app-multiple-file-upload><br>
           </label>
           <div class="form-row">
             <button type="button" id="clear" class="form-button" (click)="cancelForm()">Cancel</button>
