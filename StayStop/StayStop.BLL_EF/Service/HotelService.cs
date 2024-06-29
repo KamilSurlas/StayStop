@@ -179,10 +179,7 @@ namespace StayStop.BLL_EF.Service
             //    throw new ForbiddenException("Permission denied");
             //}
 
-            if (hotelDto.ImageToDelete is not null)
-            {
-                hotelToUpdate.Images.Remove(hotelDto.ImageToDelete);
-            }
+         
 
             if (hotelDto.CoverImage is not null && hotelToUpdate.CoverImage is not null)
             {
@@ -278,6 +275,12 @@ namespace StayStop.BLL_EF.Service
             return managers;
         }
 
-       
+        public void DeleteImage(string path)
+        {
+            if (path is not null)
+            {
+                
+            }
+        }
     }
 }
