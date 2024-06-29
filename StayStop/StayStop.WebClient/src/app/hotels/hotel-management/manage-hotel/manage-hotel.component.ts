@@ -22,7 +22,6 @@ public hotelId: number;
 public rooms: RoomResponseDto[] | null=null;
 public hotel: HotelResponseDto | null = null;
 public hotelManagers: UserResponseDto[] | null = null;
-private imageToDelete: string | null = null;
 private loadHotel(hotelId:number):void {
   this.hotelsService.getById(this.hotelId).subscribe({
     next: (res) => {
@@ -74,7 +73,7 @@ public editHotel():void {
 }
 
 public onImageDelete(imageToDeletePath: string) {
-  this.imageToDelete = imageToDeletePath;
+  
   this.imageService.delete(imageToDeletePath);
   this.editHotel();
 }
@@ -139,8 +138,7 @@ private mapHotelToUpdateDto(hotel: HotelResponseDto): HotelUpdateRequestDto {
     name: hotel.name,
     description: hotel.description,
     coverImage: hotel.coverImage,
-    images: hotel.images,
-    imageToDelete: this.imageToDelete
+    images: hotel.images
   };
 }
 }
