@@ -14,15 +14,25 @@ namespace StayStop.API.Controllers
 
         public ImageController(IImageService imageService)
         {
-            _imageService = imageService;
+          _imageService = imageService;
         }
-        [AllowAnonymous] 
+       
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult UploadImage([FromForm] IFormFile image)
         {
-            _imageService.UploadImage(image);
+            var path = _imageService.UploadImage(image);
 
-            return Ok();
+            return Ok(path);
+
+        }
+        [HttpPost("multiple")]
+        [AllowAnonymous]
+        public ActionResult UploadImages([FromForm] IEnumerable<IFormFile> images)
+        {
+            var paths = _imageService.UploadImages(images);
+
+            return Ok(paths);
 
         }
         [HttpDelete]

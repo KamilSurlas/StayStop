@@ -31,16 +31,18 @@ export class SingleFileUploadComponent {
       formData.append('image', this.file, this.file.name);
   
      
-      const upload$ = this.http.post(this.apiUrl, formData);
+      const upload$ = this.http.post(this.apiUrl, formData, {responseType: 'text'});
   
       this.status = 'uploading';
   
       upload$.subscribe({
-        next: () => {
-          this.newImage.emit(this.file?.name);
+        next: (res:any) => {
+          console.log(res);
+          this.newImage.emit(res);
           this.status = 'success';
         },
         error: (error: any) => {
+          console.log(error)
           this.status = 'fail';
           return throwError(() => error);
         },

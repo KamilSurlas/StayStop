@@ -12,5 +12,6 @@ export interface HotelUpdateRequestDto {
     name: string | null;
     description: string | null;
     coverImage: string | null;
-    images: string | null;
+    images: string[] | null;
+    imageToDelete:string | null;
 }

@@ -6,6 +6,7 @@ import { HotelResponseDto } from '../../../models/hotel-response';
 import { UserResponseDto } from '../../../models/user-response';
 import { RoomsService } from '../../../services/room.service';
 import { HotelUpdateRequestDto } from '../../../models/hotel-update-request';
+import { ImageService } from '../../../image.service';
 
 
 @Component({
@@ -31,7 +32,7 @@ private loadHotel(hotelId:number):void {
     }, 
   })
 }
-constructor(private route: ActivatedRoute,private hotelsService: HotelsService,private roomsService: RoomsService,private router: Router){
+constructor(private route: ActivatedRoute,private hotelsService: HotelsService,private roomsService: RoomsService,private router: Router,private imageService:ImageService){
   this.hotelId=Number(this.route.snapshot.params['hotelid'])
   this.loadHotel(this.hotelId);
   
@@ -62,6 +63,7 @@ public resetForm(): void {
 public editHotel():void {
   this.hotelsService.update(this.hotelId,this.mapHotelToUpdateDto(this.hotel!)).subscribe({
     next: () => {
+      console.log(this.hotel)
       this.loadHotel(this.hotelId);
     },
     error: (err) => {
@@ -71,16 +73,9 @@ public editHotel():void {
 }
 
 public onImageDelete(imageToDeletePath: string) {
-  this.hotelsService.removeImage(imageToDeletePath,this.hotelId).subscribe({
-    next: () => {
-      this.loadHotel(this.hotelId);
-    },
-    error: (err) => {
-      console.log(err);
-    }
-  })
-
- 
+  
+  this.imageService.delete(imageToDeletePath);
+  this.editHotel();
 }
 public onChooseImages() {
     this.chooseImages=!this.chooseImages;
@@ -118,9 +113,16 @@ public onChooseCoverImage() {
   this.chooseCoverImage=!this.chooseCoverImage;
   this.loadHotel(this.hotelId);
 }
-
 public saveNewCoverImage(fileName: string): void {
+
   this.hotel!.coverImage = fileName;
+  console.log(fileName);
+  this.editHotel();
+}
+public saveNewImages(fileNames: string[]): void {
+
+  this.hotel!.images = fileNames;
+  console.log(fileNames);
   this.editHotel();
 }
 private mapHotelToUpdateDto(hotel: HotelResponseDto): HotelUpdateRequestDto {
@@ -135,8 +137,8 @@ private mapHotelToUpdateDto(hotel: HotelResponseDto): HotelUpdateRequestDto {
     phoneNumber: hotel.phoneNumber,
     name: hotel.name,
     description: hotel.description,
-    coverImage: null,
-    images: null
+    coverImage: hotel.coverImage,
+    images: hotel.images
   };
 }
 }

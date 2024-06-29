@@ -14,6 +14,7 @@ namespace StayStop.BLL.Dtos.Hotel
         public string? Name { get; set; }
         public string? Description { get; set; }
         public string? CoverImage { get; set; }
-        public IEnumerable<string>? Images { get; set; }
+        public List<string>? Images { get; set; }
+        public string? ImageToDelete { get; set; }
     }
 }

@@ -173,23 +173,36 @@ namespace StayStop.BLL_EF.Service
         public void Update(int hotelId, HotelUpdateRequestDto hotelDto)
         {       
             var hotelToUpdate = GetHotelById(hotelId);
-            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, hotelToUpdate, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
-            if (!authorizationResult.Succeeded)
+            //var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, hotelToUpdate, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
+            //if (!authorizationResult.Succeeded)
+            //{
+            //    throw new ForbiddenException("Permission denied");
+            //}
+
+            if (hotelDto.ImageToDelete is not null)
             {
-                throw new ForbiddenException("Permission denied");
+                hotelToUpdate.Images.Remove(hotelDto.ImageToDelete);
             }
-           
+
             if (hotelDto.CoverImage is not null && hotelToUpdate.CoverImage is not null)
             {
                 hotelToUpdate.Images.Add(hotelToUpdate.CoverImage);
-                hotelDto.CoverImage = hotelToUpdate.CoverImage;
+                
             }
-            var images = hotelToUpdate.Images;
+         
             if (hotelDto.Images?.Any() ?? false)
             {
-                images.AddRange(hotelDto.Images);
+                foreach (var image in hotelDto.Images)
+                {
+                    if (!hotelToUpdate.Images.Contains(image))
+                    {
+                        hotelToUpdate.Images.Add(image);
+                    }
+                }
+            
             }
-            hotelDto.Images = images;
+
+            
             _mapper.Map(hotelDto, hotelToUpdate);
             _context.SaveChanges();
         }

@@ -11,5 +11,6 @@ namespace StayStop.BLL.IService
     {
         string UploadImage(IFormFile image);
         void DeleteImage(string imagePath);
+        IEnumerable<string> UploadImages(IEnumerable<IFormFile> images);
     }
 }

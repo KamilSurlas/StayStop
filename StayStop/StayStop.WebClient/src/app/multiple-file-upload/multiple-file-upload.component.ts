@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { throwError } from "rxjs";
 
@@ -10,12 +10,9 @@ import { throwError } from "rxjs";
 export class MultipleFileUploadComponent {
   status: "initial" | "uploading" | "success" | "fail" = "initial";
   images: File[] = [];
-  private apiUrl: string = 'http://localhost:5080/api/hotel/';
+  private apiUrl: string = 'http://localhost:5080/api/images/multiple';
   constructor(private http: HttpClient) {}
-  @Input()
-  hotelId!:number;
-  @Input()
-  roomId :number | null = null;
+  @Output() newImages = new EventEmitter<string[]>();
   ngOnInit(): void {}
 
   onChange(event: any) {
@@ -26,15 +23,7 @@ export class MultipleFileUploadComponent {
       this.images = files;
     }
   }
-  private buildUrl():string{
-    let url = `${this.apiUrl +this.hotelId}`;
-    if(this.roomId != null){
-     url += `/room/${this.roomId}`;
-    }
-    url += '/images/cover';
- 
-    return url;
-   }
+  
   onUpload() {
     if (this.images.length) {
       const formData = new FormData();
@@ -43,12 +32,13 @@ export class MultipleFileUploadComponent {
         formData.append("images", file, file.name);
       });
 
-      const upload$ = this.http.post(this.buildUrl(), formData);
+      const upload$ = this.http.post(this.apiUrl, formData);
 
       this.status = "uploading";
 
       upload$.subscribe({
-        next: () => {
+        next: (res:any) => {
+          this.newImages.emit(res);
           this.status = "success";
         },
         error: (error: any) => {

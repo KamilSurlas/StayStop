@@ -45,7 +45,7 @@
       <mat-divider></mat-divider>
       <button class="manage-room-properties-button"  (click)="onChooseImages()">Upload images</button> 
       <div *ngIf="chooseImages">
-        <app-multiple-file-upload [hotelId]="hotelId" [roomId]=roomId></app-multiple-file-upload>
+        <app-multiple-file-upload></app-multiple-file-upload>
           <button class="manage-room-properties-button" (click)="onChooseImages()"><mat-icon>done</mat-icon>Finish</button>
       </div>
       <h3>Room gallery</h3>

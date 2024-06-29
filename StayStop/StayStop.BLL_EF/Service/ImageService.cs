@@ -3,6 +3,7 @@ using StayStop.BLL.IService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
@@ -35,5 +36,18 @@ namespace StayStop.BLL_EF.Service
             }
             return fullPath;
         }
+
+        public IEnumerable<string> UploadImages(IEnumerable<IFormFile> images)
+        {
+            var paths = new List<string>();
+            foreach (var image in images)
+            {
+                paths.Add(UploadImage(image));  
+            
+            }
+            return paths;
+        }
+
+         
     }
 }

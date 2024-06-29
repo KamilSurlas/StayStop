@@ -71,7 +71,7 @@
       <mat-divider></mat-divider>
       <button class="manage-hotel-properties-button"  (click)="onChooseImages()">Upload images</button> 
       <div *ngIf="chooseImages">
-        <app-multiple-file-upload [hotelId]="hotelId"></app-multiple-file-upload>
+        <app-multiple-file-upload (newImages)="saveNewImages($event)"></app-multiple-file-upload>
           <button class="manage-hotel-properties-button" (click)="onChooseImages()"><mat-icon>done</mat-icon>Finish</button>
       </div>
       <h3>Hotel gallery</h3>
