@@ -25,14 +25,5 @@ constructor(private route: ActivatedRoute,private roomsService: RoomsService,pri
     }, 
   })
 };
-public deleteRoom():void{
-  this.roomsService.deleteById(this.hotelId, this.roomId).subscribe({
-    next: () => {
-      this.router.navigateByUrl(`hotels/${this.hotelId}`);
-    },
-    error: (deleteError) => {
-      this.error = deleteError.error;
-    }
-  })
-}
+
 }

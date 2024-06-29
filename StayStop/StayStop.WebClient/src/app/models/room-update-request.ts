@@ -9,4 +9,6 @@ export interface RoomUpdateRequestDto {
     isAvailable: boolean | null;
     priceForAdult: number | null;
     priceForChild: number | null;
+    coverImage: string|null;
+    images:string[]|null;
 }

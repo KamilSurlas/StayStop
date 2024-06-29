@@ -22,7 +22,7 @@ export class RoomsService {
         return this.httpClient.put<void>(`${this.apiUrl + hotelId}/room/${roomId}`, dto);
       }
       public removeImage(imageUrl: string, hotelId:number, roomId:number):Observable<void>{
-        const url = `${this.apiUrl}${hotelId}/room/${roomId}/images/all`;
+        const url = `${this.apiUrl}${hotelId}/room/${roomId}/images`;
         const headers = new HttpHeaders({
           'Content-Type': 'application/json'
         });

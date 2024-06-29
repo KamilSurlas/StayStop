@@ -22,7 +22,6 @@ public hotelId: number;
 public rooms: RoomResponseDto[] | null=null;
 public hotel: HotelResponseDto | null = null;
 public hotelManagers: UserResponseDto[] | null = null;
-private imageToDelete: string | null = null;
 private loadHotel(hotelId:number):void {
   this.hotelsService.getById(this.hotelId).subscribe({
     next: (res) => {
@@ -74,9 +73,17 @@ public editHotel():void {
 }
 
 public onImageDelete(imageToDeletePath: string) {
-  this.imageToDelete = imageToDeletePath;
+  this.hotelsService.deleteImage(this.hotelId,imageToDeletePath).subscribe({
+    next: () => {
+      this.loadHotel(this.hotelId);
+    },
+    error: (err) => {
+    
+      console.log(err);
+    }
+  })
   this.imageService.delete(imageToDeletePath);
-  this.editHotel();
+
 }
 public onChooseImages() {
     this.chooseImages=!this.chooseImages;
@@ -126,6 +133,17 @@ public saveNewImages(fileNames: string[]): void {
   console.log(fileNames);
   this.editHotel();
 }
+
+public deleteHotel() {
+  this.hotelsService.delete(this.hotelId).subscribe({
+    next: ()=>  {
+      this.router.navigate(['management/hotels']);
+    },
+    error: (err) =>  {
+      alert(err);
+    }
+  })
+}
 private mapHotelToUpdateDto(hotel: HotelResponseDto): HotelUpdateRequestDto {
   return {
     hotelType: hotel.hotelType,
@@ -140,7 +158,6 @@ private mapHotelToUpdateDto(hotel: HotelResponseDto): HotelUpdateRequestDto {
     description: hotel.description,
     coverImage: hotel.coverImage,
     images: hotel.images,
-    imageToDelete: this.imageToDelete
   };
 }
 }

@@ -165,25 +165,24 @@ namespace StayStop.BLL_EF.Service
             _context.SaveChanges();
         }
 
-        public void UploadCoverImage(int hotelId, int roomId, IFormFile coverImage)
-        {
-            if (coverImage != null && coverImage.Length > 0)
-            {
-                var hotel = GetHotelById(hotelId);
-                var room = GetRoomById(roomId);
-                if (room.HotelId != hotelId)
-                    throw new ContentNotFoundException($"Provided hotel id is wrong (hotel id: {hotelId})");
-                var roomOldCoverImage = room.CoverImage;
-                if (roomOldCoverImage is not null && !room.Images.Contains(coverImage.FileName))
-                {
-                    room.Images.Add(coverImage.FileName);
-                }
-                room.CoverImage = _imageService.UploadImage(coverImage);
-                _context.SaveChanges();
-            }
-        }
-
       
+
+        public void DeleteImage(int hotelId, int roomId, string path)
+        {
+            var hotel = GetHotelById(hotelId);
+            var room = GetRoomById(roomId);
+            if (room.HotelId != hotelId)
+                throw new ContentNotFoundException($"Provided hotel id is wrong (hotel id: {hotelId})");
+
+
+            if (path is not null && room.Images.Contains(path))
+            {
+                room.Images.Remove(path);
+            }
+
+            _context.SaveChanges();
+
+        }
     }
 }
 

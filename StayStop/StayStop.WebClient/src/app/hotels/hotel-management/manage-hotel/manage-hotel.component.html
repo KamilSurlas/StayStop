@@ -42,6 +42,10 @@
             <button type="submit" id="submit"class="form-button" (click)="editHotel()">Edit hotel</button>
           </div>
         </form>  
+        <mat-label>
+          Hotel cover image
+      </mat-label>
+      <img [src]="hotel.coverImage">
         <button class="manage-hotel-properties-button"  (click)="onChooseCoverImage()">Choose cover image</button> 
         <div *ngIf="chooseCoverImage">
           <app-single-file-upload (newImage)="saveNewCoverImage($event)"></app-single-file-upload><br>
@@ -89,7 +93,9 @@
       </mat-grid-tile>
       </mat-grid-list>
     <mat-divider></mat-divider>
-</div>
+    <h2>Danger zone</h2>
+    <button mat-raised-button color="warn" class="delete-button" (click)="deleteHotel()">Delete hotel/button>
+
 
 
 

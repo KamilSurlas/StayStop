@@ -48,3 +48,23 @@
 .finish-icon:hover{
   cursor: pointer;
 }
+.delete-button {
+  font-size: 16px;
+  padding: 10px 20px;
+  background-color: #d32f2f;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #b71c1c;
+}
+.delete-button {
+  font-size: 16px;
+  padding: 10px 20px;
+  background-color: #d32f2f;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #b71c1c;
+}

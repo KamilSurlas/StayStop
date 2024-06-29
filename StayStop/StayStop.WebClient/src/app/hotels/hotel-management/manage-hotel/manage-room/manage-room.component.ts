@@ -45,6 +45,18 @@ public onImageDelete(imageToDeletePath: string) {
 
  
 }
+public saveNewCoverImage(fileName: string): void {
+
+  this.room!.coverImage = fileName;
+  console.log(fileName);
+  this.editRoom();
+}
+public saveNewImages(fileNames: string[]): void {
+
+  this.room!.images = fileNames;
+  console.log(fileNames);
+  this.editRoom();
+}
 public onChooseCoverImage() {
   this.chooseCoverImage=!this.chooseCoverImage;
   this.loadRoom();
@@ -63,6 +75,17 @@ public editRoom():void {
     }
   })
 }
+
+public deleteRoom() {
+  this.roomsService.deleteById(this.hotelId,this.roomId).subscribe({
+    next: ()=>  {
+      this.router.navigateByUrl(`management/hotels/${this.hotelId}`);
+    },
+    error: (err) =>  {
+      alert(err);
+    }
+  })
+}
 private mapRoomToUpdateDto(room: RoomResponseDto): RoomUpdateRequestDto {
   return {
     roomType: room.roomType,
@@ -71,7 +94,9 @@ private mapRoomToUpdateDto(room: RoomResponseDto): RoomUpdateRequestDto {
     numberOfAdults: room.numberOfAdults,
     numberOfChildren: room.numberOfChildren,
     description: room.description,
-    isAvailable:room.isAvailable
+    isAvailable:room.isAvailable,
+    images: room.images,
+    coverImage: room.coverImage
   };
 }
 }
