@@ -11,6 +11,6 @@ export interface HotelRequestDto {
     phoneNumber: string|null;
     name: string|null;
     description: string|null;
-    coverImage:string;
-    images:string[];
+    coverImage:string|null;
+    images:string[]|null;
 }

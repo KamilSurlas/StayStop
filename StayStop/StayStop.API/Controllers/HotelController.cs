@@ -60,7 +60,6 @@ namespace StayStop.API.Controllers
             return NoContent();
         }
         [HttpPut("{hotelId}")]
-        [AllowAnonymous]
         public ActionResult Update([FromRoute] int hotelId, [FromBody] HotelUpdateRequestDto hotelDto)
         {
             _hotelService.Update(hotelId, hotelDto);
@@ -81,7 +80,6 @@ namespace StayStop.API.Controllers
 
             return Ok();
         }
-        [AllowAnonymous]
         [HttpGet("{hotelId}/managers")]
         public ActionResult GetManagers([FromRoute] int hotelId)
         {
@@ -89,7 +87,6 @@ namespace StayStop.API.Controllers
 
             return Ok(managers);
         }
-        [AllowAnonymous]
         [HttpDelete("{hotelId}/images")]
         public ActionResult DeleteImage([FromRoute] int hotelId, [FromBody] string path)
         {

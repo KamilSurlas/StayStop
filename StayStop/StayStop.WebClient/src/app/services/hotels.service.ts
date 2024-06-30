@@ -46,15 +46,18 @@ export class HotelsService {
         const body = JSON.stringify(email);
         return this.httpClient.post<void>(url, body, { headers });
       }    
-      public post(hotelData: FormData): Observable<any> {
+      public post(hotelData: HotelRequestDto): Observable<any> {
         return this.httpClient.post<any>(`${this.apiUrl}`, hotelData);
       }
       public deleteImage(hotelId: number, path: string):Observable<void>{
         const url = `${this.apiUrl}${hotelId}/images`;
         const headers = new HttpHeaders({
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         });
         const body = JSON.stringify(path);
-        return this.httpClient.post<void>(url, body, { headers });
+        const options = {
+          headers: headers,
+          body: body}
+        return this.httpClient.delete<void>(url, options);
       }
     }

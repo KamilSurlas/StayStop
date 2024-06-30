@@ -1,0 +1,40 @@
+<div class="add-room-container">
+    <h3>Add new room </h3>
+        <form #newRoomForm="ngForm" style="display: flex; flex-direction: column;" >
+            <mat-form-field>
+                <mat-label>Room type</mat-label>
+                <input matInput name="roomtype" [(ngModel)]="newRoom.roomType" required>
+              </mat-form-field>
+          <mat-form-field>
+            <mat-label>Price for child</mat-label>
+            <input matInput name="priceforchild" [(ngModel)]="newRoom.priceForChild" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Price for adult</mat-label>
+            <input matInput name="priceforadult" [(ngModel)]="newRoom.priceForAdult" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Number of children available</mat-label>
+            <input matInput name="numberofchildren" [(ngModel)]="newRoom.numberOfChildren" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Number of adults available</mat-label>
+            <input matInput name="numberofadults" [(ngModel)]="newRoom.numberOfAdults" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Description</mat-label>
+            <input matInput name="description" [(ngModel)]="newRoom.description" required>
+          </mat-form-field>
+          <label>
+            <h2>Choose cover image</h2>
+            <app-single-file-upload #coverImageUpload (newImage)="addNewCoverImage($event)" ></app-single-file-upload><br>
+          </label>
+          <label>
+            <h2>Choose hotel gallery </h2>
+            <app-multiple-file-upload #imagesUpload (newImages)="addNewImages($event)" ></app-multiple-file-upload><br>
+          </label>
+          <div class="form-row">
+            <button type="button" id="clear" class="form-button" (click)="cancelForm()">Cancel</button>
+            <button type="submit" id="submit"class="form-button" [disabled]="newRoomForm.invalid" (click)="onSubmit()">Add room</button>
+          </div>
+        </form>  

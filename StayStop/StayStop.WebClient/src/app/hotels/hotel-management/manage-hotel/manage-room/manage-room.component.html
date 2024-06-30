@@ -36,17 +36,17 @@
             </mat-label>
             <img [src]="room.coverImage">
         </mat-divider>  
-        <button class="manage-room-properties-button"  (click)="onChooseCoverImage()">Choose cover image</button> 
+        <button  mat-flat-button class="mat-button mat-button-base mat-flat-button mat-primary"  (click)="onChooseCoverImage()">Choose cover image</button> 
         <div *ngIf="chooseCoverImage">
-          <app-single-file-upload ></app-single-file-upload><br>
-            <button class="manage-room-properties-button" (click)="onChooseCoverImage()"><mat-icon>done</mat-icon>Finish</button>
+          <app-single-file-upload (newImage)="saveNewCoverImage($event)"></app-single-file-upload><br>
+            <button mat-flat-button class="mat-button mat-button-base mat-flat-button mat-primary"(click)="onChooseCoverImage()"><mat-icon>done</mat-icon>Finish</button>
         </div>
         <mat-divider></mat-divider>      
       <mat-divider></mat-divider>
-      <button class="manage-room-properties-button"  (click)="onChooseImages()">Upload images</button> 
+      <button  mat-flat-button class="mat-button mat-button-base mat-flat-button mat-primary" (click)="onChooseImages()">Upload images</button> 
       <div *ngIf="chooseImages">
-        <app-multiple-file-upload></app-multiple-file-upload>
-          <button class="manage-room-properties-button" (click)="onChooseImages()"><mat-icon>done</mat-icon>Finish</button>
+        <app-multiple-file-upload (newImages)="saveNewImages($event)"></app-multiple-file-upload>
+          <button mat-flat-button class="mat-button mat-button-base mat-flat-button mat-primary" (click)="onChooseImages()"><mat-icon>done</mat-icon>Finish</button>
       </div>
       <h3>Room gallery</h3>
       <mat-grid-list cols="3" rowHeight="2:1">
@@ -56,7 +56,9 @@
    </mat-grid-tile>
    </mat-grid-list>
 </div>
-
+<mat-divider></mat-divider>
+<h2>Danger zone</h2>
+<button mat-raised-button color="warn" class="delete-button" (click)="deleteRoom()">Delete hotel</button>
 
 
 

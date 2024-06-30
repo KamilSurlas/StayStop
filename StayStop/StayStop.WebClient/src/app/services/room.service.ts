@@ -3,6 +3,7 @@ import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
 import { RoomResponseDto } from "../models/room-response";
 import { RoomUpdateRequestDto } from "../models/room-update-request";
+import { RoomRequestDto } from "../models/room-request";
 @Injectable({
     providedIn: 'root'
   })
@@ -22,7 +23,7 @@ export class RoomsService {
         return this.httpClient.put<void>(`${this.apiUrl + hotelId}/room/${roomId}`, dto);
       }
       public removeImage(imageUrl: string, hotelId:number, roomId:number):Observable<void>{
-        const url = `${this.apiUrl}${hotelId}/room/${roomId}/images/all`;
+        const url = `${this.apiUrl}${hotelId}/room/${roomId}/images`;
         const headers = new HttpHeaders({
           'Content-Type': 'application/json'
         });
@@ -31,5 +32,8 @@ export class RoomsService {
           headers: headers,
           body: body}
         return this.httpClient.delete<void>(url, options);
+      }
+      public post(hotelId:number, roomData: RoomRequestDto): Observable<any> {
+        return this.httpClient.post<any>(`${this.apiUrl+hotelId}/room`, roomData);
       }
 }

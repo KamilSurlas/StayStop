@@ -73,9 +73,17 @@ public editHotel():void {
 }
 
 public onImageDelete(imageToDeletePath: string) {
-  
+  this.hotelsService.deleteImage(this.hotelId,imageToDeletePath).subscribe({
+    next: () => {
+      this.loadHotel(this.hotelId);
+    },
+    error: (err) => {
+    
+      console.log(err);
+    }
+  })
   this.imageService.delete(imageToDeletePath);
-  this.editHotel();
+
 }
 public onChooseImages() {
     this.chooseImages=!this.chooseImages;
@@ -124,6 +132,20 @@ public saveNewImages(fileNames: string[]): void {
   this.hotel!.images = fileNames;
   console.log(fileNames);
   this.editHotel();
+}
+
+public deleteHotel() {
+  this.hotelsService.delete(this.hotelId).subscribe({
+    next: ()=>  {
+      this.router.navigate(['management/hotels']);
+    },
+    error: (err) =>  {
+      alert(err);
+    }
+  })
+}
+public onAddNewRoomClicked():void{
+  this.router.navigateByUrl(`management/hotels/${this.hotelId}/rooms/add`);
 }
 private mapHotelToUpdateDto(hotel: HotelResponseDto): HotelUpdateRequestDto {
   return {

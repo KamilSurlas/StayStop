@@ -65,7 +65,8 @@ export function tokenGetter() {
     AssignManagerFormComponent,
     SingleFileUploadComponent,
     MultipleFileUploadComponent,
-    //AddHotelComponent
+    AddHotelComponent,
+    AddRoomComponent
   ],
   imports: [
     BrowserModule,

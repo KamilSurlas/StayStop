@@ -24,29 +24,33 @@ export class SingleFileUploadComponent {
       this.file = file;
     }
   }
-  onUpload() {
-    if (this.file) {
-      const formData = new FormData();
+  onUpload(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      if (this.file) {
+        const formData = new FormData();
+        formData.append('image', this.file, this.file.name);
   
-      formData.append('image', this.file, this.file.name);
+        const upload$ = this.http.post(this.apiUrl, formData, { responseType: 'text' });
   
-     
-      const upload$ = this.http.post(this.apiUrl, formData, {responseType: 'text'});
+        this.status = 'uploading';
   
-      this.status = 'uploading';
-  
-      upload$.subscribe({
-        next: (res:any) => {
-          console.log(res);
-          this.newImage.emit(res);
-          this.status = 'success';
-        },
-        error: (error: any) => {
-          console.log(error)
-          this.status = 'fail';
-          return throwError(() => error);
-        },
-      });
-    }
+        upload$.subscribe({
+          next: (res: any) => {
+            console.log(res);
+            this.newImage.emit(res);
+            this.status = 'success';
+            resolve(); 
+          },
+          error: (error: any) => {
+            console.error(error);
+            this.status = 'fail';
+            reject(error); 
+          }
+        });
+      } else {
+        resolve(); 
+      }
+    });
   }
+  
 }

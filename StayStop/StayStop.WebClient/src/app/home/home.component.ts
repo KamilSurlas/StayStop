@@ -41,7 +41,7 @@ throw new Error('Method not implemented.');
   }
 
   public search():void {
-    this.hotelsService.getAll({ pageSize: 5, pageNumber: 1, searchPhrase: this.searchPhrase, hotelsSortBy: null, sortDirection: SortDirection.ASC }).subscribe(
+    this.hotelsService.getAll({ pageSize: 5, pageNumber: 1, searchPhrase: this.searchPhrase, hotelsSortBy: null, sortDirection: SortDirection.ASC, stars:null }).subscribe(
       {
       next: (res) => {
         console.log(res)
@@ -69,5 +69,6 @@ throw new Error('Method not implemented.');
     this.numberOfKids = 0;
     this.numberOfAdults = 0; 
     this.numberOfRooms = 1;
+   
   }
 }

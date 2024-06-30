@@ -33,7 +33,7 @@
 
       <mat-form-field class="example-full-width">
         <mat-label>Stars</mat-label>
-        <input matInput type="number" name="sixthInput" ngModel="numStars" min="1" max="5" #sixthMessage maxlength="256">
+        <input matInput type="number" name="sixthInput" [(ngModel)]="stars" min="1" max="5" #sixthMessage maxlength="256">
       </mat-form-field>
 
       <button mat-flat-button class="mat-button mat-button-base mat-flat-button mat-primary">Filter</button>

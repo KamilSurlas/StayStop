@@ -146,13 +146,18 @@ namespace StayStop.BLL_EF.Service
                 : baseQuery.AsQueryable().OrderByDescending(selected).ToList();
             }
 
-
+            if (pagination.Stars is not null)
+            {
+                baseQuery.Where(h => h.Stars == pagination.Stars);
+            }
+           
             var hotels = baseQuery
               .Skip(pagination.PageSize * (pagination.PageNumber - 1))
             .Take(pagination.PageSize)
             .ToList();
 
-            //FILTROWANIE
+           
+
             var hotelResults = _mapper.Map<List<HotelResponseDto>>(hotels);
             
             var result = new PageResult<HotelResponseDto>(hotelResults, baseQuery.Count(), 
@@ -173,13 +178,13 @@ namespace StayStop.BLL_EF.Service
         public void Update(int hotelId, HotelUpdateRequestDto hotelDto)
         {       
             var hotelToUpdate = GetHotelById(hotelId);
-            //var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, hotelToUpdate, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
-            //if (!authorizationResult.Succeeded)
-            //{
-            //    throw new ForbiddenException("Permission denied");
-            //}
+            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, hotelToUpdate, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
+            if (!authorizationResult.Succeeded)
+            {
+                throw new ForbiddenException("Permission denied");
+            }
 
-         
+
 
             if (hotelDto.CoverImage is not null && hotelToUpdate.CoverImage is not null)
             {
@@ -278,7 +283,7 @@ namespace StayStop.BLL_EF.Service
         public void DeleteImage(int hotelId, string path)
         {
             var hotel = GetHotelById(hotelId);
-            if (path is not null)
+            if (path is not null && hotel.Images.Contains(path))
             {
                 hotel.Images.Remove(path);
             }

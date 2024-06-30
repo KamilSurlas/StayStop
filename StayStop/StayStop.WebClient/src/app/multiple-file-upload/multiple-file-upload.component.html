@@ -1,4 +1,8 @@
-<input type="file" class="file-input" multiple (change)="onChange($event)" />
+<div class="multiple-file-input-container">
+  <input type="file"  id="multiple-file-input"  class="multiple-file-input" multiple (change)="onChange($event)"/>
+  <label class="multiple-file-input-label" for="multiple-file-input">Select Files</label>
+</div>
+
 
 <div *ngIf="images.length" class="file-section">
   <section *ngFor="let images of images">
@@ -11,7 +15,7 @@
   </section>
 
   <h3>Click button bellow to start uploading</h3>
-  <button (click)="onUpload()" class="upload-button">Upload the images</button>
+  <button (click)="onUpload()" class="upload-button" [disabled]="!images">Upload the images</button>
 
   <section [ngSwitch]="status">
     <p *ngSwitchCase="'uploading'">⏳ Uploading...</p>

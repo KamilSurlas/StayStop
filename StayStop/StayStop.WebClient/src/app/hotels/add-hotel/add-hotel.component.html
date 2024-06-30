@@ -3,7 +3,7 @@
         <form #newHotelForm="ngForm" style="display: flex; flex-direction: column;" >
             <mat-form-field>
                 <mat-label>Name</mat-label>
-                <input matInput name="name" [(ngModel)]="newHotel.name">
+                <input matInput name="name" [(ngModel)]="newHotel.name" required>
               </mat-form-field>
           <mat-form-field>
             <mat-label>City</mat-label>
@@ -41,11 +41,13 @@
             <mat-label>Starts</mat-label>
             <input matInput name="stars" [(ngModel)]="newHotel.stars" required>
           </mat-form-field>
+          <h3>Choose cover image</h3>
           <label>
-            <input type="file" name="coverImage" (change)="onCoverImageSelected($event)" required>
+            <app-single-file-upload #coverImageUpload (newImage)="addNewCoverImage($event)" ></app-single-file-upload><br>
           </label>
+          <h3>Choose hotel gallery </h3>
           <label>
-            <input type="file" name="images" multiple (change)="onImagesSelected($event)" required>
+            <app-multiple-file-upload #imagesUpload (newImages)="addNewImages($event)" ></app-multiple-file-upload><br>
           </label>
           <div class="form-row">
             <button type="button" id="clear" class="form-button" (click)="cancelForm()">Cancel</button>
