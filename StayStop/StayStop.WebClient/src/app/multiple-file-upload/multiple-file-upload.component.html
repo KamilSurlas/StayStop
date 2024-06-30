@@ -1,8 +1,7 @@
-<div class="file-input-container">
-  <input type="file" id="file-input" class="file-input" multiple (change)="onChange($event)"/>
-  <label for="file-input" class="file-input-label">Choose File(s)</label>
+<div class="multiple-file-input-container">
+  <input type="file"  id="multiple-file-input"  class="multiple-file-input" multiple (change)="onChange($event)"/>
+  <label class="multiple-file-input-label" for="multiple-file-input">Select Files</label>
 </div>
-
 
 
 <div *ngIf="images.length" class="file-section">

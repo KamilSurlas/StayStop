@@ -144,6 +144,9 @@ public deleteHotel() {
     }
   })
 }
+public onAddNewRoomClicked():void{
+  this.router.navigateByUrl(`management/hotels/${this.hotelId}/rooms/add`);
+}
 private mapHotelToUpdateDto(hotel: HotelResponseDto): HotelUpdateRequestDto {
   return {
     hotelType: hotel.hotelType,

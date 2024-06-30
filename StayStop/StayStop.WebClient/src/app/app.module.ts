@@ -37,6 +37,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { SingleFileUploadComponent } from './single-file-upload/single-file-upload.component';
 import { MultipleFileUploadComponent } from './multiple-file-upload/multiple-file-upload.component';
 import { AddHotelComponent } from './hotels/add-hotel/add-hotel.component';
+import { AddRoomComponent } from './hotels/add-room/add-room.component';
 
 
 
@@ -62,7 +63,8 @@ export function tokenGetter() {
     AssignManagerFormComponent,
     SingleFileUploadComponent,
     MultipleFileUploadComponent,
-    AddHotelComponent
+    AddHotelComponent,
+    AddRoomComponent
   ],
   imports: [
     BrowserModule,

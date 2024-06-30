@@ -108,5 +108,14 @@ export class AuthService {
     
     return null;
   }
-
+  getUserId() : string | null {
+    const token = localStorage.getItem("accessToken");
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      const decodeToken = this.jwtHelper.decodeToken(token);
+      
+      return (decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
+    }
+    
+    return null;
+  }
 }

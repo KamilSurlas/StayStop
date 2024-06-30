@@ -13,7 +13,8 @@ import { HotelManagementComponent } from './hotels/hotel-management/hotel-manage
 import { ManageHotelComponent } from './hotels/hotel-management/manage-hotel/manage-hotel.component';
 import { ManageRoomComponent } from './hotels/hotel-management/manage-hotel/manage-room/manage-room.component';
 import { AddHotelComponent } from './hotels/add-hotel/add-hotel.component';
-//import { AddHotelComponent } from './hotels/add-hotel/add-hotel.component';
+import { AddRoomComponent } from './hotels/add-room/add-room.component';
+
 
 
 const routes: Routes = [
@@ -25,7 +26,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   {path: 'management/hotels/add',component: AddHotelComponent},
   { path: 'account', component: AccountComponent },
-  //{ path: 'hotels/management', component: HotelManagementComponent }, 
+  {path: 'management/hotels/:hotelid/rooms/add',component: AddRoomComponent},
   { path: 'management/hotels', component: HotelManagementComponent},
   { path: 'hotels', component: HotelsComponent },
   { path:  'management/hotels/:hotelid', component:ManageHotelComponent},

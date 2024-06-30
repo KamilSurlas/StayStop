@@ -1,0 +1,15 @@
+.form-button {
+    background-color: #f5f5f5; /* Biały kolor tła przycisku */
+    color: #333333; /* Ciemny kolor tekstu */
+    border: none; /* Brak obramowania */
+    padding: 10px 20px; /* Wewnętrzne odstępy */
+    font-size: 16px; /* Rozmiar tekstu */
+    border-radius: 5px; /* Zaokrąglenie rogów */
+    cursor: pointer; /* Zmiana kursora na wskaźnik */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Płynne przejścia */
+}
+
+.form-button:hover {
+    background-color: #f0f0f0; /* Jasny kolor tła po najechaniu */
+    color: #555555; /* Ciemniejszy kolor tekstu po najechaniu */
+}

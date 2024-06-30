@@ -1,44 +1,30 @@
-.upload-button {
-    background-color: #f5f5f5; /* Biały kolor tła przycisku */
-    color: #333333; /* Ciemny kolor tekstu */
-    border: none; /* Brak obramowania */
-    padding: 10px 20px; /* Wewnętrzne odstępy */
-    font-size: 16px; /* Rozmiar tekstu */
-    border-radius: 5px; /* Zaokrąglenie rogów */
-    cursor: pointer; /* Zmiana kursora na wskaźnik */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Płynne przejścia */
+.multiple-file-input-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: Arial, sans-serif;
 }
 
-.upload-button:hover {
-    background-color: #f0f0f0; /* Jasny kolor tła po najechaniu */
-    color: #555555; /* Ciemniejszy kolor tekstu po najechaniu */
+.multiple-file-input {
+  display: none;
 }
-.file-input-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .file-input {
-    display: none;
-  }
-  
-  .file-input-label {
-    display: inline-block;
-    padding: 10px 20px;
-    color: #fff;
-    background-color: #007bff;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .file-input-label:hover {
-    background-color: #0056b3;
-  }
-  
-  .file-name {
-    font-size: 14px;
-    color: #666;
-  }
+
+.multiple-file-input-label {
+  display: inline-block;
+  padding: 10px 20px;
+  color: #fff;
+  background-color: #007bff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.multiple-file-input-label:hover {
+  background-color: #0056b3;
+}
+
+.file-names {
+  font-size: 14px;
+  color: #666;
+}
+

@@ -59,7 +59,7 @@ namespace StayStop.BLL_EF.Service
             var room = _mapper.Map<Room>(roomDto);
             room.HotelId = hotelId;
             room.Hotel = hotel;
-            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, room , new ResourceOperationRequirement(ResourceOperation.Create)).Result;
+            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, room, new ResourceOperationRequirement(ResourceOperation.Create)).Result;
             if (!authorizationResult.Succeeded)
             {
                 throw new ForbiddenException("Permission denied");

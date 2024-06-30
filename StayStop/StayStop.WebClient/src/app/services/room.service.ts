@@ -3,6 +3,7 @@ import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
 import { RoomResponseDto } from "../models/room-response";
 import { RoomUpdateRequestDto } from "../models/room-update-request";
+import { RoomRequestDto } from "../models/room-request";
 @Injectable({
     providedIn: 'root'
   })
@@ -31,5 +32,8 @@ export class RoomsService {
           headers: headers,
           body: body}
         return this.httpClient.delete<void>(url, options);
+      }
+      public post(hotelId:number, roomData: RoomRequestDto): Observable<any> {
+        return this.httpClient.post<any>(`${this.apiUrl+hotelId}/room`, roomData);
       }
 }
