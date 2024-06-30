@@ -6,6 +6,7 @@ import { HotelsService } from '../services/hotels.service';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { HotelsDataService } from '../services/hotels-data.service';
+import { ReservationService } from '../services/reservation.service';
 
 @Component({
   selector: 'app-hotels',
@@ -24,7 +25,7 @@ export class HotelsComponent {
   public numberOfRooms: number | null = null;
   public pageSizeOptions: number[] = [5,10,15];
 
-  constructor(private hotelsService: HotelsService, private router: Router, private hotelsData: HotelsDataService){
+  constructor(private hotelsService: HotelsService, private router: Router, private hotelsData: HotelsDataService, private reservationService : ReservationService){
     if(hotelsData.getHotelsData() != null) {
       this.result = hotelsData.getHotelsData();
       if(hotelsData.getSearchPhrase() != null)

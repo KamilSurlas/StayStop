@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthService } from '../services/auth.service';
 import { HotelsService } from '../services/hotels.service';
 import { SortDirection } from '../models/sort-direction';
 import { HotelsDataService } from '../services/hotels-data.service';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ReservationService } from '../services/reservation.service';
+
 
 @Component({
   selector: 'app-home',
@@ -21,8 +23,14 @@ throw new Error('Method not implemented.');
   public numberOfKids: number = 0; 
   public numberOfAdults: number = 0; 
   public numberOfRooms: number = 1; 
+  public minDate: Date = new Date();
+  public range = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  });
 
-  constructor(private authService: AuthService, private hotelsService: HotelsService, private hotelsData: HotelsDataService, private router: Router) { }
+  constructor(private authService: AuthService, private hotelsService: HotelsService, private hotelsData: HotelsDataService, private router: Router, 
+    private reservationService: ReservationService) { }
 
   isUserAuthenticated = (): boolean => {
     return this.authService.isUserAuthenticated();
@@ -43,6 +51,13 @@ throw new Error('Method not implemented.');
         this.hotelsData.setNumberOfAdults(this.numberOfAdults);
         this.hotelsData.setNumberOfKids(this.numberOfKids);
         this.hotelsData.setNumberOfRooms(this.numberOfRooms);
+        if (this.range.get('start') == null || this.range.get('end')) {
+          this.range.patchValue({
+            start: new Date(Date.now()),
+            end: new Date(Date.now() + 1)
+          });
+        }
+        this.reservationService.reservation.startDate = this.range.get('start')?.value?.toString();
         this.router.navigate(['/hotels']);
       },
       error: (err) => console.log(err)

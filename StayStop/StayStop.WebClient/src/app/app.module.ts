@@ -36,6 +36,9 @@ import { AssignManagerFormComponent } from './hotels/hotel-management/manage-hot
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { SingleFileUploadComponent } from './single-file-upload/single-file-upload.component';
 import { MultipleFileUploadComponent } from './multiple-file-upload/multiple-file-upload.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatNativeDateModule } from '@angular/material/core';
 //import { AddHotelComponent } from './hotels/add-hotel/add-hotel.component';
 
 
@@ -82,6 +85,9 @@ export function tokenGetter() {
     MatButtonModule,
     MatTableModule,
     MatProgressBarModule,
+    MatDatepickerModule,
+    ReactiveFormsModule,
+    MatNativeDateModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
