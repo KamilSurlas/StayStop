@@ -50,7 +50,7 @@ namespace StayStop.API.Controllers
         public ActionResult Create([FromBody] HotelRequestDto hotelDto)
         {
             var id = _hotelService.Create(hotelDto);
-            return Created($"/api/hotel/{id}", new { newId = id });
+            return Created($"/api/hotel/{id}", new { Id = id });
         }
         [HttpDelete("{hotelId}")]
         public ActionResult DeleteById([FromRoute] int hotelId)

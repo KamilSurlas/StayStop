@@ -23,7 +23,7 @@ namespace StayStop.API.Controllers
         {
             var newRoomId = _roomService.Create(hotelId, roomDto);
 
-            return Created($"/api/hotel/{hotelId}/room/{newRoomId}", null);
+            return Created($"/api/hotel/{hotelId}/room/{newRoomId}", new { Id = newRoomId });
         }
         [HttpGet]
         [AllowAnonymous]

@@ -53,8 +53,8 @@ export class AddRoomComponent {
   
         this.api.post(this.hotelId,this.newRoom).subscribe({
           next: (res: any) => {
-            const hotelId = res.Id;
-            this.router.navigateByUrl(`management/hotels/${hotelId}`);
+            const roomId = res.Id;
+            this.router.navigateByUrl(`management/hotels/${this.hotelId}/rooms/${roomId}`);
           },
           error: (err) => console.error(err)
         });
