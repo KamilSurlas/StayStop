@@ -38,7 +38,10 @@ import { SingleFileUploadComponent } from './single-file-upload/single-file-uplo
 import { MultipleFileUploadComponent } from './multiple-file-upload/multiple-file-upload.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { AddRoomComponent } from './hotels/add-room/add-room.component';
+import { AddHotelComponent } from './hotels/add-hotel/add-hotel.component';
+import { BasketComponent } from './basket/basket.component';
 //import { AddHotelComponent } from './hotels/add-hotel/add-hotel.component';
 
 
@@ -66,7 +69,8 @@ export function tokenGetter() {
     SingleFileUploadComponent,
     MultipleFileUploadComponent,
     AddHotelComponent,
-    AddRoomComponent
+    AddRoomComponent,
+    BasketComponent
   ],
   imports: [
     BrowserModule,

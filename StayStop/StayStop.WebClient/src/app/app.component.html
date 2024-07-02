@@ -8,6 +8,7 @@
 
     <div class="login-container">
             <label *ngIf="this.getUserName() != null">Hi, {{this.getUserName()}}</label>
+            <button *ngIf="!this.isBasketEmpty()" class="icon-button" (click)="navigateToCart()"><i class="material-icons" style="margin-left: 10px;">shopping_cart</i></button>
             <button *ngIf="!this.isUserAuthenticated()" class="login-button" routerLink="/login">Sign in</button>
             <button *ngIf="!this.isUserAuthenticated()" class="login-button" routerLink="/register">Register</button>
             <button *ngIf="this.isUserAuthenticated()" class="login-button" (click)="logOut()">Log out</button>

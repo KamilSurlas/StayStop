@@ -3,6 +3,8 @@ import { RoomResponseDto } from '../../models/room-response';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoomsService } from '../../services/room.service';
 import { HotelsDataService } from '../../services/hotels-data.service';
+import { ReservationService } from '../../services/reservation.service';
+import { ReservationPositionRequestDto } from '../../models/reservation-position-request';
 
 @Component({
   selector: 'app-room-details',
@@ -16,7 +18,9 @@ public room: RoomResponseDto | null = null;
 //public amount 
 public roomId: number;
 public hotelId:number;
-constructor(private route: ActivatedRoute,private roomsService: RoomsService,private router: Router, private hotelService: HotelsDataService){
+
+constructor(private route: ActivatedRoute,private roomsService: RoomsService,private router: Router, private hotelService: HotelsDataService, 
+  private reservationService: ReservationService){
   this.roomId=Number(this.route.snapshot.params['roomid'])
   this.hotelId=Number(this.route.snapshot.params['hotelid'])
   this.roomsService.getById(this.hotelId, this.roomId).subscribe({
@@ -40,8 +44,24 @@ public deleteRoom():void{
 }
 
   bookRoom() {
-    let numberOfAdults: number | null = this.hotelService.getNumberOfAdults();
-    let numberOfKids: number | null = this.hotelService.getNumberOfKids();
-    let amount
+    let numberOfAdults: number = this.hotelService.getNumberOfAdults() ?? 0;
+    let numberOfKids: number = this.hotelService.getNumberOfKids() ?? 0;
+
+    if (numberOfKids > 0 || numberOfAdults > 0) {
+      let reservationPositions: ReservationPositionRequestDto[] = [];
+      reservationPositions.push({
+        numberOfAdults: numberOfAdults,
+        numberOfChildren: numberOfKids,
+        amount: 1,
+        roomId: this.roomId
+      });
+  
+      if (this.reservationService.reservation) {
+        this.reservationService.reservation.reservationPositions.push(...reservationPositions);
+      }
+    }
+    
+
+    console.log(this.reservationService);
   }
 }

@@ -6,6 +6,7 @@ import { HotelsDataService } from '../services/hotels-data.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ReservationService } from '../services/reservation.service';
+import { DatePipe } from '@angular/common'
 
 
 @Component({
@@ -51,13 +52,51 @@ throw new Error('Method not implemented.');
         this.hotelsData.setNumberOfAdults(this.numberOfAdults);
         this.hotelsData.setNumberOfKids(this.numberOfKids);
         this.hotelsData.setNumberOfRooms(this.numberOfRooms);
-        if (this.range.get('start') == null || this.range.get('end')) {
+
+        
+        
+        if (this.range.get('start')?.value == null || this.range.get('end')?.value == null) {
           this.range.patchValue({
             start: new Date(Date.now()),
-            end: new Date(Date.now() + 1)
+            end: new Date(Date.now() + 86400000) // adding 24 hours in milliseconds
           });
         }
-        this.reservationService.reservation.startDate = this.range.get('start')?.value?.toString();
+        
+        const startDateValue = this.range.get('start')?.value;
+        const endDateValue = this.range.get('end')?.value;
+
+        console.log('start' + startDateValue);
+
+        if (startDateValue != null && endDateValue != null) {
+          if (!this.reservationService.reservation) {
+
+            //Zmiana czasu, ponieważ roznica czasowa
+            const startDateAdjusted = new Date(startDateValue);
+            startDateAdjusted.setHours(startDateAdjusted.getHours() + 2);
+
+            const endDateAdjusted = new Date(endDateValue);
+            endDateAdjusted.setHours(endDateAdjusted.getHours() + 2);
+
+            this.reservationService.reservation = {
+              
+              startDate: startDateAdjusted.toISOString(),
+              endDate: endDateAdjusted.toISOString(),
+              reservationPositions: []
+            };
+
+
+            console.log(this.reservationService.reservation.endDate);
+          } else {
+            console.log('else');
+            this.reservationService.reservation.startDate = startDateValue.toISOString();
+            this.reservationService.reservation.endDate = endDateValue.toISOString();
+          }
+        }
+        //console.log(this.reservationService.reservation?.startDate);
+        //console.log(this.reservationService.reservation?.endDate);
+        //let data = this.datepipe.transform(this.range.get('start')?.value, 'yyyy-MM-dd');
+        //console.log(this.range.get('start')?.value?.toISOString());
+
         this.router.navigate(['/hotels']);
       },
       error: (err) => console.log(err)

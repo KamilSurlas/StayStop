@@ -71,10 +71,10 @@ namespace StayStop.BLL_EF.Service
 
             reservation.User = user;
             reservation.UserId = user.UserId;
-            foreach (var rp in reservation.ReservationPositions)
-            {
-                rp.Room.IsAvailable = false;
-            }
+            //foreach (var rp in reservation.ReservationPositions)
+            //{
+            //    rp.Room.IsAvailable = false;
+            //}
 
             user.UserReservations.Add(reservation);
 

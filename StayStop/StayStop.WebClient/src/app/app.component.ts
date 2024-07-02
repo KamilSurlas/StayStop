@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from './services/auth.service';
+import { ReservationService } from './services/reservation.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,10 +9,9 @@ import { AuthService } from './services/auth.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-
   title = 'StayStop';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private reservationService: ReservationService, private router: Router) {}
 
   isUserAuthenticated = (): boolean => {
     return this.authService.isUserAuthenticated();
@@ -30,5 +31,13 @@ export class AppComponent {
 
   canUserManageHotel = () : boolean => {
     return (this.authService.isRoleAdmin() || this.authService.isRoleHotelOwner() || this.authService.isRoleManager());
+  }
+
+  isBasketEmpty = (): boolean => {
+    return (this.reservationService.reservation?.reservationPositions.length == 0 || this.reservationService.reservation == null);
+  }
+
+  navigateToCart() {
+    this.router.navigate(["basket"]); 
   }
 }
