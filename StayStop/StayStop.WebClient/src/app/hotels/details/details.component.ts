@@ -9,7 +9,6 @@ import { HotelsService } from '../../services/hotels.service';
   styleUrl: './details.component.css'
 })
 export class DetailsComponent {
-public error: string | null=null;
 public hotel: HotelResponseDto | null = null;
 public hotelId: number;
 constructor(private route: ActivatedRoute,private hotelsService: HotelsService,private router: Router){

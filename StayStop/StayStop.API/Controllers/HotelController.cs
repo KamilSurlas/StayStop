@@ -66,6 +66,14 @@ namespace StayStop.API.Controllers
 
             return Ok();
         }
+        [HttpGet("available")]
+        [AllowAnonymous]
+        public ActionResult GetAvailableHotels([FromQuery] HotelPagination pagination, [FromQuery] DateTime from, [FromQuery] DateTime to)
+        {
+            var res = _hotelService.GetAvailable(pagination,from,to);
+
+            return Ok(res);
+        }
         [HttpPost("{hotelId}/managers")]
         public ActionResult AddManager([FromRoute] int hotelId, [FromBody] string managerEmail)
         {

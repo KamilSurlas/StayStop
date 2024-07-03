@@ -42,7 +42,28 @@ throw new Error('Method not implemented.');
   }
 
   public search():void {
-    this.hotelsService.getAll({ pageSize: 5, pageNumber: 1, searchPhrase: this.searchPhrase, hotelsSortBy: null, sortDirection: SortDirection.ASC, stars:null }).subscribe(
+
+    if (this.range.get('start')?.value == null || this.range.get('end')?.value == null) {
+      this.range.patchValue({
+        start: new Date(Date.now()),
+        end: new Date(Date.now() + 86400000) // adding 24 hours in milliseconds
+      });
+    }
+   
+    const startDateValue = this.range.get('start')?.value;
+    const endDateValue = this.range.get('end')?.value;
+    console.log(startDateValue);
+    console.log(endDateValue);
+    this.hotelsService.getAvailable({ 
+      pageSize: 5, 
+      pageNumber: 1, 
+      searchPhrase: this.searchPhrase, 
+      hotelsSortBy: null, 
+      sortDirection: SortDirection.ASC, 
+      stars: null},
+      startDateValue!, 
+      endDateValue! 
+    ).subscribe(
       {
       next: (res) => {
         console.log(res)
@@ -55,15 +76,7 @@ throw new Error('Method not implemented.');
 
         
         
-        if (this.range.get('start')?.value == null || this.range.get('end')?.value == null) {
-          this.range.patchValue({
-            start: new Date(Date.now()),
-            end: new Date(Date.now() + 86400000) // adding 24 hours in milliseconds
-          });
-        }
-        
-        const startDateValue = this.range.get('start')?.value;
-        const endDateValue = this.range.get('end')?.value;
+      
 
         console.log('start' + startDateValue);
 

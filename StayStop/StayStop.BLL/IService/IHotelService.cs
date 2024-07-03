@@ -18,5 +18,6 @@ namespace StayStop.BLL.IService
         HotelOpinionResponseDto GetOpinion(int hotelId);
         List<UserResponseDto> GetManagers(int hotelId);
         void DeleteImage(int hotelId, string path);
+        PageResult<HotelResponseDto>? GetAvailable(HotelPagination pagination, DateTime from, DateTime to);
     }
 }

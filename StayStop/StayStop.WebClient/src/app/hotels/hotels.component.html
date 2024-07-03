@@ -40,7 +40,9 @@
     </form>
   </div>
 
-
+  <div *ngIf="result?.items?.length == 0" class="error-message">
+    Ooops... We did not find any available places for Your data.
+  </div>
 
   <div class="right-panel">
     <div class="card-container">

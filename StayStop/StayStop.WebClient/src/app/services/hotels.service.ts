@@ -60,4 +60,16 @@ export class HotelsService {
           body: body}
         return this.httpClient.delete<void>(url, options);
       }
+      public getAvailable(pagination: HotelPagination,from: Date, to: Date): Observable<PageResult<HotelResponseDto>>
+      {
+          const httpParams=new HttpParams().append("pageNumber",pagination.pageNumber)
+          .append("pageSize", pagination.pageSize).append("searchPhrase",pagination.searchPhrase ?? "")
+          .append("sortBy",pagination.hotelsSortBy ?? "")
+          .append("sortDirection",pagination.sortDirection ?? "")
+          .append("from",from.toISOString())
+          .append("to",to.toISOString());
+
+          const params = httpParams;
+          return this.httpClient.get<PageResult<HotelResponseDto>>(`${this.apiUrl}available`, {params: params});
+      }
     }

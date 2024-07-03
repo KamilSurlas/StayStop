@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using StayStop.BLL.Authorization;
 using StayStop.BLL.Dtos.Hotel;
 using StayStop.BLL.Dtos.Hotel.HotelOpinion;
+using StayStop.BLL.Dtos.Room;
 using StayStop.BLL.Dtos.User;
 using StayStop.BLL.Exceptions;
 using StayStop.BLL.IService;
@@ -24,7 +25,7 @@ namespace StayStop.BLL_EF.Service
         private readonly IAuthorizationService _authorizationService;
 
 
-        public HotelService(StayStopDbContext context, IMapper mapper, 
+        public HotelService(StayStopDbContext context, IMapper mapper,
             IUserContextService userContextService, IAuthorizationService authorizationService,
             IImageService imageService)
         {
@@ -42,7 +43,7 @@ namespace StayStop.BLL_EF.Service
             var hotel = _context.Hotels.
                 Include(h => h.Rooms).
                 Include(h => h.Managers)
-                .Include(h=>h.Owner).
+                .Include(h => h.Owner).
                 FirstOrDefault(h => h.HotelId == hotelId);
 
             if (hotel is null) throw new ContentNotFoundException($"Hotel with id: {hotelId} was not found");
@@ -76,12 +77,12 @@ namespace StayStop.BLL_EF.Service
 
             return (averageMark, count);
         }
-      
+
         public int Create(HotelRequestDto hotelDto)
         {
             var hotel = _mapper.Map<Hotel>(hotelDto);
             hotel.OwnerId = _userContextService.GetUserId;
- 
+
             _context.Add(hotel);
             _context.SaveChanges();
 
@@ -96,7 +97,7 @@ namespace StayStop.BLL_EF.Service
             if (!authorizationResult.Succeeded)
             {
                 throw new ForbiddenException("Permission denied");
-            }          
+            }
             _context.Remove(hotelToDelete);
             _context.SaveChanges();
         }
@@ -123,8 +124,8 @@ namespace StayStop.BLL_EF.Service
                     hotelAvgOpinions.Add(hotel, avg);
                 }
 
-                var sortedHotels = pagination.SortDirection == SortDirection.ASC 
-                    ? hotelAvgOpinions.OrderBy(avgOpinion => avgOpinion.Value) 
+                var sortedHotels = pagination.SortDirection == SortDirection.ASC
+                    ? hotelAvgOpinions.OrderBy(avgOpinion => avgOpinion.Value)
                     : hotelAvgOpinions.OrderByDescending(avgOpinion => avgOpinion.Value);
 
                 baseQuery = sortedHotels.Select(h => h.Key).ToList();
@@ -136,7 +137,7 @@ namespace StayStop.BLL_EF.Service
                     {nameof(Hotel.Name), h => h.Name },
                     {nameof(Hotel.Stars), h => h.Stars },
                     {nameof(Hotel.Country), h => h.Country },
-                    {nameof(Hotel.City), h => h.City },                
+                    {nameof(Hotel.City), h => h.City },
                 };
 
                 var selected = columnsSelector[pagination.HotelsSortBy];
@@ -148,19 +149,19 @@ namespace StayStop.BLL_EF.Service
 
             if (pagination.Stars is not null)
             {
-                baseQuery.Where(h => h.Stars == pagination.Stars);
+                baseQuery = baseQuery.Where(h => h.Stars == pagination.Stars).ToList();
             }
-           
+
             var hotels = baseQuery
               .Skip(pagination.PageSize * (pagination.PageNumber - 1))
             .Take(pagination.PageSize)
             .ToList();
 
-           
+
 
             var hotelResults = _mapper.Map<List<HotelResponseDto>>(hotels);
-            
-            var result = new PageResult<HotelResponseDto>(hotelResults, baseQuery.Count(), 
+
+            var result = new PageResult<HotelResponseDto>(hotelResults, baseQuery.Count(),
                 pagination.PageSize, pagination.PageNumber);
 
             return result;
@@ -176,7 +177,7 @@ namespace StayStop.BLL_EF.Service
         }
 
         public void Update(int hotelId, HotelUpdateRequestDto hotelDto)
-        {       
+        {
             var hotelToUpdate = GetHotelById(hotelId);
             var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, hotelToUpdate, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
             if (!authorizationResult.Succeeded)
@@ -189,9 +190,9 @@ namespace StayStop.BLL_EF.Service
             if (hotelDto.CoverImage is not null && hotelToUpdate.CoverImage is not null)
             {
                 hotelToUpdate.Images.Add(hotelToUpdate.CoverImage);
-                
+
             }
-         
+
             if (hotelDto.Images?.Any() ?? false)
             {
                 foreach (var image in hotelDto.Images)
@@ -201,10 +202,10 @@ namespace StayStop.BLL_EF.Service
                         hotelToUpdate.Images.Add(image);
                     }
                 }
-            
+
             }
 
-            
+
             _mapper.Map(hotelDto, hotelToUpdate);
             _context.SaveChanges();
         }
@@ -226,7 +227,7 @@ namespace StayStop.BLL_EF.Service
 
             hotel.Managers.Add(manager);
 
-        
+
             _context.SaveChanges();
         }
 
@@ -238,15 +239,15 @@ namespace StayStop.BLL_EF.Service
             {
                 throw new ForbiddenException("Permission denied");
             }
-            var manager = _context.Users.FirstOrDefault(u=>u.UserId == userId);
+            var manager = _context.Users.FirstOrDefault(u => u.UserId == userId);
             if (manager is null) throw new ContentNotFoundException($"User with id: {userId} was not found");
 
             if (!manager.ManagedHotels.Contains(hotel)) throw new InvalidManagerToRemove($"Manager with an id {userId} is not managing hotel with an id {hotelId}");
 
             hotel.Managers.Remove(manager);
 
-            manager.ManagedHotels.Remove(hotel); 
-            
+            manager.ManagedHotels.Remove(hotel);
+
             _context.SaveChanges();
         }
 
@@ -289,6 +290,49 @@ namespace StayStop.BLL_EF.Service
             }
 
             _context.SaveChanges();
+        }
+
+        public List<HotelResponseDto> GetAvailable()
+        {
+            return null;
+        }
+
+        public PageResult<HotelResponseDto>? GetAvailable(HotelPagination pagination, DateTime from, DateTime to)
+        {
+            var results = this.GetAll(pagination);
+
+            var reservations = _context.Reservations
+                .Include(r => r.ReservationPositions)
+                .ToList();
+
+            var availableHotels = results.Items.Select(hotel =>
+            {
+                var availableRooms = hotel.Rooms.Where(room =>
+                    !reservations.Any(reservation =>
+                        reservation.ReservationPositions.Any(rp =>
+                            rp.RoomId == room.RoomId &&
+                            (from >= reservation.EndDate && to <= reservation.StartDate)
+                        )
+                    )
+                ).ToList();
+
+                var availableRoomDtos = _mapper.Map<List<RoomResponseDto>>(availableRooms);
+
+
+                var hotelDto = _mapper.Map<HotelResponseDto>(hotel);
+                hotelDto.Rooms = availableRoomDtos;
+
+                return hotelDto;
+                
+            })
+            .Where(hotel => hotel.Rooms.Count > 0)
+            .ToList();
+
+
+            results.Items = availableHotels;
+            results.TotalItemsCount = availableHotels.Count();
+
+            return results ?? null;
         }
     }
 }
