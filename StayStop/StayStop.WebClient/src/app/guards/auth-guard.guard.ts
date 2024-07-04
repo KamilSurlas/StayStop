@@ -47,7 +47,7 @@ export class AuthGuard implements CanActivate  {
       });
     });
 
-    localStorage.setItem("jwt", refreshRes.accessToken);
+    localStorage.setItem("accessToken", refreshRes.accessToken);
     localStorage.setItem("refreshToken", refreshRes.refreshToken);
     isRefreshSuccess = true;
 

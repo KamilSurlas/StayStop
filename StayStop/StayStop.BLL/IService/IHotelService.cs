@@ -1,5 +1,6 @@
 ﻿using StayStop.BLL.Dtos.Hotel;
 using StayStop.BLL.Dtos.Hotel.HotelOpinion;
+using StayStop.BLL.Dtos.Reservation.Helpers.Models;
 using StayStop.BLL.Dtos.User;
 using StayStop.BLL.Pagination;
 
@@ -18,6 +19,6 @@ namespace StayStop.BLL.IService
         HotelOpinionResponseDto GetOpinion(int hotelId);
         List<UserResponseDto> GetManagers(int hotelId);
         void DeleteImage(int hotelId, string path);
-        PageResult<HotelResponseDto>? GetAvailable(HotelPagination pagination, DateTime from, DateTime to);
+        PageResult<HotelResponseDto>? GetAvailable(HotelPagination pagination,ReservationDetailsDto details);
     }
 }

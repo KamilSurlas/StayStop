@@ -52,8 +52,8 @@ throw new Error('Method not implemented.');
    
     const startDateValue = this.range.get('start')?.value;
     const endDateValue = this.range.get('end')?.value;
-    console.log(startDateValue);
-    console.log(endDateValue);
+
+
     this.hotelsService.getAvailable({ 
       pageSize: 5, 
       pageNumber: 1, 
@@ -61,8 +61,12 @@ throw new Error('Method not implemented.');
       hotelsSortBy: null, 
       sortDirection: SortDirection.ASC, 
       stars: null},
-      startDateValue!, 
-      endDateValue! 
+      {
+      from: startDateValue!,
+      to: endDateValue!,
+      numOfAdults: this.numberOfAdults,
+      numOfChildren: this.numberOfKids
+      }
     ).subscribe(
       {
       next: (res) => {

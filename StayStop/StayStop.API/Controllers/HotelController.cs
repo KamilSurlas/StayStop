@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using StayStop.BLL.Dtos.Hotel;
 using StayStop.BLL.Dtos.Hotel.HotelOpinion;
+using StayStop.BLL.Dtos.Reservation.Helpers.Models;
 using StayStop.BLL.IService;
 using StayStop.BLL.Pagination;
 using StayStop.Model;
@@ -68,9 +69,9 @@ namespace StayStop.API.Controllers
         }
         [HttpGet("available")]
         [AllowAnonymous]
-        public ActionResult GetAvailableHotels([FromQuery] HotelPagination pagination, [FromQuery] DateTime from, [FromQuery] DateTime to)
+        public ActionResult GetAvailableHotels([FromQuery] HotelPagination pagination, [FromQuery]  ReservationDetailsDto details)
         {
-            var res = _hotelService.GetAvailable(pagination,from,to);
+            var res = _hotelService.GetAvailable(pagination,details);
 
             return Ok(res);
         }
