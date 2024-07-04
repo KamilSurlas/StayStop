@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ReservationRequestDto } from '../models/reservation-request';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from "rxjs";
+import { ReservationResponseDto } from '../models/reservation-response';
 
 @Injectable({
   providedIn: 'root'
@@ -14,5 +15,13 @@ export class ReservationService {
 
   public post(): Observable<any> {
     return this.httpClient.post<any>(`${this.apiUrl}`, this.reservation);
+  }
+
+  public get(): Observable<ReservationResponseDto[]> {
+    return this.httpClient.get<ReservationResponseDto[]>(`http://localhost:5080/api/user/reservations/`);
+  }
+
+  public delete(reservationId: number): Observable<any> {
+    return this.httpClient.delete<any>(`${this.apiUrl}${reservationId}`);
   }
 }

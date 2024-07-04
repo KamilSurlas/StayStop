@@ -10,7 +10,7 @@ import { RoomRequestDto } from "../models/room-request";
 export class RoomsService {
     private apiUrl: string = 'http://localhost:5080/api/hotel/';
     constructor(private httpClient: HttpClient){}
-    public getById(hotelId: number, roomId:number):Observable<RoomResponseDto>{
+      public getById(hotelId: number, roomId:number):Observable<RoomResponseDto>{
         return this.httpClient.get<RoomResponseDto>(`${this.apiUrl}${hotelId}/room/${roomId}`);
       }
       public deleteById(hotelId: number, roomId:number):Observable<void>{
@@ -22,6 +22,11 @@ export class RoomsService {
       public update(hotelId:number, roomId: number, dto: RoomUpdateRequestDto):Observable<void>{
         return this.httpClient.put<void>(`${this.apiUrl + hotelId}/room/${roomId}`, dto);
       }
+
+      public getSingleRoomById(roomId: number) : Observable<RoomResponseDto>{
+        return this.httpClient.get<RoomResponseDto>(`${this.apiUrl}room/${roomId}`)
+      }
+
       public removeImage(imageUrl: string, hotelId:number, roomId:number):Observable<void>{
         const url = `${this.apiUrl}${hotelId}/room/${roomId}/images`;
         const headers = new HttpHeaders({

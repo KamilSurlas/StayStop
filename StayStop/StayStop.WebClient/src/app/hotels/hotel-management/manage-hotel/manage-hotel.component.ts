@@ -6,7 +6,7 @@ import { HotelResponseDto } from '../../../models/hotel-response';
 import { UserResponseDto } from '../../../models/user-response';
 import { RoomsService } from '../../../services/room.service';
 import { HotelUpdateRequestDto } from '../../../models/hotel-update-request';
-import { ImageService } from '../../../image.service';
+import { ImageService } from '../../../services/image.service';
 
 
 @Component({

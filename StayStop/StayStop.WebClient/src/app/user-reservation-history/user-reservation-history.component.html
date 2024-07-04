@@ -1,0 +1,27 @@
+<div class="reservation-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Reservation ID</th>
+          <th>Price</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of reservationPositions">
+          <td>{{ r.reservationId }}</td>
+          <td>{{ r.price | currency }}</td>
+          <td>
+            <button class="details-button" (click)="viewDetails(r)">Details</button>
+            <button 
+              class="cancel-button" 
+              (click)="cancelReservation(r.reservationId)" 
+              [disabled]="!canBeCancelled(r)">
+              Cancel
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

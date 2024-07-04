@@ -4,6 +4,7 @@
         <li *ngIf="this.isUserAuthenticated()"><a href="/account">Account</a></li>
         <li><a routerLink="hotels">Hotels</a></li>
         <li *ngIf="this.canUserManageHotel()"><a routerLink="management/hotels">Manage hotels</a></li>
+        <li *ngIf="this.isUserAuthenticated()"><a href="/history">Reservations</a></li>
     </ul>
 
     <div class="login-container">

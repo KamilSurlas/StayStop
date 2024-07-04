@@ -42,6 +42,8 @@ import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { AddRoomComponent } from './hotels/add-room/add-room.component';
 import { AddHotelComponent } from './hotels/add-hotel/add-hotel.component';
 import { BasketComponent } from './basket/basket.component';
+import { UserReservationHistoryComponent } from './user-reservation-history/user-reservation-history.component';
+import { ReservationDetailsComponent } from './reservation-details/reservation-details.component';
 //import { AddHotelComponent } from './hotels/add-hotel/add-hotel.component';
 
 
@@ -70,7 +72,9 @@ export function tokenGetter() {
     MultipleFileUploadComponent,
     AddHotelComponent,
     AddRoomComponent,
-    BasketComponent
+    BasketComponent,
+    UserReservationHistoryComponent,
+    ReservationDetailsComponent
   ],
   imports: [
     BrowserModule,

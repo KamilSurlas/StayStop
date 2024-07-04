@@ -183,6 +183,12 @@ namespace StayStop.BLL_EF.Service
             _context.SaveChanges();
 
         }
+
+        public RoomResponseDto GetSingleRoomById(int roomId)
+        {
+            var result = _mapper.Map<RoomResponseDto>(GetRoomById(roomId));
+            return result;
+        }
     }
 }
 

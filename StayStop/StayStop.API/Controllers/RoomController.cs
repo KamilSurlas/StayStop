@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using StayStop.BLL.Dtos.Room;
 using StayStop.BLL.IService;
 using StayStop.BLL_EF.Service;
+using StayStop.Model;
 using StayStop.Model.Constants;
 
 namespace StayStop.API.Controllers
@@ -39,6 +40,16 @@ namespace StayStop.API.Controllers
             RoomResponseDto room = _roomService.GetById(hotelId, roomId);
             return Ok(room);
         }
+
+        [Route("~/api/hotel/room/{roomId}")]
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult<RoomResponseDto> GetSingleRoomById([FromRoute] int roomId)
+        {
+            RoomResponseDto room = _roomService.GetSingleRoomById(roomId);
+            return Ok(room);
+        }
+
         [HttpDelete]
         public ActionResult DeleteAll([FromRoute] int hotelId)
         {

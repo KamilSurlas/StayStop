@@ -1,3 +1,35 @@
-<p>basket works!</p>
+<div *ngIf="!(this.rooms.length <= 0)">
+    <div class="container">
+        <div class="reservation-header">
+          <h1>Reservation Dates</h1>
+          <h2 class="reservation-dates">
+            {{ this.startDate | date:'yyyy-MM-dd' }} - {{ this.endDate | date:'yyyy-MM-dd' }}
+          </h2>
+        </div>
+      
+        <div class="rooms-list">
+          <div *ngFor="let r of rooms" class="room-item">
+            <img [src]="r.coverImage" alt="Room Image" class="cover-image">
+            <div class="room-details">
+              <h2 class="room-type">{{ r.roomType }}</h2>
+              <p class="capacity">Adults: {{ r.numberOfAdults }}, Children: {{ r.numberOfChildren }}</p>
+            </div>
+          </div>
+        </div>
+      
+        <div class="summary">
+          <h3>Summary</h3>
+          <p>Total Rooms: {{ rooms.length }}</p>
+          <p>Total Price: ${{ this.price | number:'1.2-2' }}</p>
+        </div>
+      
+        <button (click)="createReservation()">Order</button>
+    </div>
+</div>
 
-<button (click)="createReservation()">Order</button>
+
+<div *ngIf="this.rooms.length <= 0">
+    <h1>You do not have any reservation!</h1>
+</div>
+
+  
