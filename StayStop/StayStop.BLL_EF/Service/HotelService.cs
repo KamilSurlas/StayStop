@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using StayStop.BLL.Authorization;
 using StayStop.BLL.Dtos.Hotel;
 using StayStop.BLL.Dtos.Hotel.HotelOpinion;
+using StayStop.BLL.Dtos.Reservation.Helpers.Models;
 using StayStop.BLL.Dtos.Room;
 using StayStop.BLL.Dtos.User;
 using StayStop.BLL.Exceptions;
@@ -291,48 +292,52 @@ namespace StayStop.BLL_EF.Service
 
             _context.SaveChanges();
         }
-
-        public List<HotelResponseDto> GetAvailable()
+        public PageResult<HotelResponseDto>? GetAvailable(HotelPagination pagination, ReservationDetailsDto details)
         {
-            return null;
-        }
+            var results = GetAll(pagination);
 
-        public PageResult<HotelResponseDto>? GetAvailable(HotelPagination pagination, DateTime from, DateTime to)
-        {
-            var results = this.GetAll(pagination);
 
-            var reservations = _context.Reservations
+            var conflictingReservations = _context.Reservations
                 .Include(r => r.ReservationPositions)
-                .ToList();
+                .Where(reservation =>
+                    reservation.ReservationPositions.Any(rp =>
+                        (reservation.StartDate < details.To && reservation.EndDate > details.From)
+                    )
+                ).ToList();
 
             var availableHotels = results.Items.Select(hotel =>
             {
                 var availableRooms = hotel.Rooms.Where(room =>
-                    !reservations.Any(reservation =>
-                        reservation.ReservationPositions.Any(rp =>
-                            rp.RoomId == room.RoomId &&
-                            (from >= reservation.EndDate && to <= reservation.StartDate)
-                        )
-                    )
+                 !conflictingReservations.Any(reservation =>
+                    reservation.ReservationPositions.Any(rp =>
+                    rp.RoomId == room.RoomId
+                    )) 
+                 && room.NumberOfAdults >= details.NumOfAdults 
+                 && room.NumberOfChildren >= details.NumOfChildren
                 ).ToList();
 
-                var availableRoomDtos = _mapper.Map<List<RoomResponseDto>>(availableRooms);
+
+                if (availableRooms.Any())
+                {
+                    var hotelDto = _mapper.Map<HotelResponseDto>(hotel);
 
 
-                var hotelDto = _mapper.Map<HotelResponseDto>(hotel);
-                hotelDto.Rooms = availableRoomDtos;
+                    hotelDto.Rooms = _mapper.Map<List<RoomResponseDto>>(availableRooms);
 
-                return hotelDto;
-                
+                    return hotelDto;
+                }
+
+                return null;
             })
-            .Where(hotel => hotel.Rooms.Count > 0)
-            .ToList();
-
+    .Where(hotel => hotel != null)
+    .ToList();
 
             results.Items = availableHotels;
             results.TotalItemsCount = availableHotels.Count();
 
             return results ?? null;
+
+
         }
     }
 }

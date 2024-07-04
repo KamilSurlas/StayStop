@@ -1,33 +1,37 @@
 .selectable:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .container {
-    display: flex;
-  }
-  
-  .left-panel {
-    flex: 1;
-    margin-top: 15px;
-    margin-left: 10px;
-  }
-  
-  .right-panel {
-    flex: 4;
-  }
-  
-  .example-form {
-    margin-bottom: 10px; 
-  }
-  
-  .example-full-width {
-    width: 100%;
-  }
-  .error-message {
-    color: red;
-    font-weight: bold;
-    font-size: 1.2em;
-    margin-top: 10px;
-  }
-  
-  
+  display: flex;
+}
+
+.left-panel {
+  flex: 1;
+  margin-top: 15px;
+  margin-left: 10px;
+}
+
+.right-panel {
+  flex: 4;
+}
+
+.example-form {
+  margin-bottom: 10px; 
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.error-message {
+  color: #ff0000; 
+  background-color: #ffe6e6;
+  border: 1px solid #ff0000; 
+  border-radius: 5px; 
+  font-weight: bold;
+  font-size: 1.2em;
+  padding: 10px; 
+  margin-top: 10px;
+  text-align: center; 
+}

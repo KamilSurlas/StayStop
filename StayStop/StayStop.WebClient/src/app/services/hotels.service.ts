@@ -7,6 +7,7 @@ import { Injectable } from "@angular/core";
 import { UserResponseDto } from "../models/user-response";
 import { HotelUpdateRequestDto } from "../models/hotel-update-request";
 import { HotelRequestDto } from "../models/hotel-request";
+import { ReservationDetailsDto } from "../models/reservation-details";
 @Injectable({
     providedIn: 'root'
   })
@@ -60,14 +61,16 @@ export class HotelsService {
           body: body}
         return this.httpClient.delete<void>(url, options);
       }
-      public getAvailable(pagination: HotelPagination,from: Date, to: Date): Observable<PageResult<HotelResponseDto>>
+      public getAvailable(pagination: HotelPagination,reservationDetails: ReservationDetailsDto): Observable<PageResult<HotelResponseDto>>
       {
           const httpParams=new HttpParams().append("pageNumber",pagination.pageNumber)
           .append("pageSize", pagination.pageSize).append("searchPhrase",pagination.searchPhrase ?? "")
           .append("sortBy",pagination.hotelsSortBy ?? "")
           .append("sortDirection",pagination.sortDirection ?? "")
-          .append("from",from.toISOString())
-          .append("to",to.toISOString());
+          .append("from",reservationDetails.from.toISOString())
+          .append("to",reservationDetails.to.toISOString())
+          .append("numOfAdults",reservationDetails.numOfAdults)
+          .append("numOfChildren",reservationDetails.numOfChildren)
 
           const params = httpParams;
           return this.httpClient.get<PageResult<HotelResponseDto>>(`${this.apiUrl}available`, {params: params});
