@@ -1,5 +1,6 @@
 ﻿using StayStop.BLL.Dtos.Reservation;
 using StayStop.BLL.Pagination;
+using StayStop.Model.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,7 @@ namespace StayStop.BLL.IService
         IEnumerable<ReservationResponseDto> GetReservationsHistory();
         PageResult<ReservationResponseDto> GetAll(ReservationPagination pagination);
         void DeleteById(int reservationId);
+        void UpdateStatus(int reservationId, ReservationStatus reservationStatus);
+        ReservationResponseDto GetById(int reservationId);
     }
 }

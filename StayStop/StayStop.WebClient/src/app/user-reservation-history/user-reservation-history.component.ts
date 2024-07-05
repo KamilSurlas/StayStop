@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ReservationResponseDto } from '../models/reservation-response';
 import { ReservationService } from '../services/reservation.service';
+import { Router } from '@angular/router';
+import { ReservationStatus } from '../models/reservation-status';
 
 @Component({
   selector: 'app-user-reservation-history',
@@ -9,15 +11,15 @@ import { ReservationService } from '../services/reservation.service';
 })
 export class UserReservationHistoryComponent {
 
-  constructor(private reservationService: ReservationService) {
+  constructor(private reservationService: ReservationService, private router: Router) {
     this.loadData();
   }
-  reservationPositions: ReservationResponseDto[] = [];
+  reservations: ReservationResponseDto[] = [];
   
   loadData() {
     this.reservationService.get().subscribe({
       next: (res) => {
-        this.reservationPositions = res;
+        this.reservations = res;
       },
       error: (err) => {
         console.log(err);
@@ -33,21 +35,17 @@ export class UserReservationHistoryComponent {
   }
 
 
-  cancelReservation(reservationId: number) {
-    this.reservationService.delete(reservationId).subscribe({
-      next: (res) => {
-        console.log(res);
+  viewDetails(reservationId: number) {
+    this.router.navigateByUrl(`history/${reservationId}`);
+  }
+  cancelReservation(reservationId: number):void{
+    this.reservationService.changeStatus(reservationId,ReservationStatus.Canceled).subscribe({
+      next: () => {
+        this.loadData();
       },
       error: (err) => {
         console.log(err);
       }
-    });
-    //this.loadData();
+    })
   }
-
-
-  viewDetails(reservation: ReservationResponseDto) {
-    //this.roomService
-  }
-  
 }

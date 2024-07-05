@@ -3,6 +3,7 @@ import { ReservationRequestDto } from '../models/reservation-request';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from "rxjs";
 import { ReservationResponseDto } from '../models/reservation-response';
+import { ReservationStatus } from '../models/reservation-status';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class ReservationService {
   private apiUrl: string = 'http://localhost:5080/api/reservation/';
 
   public post(): Observable<any> {
+    this.reservation!.reservationStatus = ReservationStatus.Booked;
     return this.httpClient.post<any>(`${this.apiUrl}`, this.reservation);
   }
 
@@ -23,5 +25,11 @@ export class ReservationService {
 
   public delete(reservationId: number): Observable<any> {
     return this.httpClient.delete<any>(`${this.apiUrl}${reservationId}`);
+  }
+  public getById(reservationId: number):Observable<ReservationResponseDto>{
+    return this.httpClient.get<ReservationResponseDto>(`${this.apiUrl}${reservationId}`);
+  }
+  public changeStatus(reservationId: number, status: ReservationStatus):Observable<void>{
+    return this.httpClient.put<void>(this.apiUrl + reservationId,status);
   }
 }

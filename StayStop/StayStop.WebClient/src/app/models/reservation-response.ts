@@ -1,4 +1,5 @@
 import { ReservationPositionResponseDto } from "./reservation-position-response";
+import { ReservationStatus } from "./reservation-status";
 
 export interface ReservationResponseDto {
     reservationId: number;
@@ -6,4 +7,6 @@ export interface ReservationResponseDto {
     endDate: string;
     price: number;
     reservationPositions: ReservationPositionResponseDto[];
+    reservationStatus: ReservationStatus;
+
 }

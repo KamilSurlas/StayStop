@@ -14,6 +14,7 @@ using StayStop.BLL.Pagination;
 using StayStop.BLL_EF.Exceptions;
 using StayStop.DAL.Context;
 using StayStop.Model;
+using StayStop.Model.Enums;
 using System.Linq.Expressions;
 
 namespace StayStop.BLL_EF.Service
@@ -310,7 +311,7 @@ namespace StayStop.BLL_EF.Service
                 var availableRooms = hotel.Rooms.Where(room =>
                  !conflictingReservations.Any(reservation =>
                     reservation.ReservationPositions.Any(rp =>
-                    rp.RoomId == room.RoomId
+                    rp.RoomId == room.RoomId && reservation.ReservationStatus == ReservationStatus.Booked
                     )) 
                  && room.NumberOfAdults >= details.NumOfAdults 
                  && room.NumberOfChildren >= details.NumOfChildren

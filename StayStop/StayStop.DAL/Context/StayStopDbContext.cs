@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StayStop.Model;
+using StayStop.Model.Enums;
 
 namespace StayStop.DAL.Context
 {
@@ -44,6 +45,7 @@ namespace StayStop.DAL.Context
             // Enumy jako tekst nie inty
             modelBuilder.Entity<Hotel>().Property(h => h.HotelType).HasConversion(new EnumToStringConverter<HotelType>());
             modelBuilder.Entity<Room>().Property(r => r.RoomType).HasConversion(new EnumToStringConverter<RoomType>());
+            modelBuilder.Entity<Reservation>().Property(r => r.ReservationStatus).HasConversion(new EnumToStringConverter<ReservationStatus>());
      
             //ReservationPosition - Rooms
             modelBuilder.Entity<ReservationPosition>()

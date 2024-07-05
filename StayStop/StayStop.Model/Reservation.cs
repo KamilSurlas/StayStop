@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using StayStop.Model.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,6 +16,7 @@ namespace StayStop.Model
         public DateTime StartDate { get; set; } = DateTime.UtcNow;
         public DateTime EndDate { get; set; }
         public required decimal Price { get; set; }
+        public required ReservationStatus ReservationStatus { get; set; }
         public Opinion? Opinion { get; set; }
         public required List<ReservationPosition> ReservationPositions { get; set; }
     }

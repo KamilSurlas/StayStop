@@ -5,6 +5,7 @@ using StayStop.BLL.IService;
 using StayStop.BLL.Pagination;
 using StayStop.Model;
 using StayStop.Model.Constants;
+using StayStop.Model.Enums;
 
 namespace StayStop.API.Controllers
 {
@@ -24,7 +25,7 @@ namespace StayStop.API.Controllers
         {
             var newReservationId = _reservationService.Create(reservationDto);
 
-            return Created($"/api/reservation/{newReservationId}", null);
+            return Created($"/api/reservation/{newReservationId}", new {Id = newReservationId});
         }
         [HttpGet("/api/user/{userId}/reservations")]
         [Authorize(Roles = UserRole.Admin)]
@@ -41,6 +42,13 @@ namespace StayStop.API.Controllers
 
             return Ok(reservations);
         }
+        [HttpGet("{reservationId}")]
+        public ActionResult<ReservationResponseDto> GetById([FromRoute] int reservationId) 
+        {
+            var reservation = _reservationService.GetById(reservationId);
+
+            return Ok(reservation);
+        }
         [HttpGet]
         [Authorize(Roles = UserRole.Admin)]
         public ActionResult<IEnumerable<ReservationResponseDto>> GetAll([FromQuery] ReservationPagination pagination)
@@ -56,6 +64,13 @@ namespace StayStop.API.Controllers
             _reservationService.DeleteById( reservationId);
 
             return NoContent();
+        }
+        [HttpPut("{reservationId}")]
+        public ActionResult ChangeReservationStatus([FromRoute] int reservationId, [FromBody] ReservationStatus reservationStatus)
+        {
+            _reservationService.UpdateStatus(reservationId, reservationStatus);
+
+            return Ok();
         }
     }
 }

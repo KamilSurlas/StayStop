@@ -16,6 +16,7 @@ import { AddHotelComponent } from './hotels/add-hotel/add-hotel.component';
 import { AddRoomComponent } from './hotels/add-room/add-room.component';
 import { BasketComponent } from './basket/basket.component';
 import { UserReservationHistoryComponent } from './user-reservation-history/user-reservation-history.component';
+import { ReservationDetailsComponent } from './reservation-details/reservation-details.component';
 
 
 
@@ -35,6 +36,7 @@ const routes: Routes = [
   {path:  'management/hotels/:hotelid/rooms/:roomid', component: ManageRoomComponent},
   { path: 'basket', component: BasketComponent },
   { path: 'history', component: UserReservationHistoryComponent },
+   {path: 'history/:reservationid',component: ReservationDetailsComponent}
 ];
 
 @NgModule({

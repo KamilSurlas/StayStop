@@ -98,7 +98,8 @@ throw new Error('Method not implemented.');
               
               startDate: startDateAdjusted.toISOString(),
               endDate: endDateAdjusted.toISOString(),
-              reservationPositions: []
+              reservationPositions: [],
+              reservationStatus: null!,
             };
 
 

@@ -3,11 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using StayStop.BLL.DateTimeExtension;
 using StayStop.BLL.Dtos.Hotel;
 using StayStop.BLL.Dtos.Reservation;
+using StayStop.BLL.Exceptions;
 using StayStop.BLL.IService;
 using StayStop.BLL.Pagination;
 using StayStop.BLL_EF.Exceptions;
 using StayStop.DAL.Context;
 using StayStop.Model;
+using StayStop.Model.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +42,7 @@ namespace StayStop.BLL_EF.Service
         }
         private Reservation GetReservationById(int reservationId)
         {
-            var reservation = _context.Reservations.First(r => r.ReservationId == reservationId);
+            var reservation = _context.Reservations.Include(r => r.ReservationPositions).ThenInclude(rp => rp.Room).First(r => r.ReservationId == reservationId);
             if (reservation is null) throw new ContentNotFoundException($"Reservation with id: {reservationId} was not found");
 
             return reservation;
@@ -157,6 +159,31 @@ namespace StayStop.BLL_EF.Service
 
             return results;
 
+        }
+
+        public void UpdateStatus(int reservationId, ReservationStatus reservationStatus)
+        {
+            var reservation = GetReservationById(reservationId);
+            if (reservation.UserId != _userContextService.GetUserId)
+            {
+                throw new ForbiddenException("Access denied");
+            }
+            if (reservation.ReservationStatus != reservationStatus &&
+                reservation.ReservationStatus != ReservationStatus.Canceled)
+            {
+                reservation.ReservationStatus = reservationStatus;
+            }
+
+            _context.SaveChanges();
+        }
+
+        public ReservationResponseDto GetById(int reservationId)
+        {
+            var reservation = GetReservationById(reservationId);
+
+            var result = _mapper.Map<ReservationResponseDto>(reservation);
+
+            return result;
         }
     }
 }

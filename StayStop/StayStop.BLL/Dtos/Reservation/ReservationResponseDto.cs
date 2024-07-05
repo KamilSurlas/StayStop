@@ -1,5 +1,6 @@
 ﻿using StayStop.BLL.Dtos.ReservationPosition;
 using StayStop.Model;
+using StayStop.Model.Enums;
 
 namespace StayStop.BLL.Dtos.Reservation
 {
@@ -10,6 +11,7 @@ namespace StayStop.BLL.Dtos.Reservation
         public required DateTime EndDate { get; set; }
         public required decimal Price { get; set; }
         public required List<ReservationPositionResponseDto> ReservationPositions { get; set; }
+        public required ReservationStatus ReservationStatus { get; set; }
     }
 }
 

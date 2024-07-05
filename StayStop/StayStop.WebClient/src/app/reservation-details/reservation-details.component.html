@@ -1,1 +1,30 @@
-<p>reservation-details works!</p>
+<!-- reservation-details.component.html -->
+<div class="reservation-details">
+    <h2>Reservation Details</h2>
+    <div class="reservation-info">
+      <p><strong>Reservation ID:</strong> {{ reservation?.reservationId }}</p>
+      <p><strong>Start Date:</strong> {{ reservation?.startDate | date:'yyyy-MM-dd'}}</p>
+      <p><strong>End Date:</strong> {{ reservation?.endDate | date:'yyyy-MM-dd' }}</p>
+      <p><strong>Status:</strong> {{ reservation?.reservationStatus }}</p>
+    </div>
+  
+    <h3>Reservation Positions</h3>
+    <div class="positions">
+      <div *ngFor="let position of reservation?.reservationPositions" class="position">    
+        <p><strong>Room Type:</strong> {{ position.room.roomType }}</p>
+        <p><strong>Numer of adults:</strong> {{ position.numberOfAdults }}</p>
+        <p><strong>Number of kids:</strong> {{ position.numberOfChildren }}</p>
+        <p><strong>Price:</strong> {{ position.price | currency }}</p>
+        <p><strong>Amount:</strong> {{ position.amount }}</p>
+        <div class="room-images">
+          <img *ngFor="let image of position.room.images" [src]="image" alt="Room image">
+        </div>
+      </div>
+    </div>
+  
+    <h3>Total Price: {{ reservation?.price | currency }}</h3>
+  </div>
+  
+  <div *ngIf="isPastEndDate(reservation?.endDate!)">
+    <button (click)="addOpinion(reservation?.reservationId!)">Add opinion about your stay</button>
+  </div>

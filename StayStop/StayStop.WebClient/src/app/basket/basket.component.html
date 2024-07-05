@@ -27,6 +27,11 @@
     </div>
 </div>
 
+<div *ngIf="createdMessage">
+  <h1>{{createdMessage}}</h1>
+  <h3>You can see reservation details here:</h3>
+  <button (click)="seeReservationDetails()">Reservation details</button>
+</div>
 
 <div *ngIf="this.rooms.length <= 0">
     <h1>You do not have any reservation!</h1>

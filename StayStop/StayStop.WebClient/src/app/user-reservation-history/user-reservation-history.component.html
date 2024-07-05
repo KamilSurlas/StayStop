@@ -4,15 +4,17 @@
         <tr>
           <th>Reservation ID</th>
           <th>Price</th>
+          <th>Status</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let r of reservationPositions">
+        <tr *ngFor="let r of reservations">
           <td>{{ r.reservationId }}</td>
           <td>{{ r.price | currency }}</td>
+          <td>{{r.reservationStatus}}</td>
           <td>
-            <button class="details-button" (click)="viewDetails(r)">Details</button>
+            <button class="details-button" (click)="viewDetails(r.reservationId)">Details</button>
             <button 
               class="cancel-button" 
               (click)="cancelReservation(r.reservationId)" 
