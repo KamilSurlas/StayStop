@@ -17,6 +17,10 @@ import { AddRoomComponent } from './hotels/add-room/add-room.component';
 import { BasketComponent } from './basket/basket.component';
 import { UserReservationHistoryComponent } from './user-reservation-history/user-reservation-history.component';
 import { ReservationDetailsComponent } from './reservation-details/reservation-details.component';
+import { AddOpinionComponent } from './opinions/add-opinion/add-opinion.component';
+import { HotelOpinionsComponent } from './opinions/hotel-opinions/hotel-opinions.component';
+import { UserOpinionsComponent } from './opinions/user-opinions/user-opinions.component';
+import { UpdateOpinionComponent } from './opinions/update-opinion/update-opinion.component';
 
 
 
@@ -36,7 +40,11 @@ const routes: Routes = [
   {path:  'management/hotels/:hotelid/rooms/:roomid', component: ManageRoomComponent},
   { path: 'basket', component: BasketComponent },
   { path: 'history', component: UserReservationHistoryComponent },
-   {path: 'history/:reservationid',component: ReservationDetailsComponent}
+   {path: 'history/:reservationid',component: ReservationDetailsComponent},
+   {path:'history/:reservationid/opinions/add',component:AddOpinionComponent},
+   { path: 'hotels/:hotelid/opinions', component:HotelOpinionsComponent },
+   {path:'opinions',component:UserOpinionsComponent},
+   {path: 'opinions/:opinionid/update',component: UpdateOpinionComponent}
 ];
 
 @NgModule({

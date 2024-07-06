@@ -1,0 +1,25 @@
+<div class="update-opinion-container">
+    <h2>Edit Opinion</h2>
+    <form #updateopinion (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>User Opinion</mat-label>
+        <textarea matInput [(ngModel)]="opinionUpdateDto.userOpinion" name="userOpinion" ></textarea>
+        <mat-error *ngIf="!opinionUpdateDto.userOpinion">User Opinion is required</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Details</mat-label>
+        <textarea matInput [(ngModel)]="opinionUpdateDto.details" name="details" ></textarea>
+        <mat-error *ngIf="!opinionUpdateDto.details">Details are required</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Mark</mat-label>
+        <input matInput type="number" [(ngModel)]="opinionUpdateDto.mark" name="mark" />
+        <mat-error *ngIf="!opinionUpdateDto.mark">Mark is required</mat-error>
+      </mat-form-field>
+  
+      <button mat-raised-button color="primary" type="submit" >Save Changes</button>
+    </form>
+  </div>
+  

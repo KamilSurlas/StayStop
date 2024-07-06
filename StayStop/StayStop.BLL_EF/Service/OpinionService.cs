@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using StayStop.BLL.Authorization;
+using StayStop.BLL.Dtos.Hotel.HotelOpinion;
 using StayStop.BLL.Dtos.Opinion;
 using StayStop.BLL.Exceptions;
 using StayStop.BLL.IService;
@@ -44,11 +45,17 @@ namespace StayStop.BLL_EF.Service
         public int Create(int reservationId, OpinionRequestDto opinionDto)
         {
             if (opinionDto.Mark < 1 || opinionDto.Mark > 5) throw new InvalidDataException($"Mark is invalid: {opinionDto.Mark}");
-   
+
+
 
             var reservation = GetReservationById(reservationId);
 
             if (reservation.Opinion is not null) throw new ReservationAlreadyHasOpinion($"Reservation with an id {reservationId} already has opinion");
+
+            if (reservation.UserId != _userContextService.GetUserId)
+            {
+                throw new ForbiddenException("Access denied");
+            }
 
             var opinion = _mapper.Map<Opinion>(opinionDto);
             opinion.AddedById = _userContextService.GetUserId;
@@ -91,23 +98,73 @@ namespace StayStop.BLL_EF.Service
             return opinion;
         }
 
-        public void Update(int reservationId, OpinionUpdateRequestDto opinionDto)
+        public void UpdateByOpinionId(int opinionId, OpinionUpdateRequestDto opinionDto)
         {
             if (opinionDto.Mark < 1 || opinionDto.Mark > 5) throw new InvalidDataException($"Mark is invalid: {opinionDto.Mark}");
+            var opinion = _context.Opinions
+              .Include(o => o.Reservation)
+              .ThenInclude(r => r.ReservationPositions)
+              .ThenInclude(rp => rp.Room).Where(o => o.OpinionId == opinionId).FirstOrDefault();
+            if (opinion is null)
+            {
+                throw new ContentNotFoundException($"Opinion with id: {opinionId} was not found");
+            }
 
-            var reservation = GetReservationById(reservationId);
 
-            if (reservation.Opinion is null) throw new InvalidOperationException($"Reservation with an id {reservationId} don't have opinion");
-            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, reservation.Opinion, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
+            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, opinion, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
             if (!authorizationResult.Succeeded)
             {
                 throw new ForbiddenException("Permission denied");
             }
-            _mapper.Map(opinionDto, reservation.Opinion);
+            _mapper.Map(opinionDto, opinion);
 
-            reservation.Opinion.ReservationId = reservationId;
+         
 
             _context.SaveChanges();
+        }
+
+        public List<OpinionResponseDto> GetUserOpinions()
+        {
+            var opinions = _context.Opinions.Include(o => o.Reservation)
+            .ThenInclude(r => r.ReservationPositions)
+                .ThenInclude(rp => rp.Room)
+                    .ThenInclude(room => room.Hotel).Where(o => o.AddedById == _userContextService.GetUserId).ToList();
+
+            var results = _mapper.Map<List<OpinionResponseDto>>(opinions);
+
+            return results;
+        }
+
+        public void DeleteByOpinionId(int opinionId)
+        {
+            var opinion = _context.Opinions
+                .FirstOrDefault(o => o.OpinionId == opinionId);
+
+            if (opinion is null)
+            {
+                throw new ContentNotFoundException($"Opinion with id: {opinionId} was not found");
+
+               
+            }
+            _context.Remove(opinion);
+            _context.SaveChanges();
+        }
+
+        public OpinionResponseDto GetByOpinionId(int opinionId)
+        {
+            var opinion = _context.Opinions
+                .Include(o => o.Reservation)
+                .ThenInclude(r => r.ReservationPositions)
+                .ThenInclude(rp => rp.Room)
+                    .ThenInclude(room => room.Hotel).Where(o => o.OpinionId == opinionId).FirstOrDefault();
+
+            if (opinion is null)
+            {
+                throw new ContentNotFoundException($"Opinion with id: {opinionId} was not found");
+            }
+
+            var result = _mapper.Map<OpinionResponseDto>(opinion);
+            return result;
         }
     }
 }

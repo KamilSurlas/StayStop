@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ReservationResponseDto } from '../models/reservation-response';
 import { ReservationService } from '../services/reservation.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ReservationStatus } from '../models/reservation-status';
 
 @Component({
   selector: 'app-reservation-details',
@@ -10,7 +11,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ReservationDetailsComponent {
 public reservation: ReservationResponseDto | null = null;
-constructor(private reservationService: ReservationService, private activatedRoute: ActivatedRoute){
+public status = ReservationStatus;
+constructor(private reservationService: ReservationService, private activatedRoute: ActivatedRoute, private router: Router){
   this.loadReservation(this.activatedRoute.snapshot.params['reservationid'])
 }
 private loadReservation(reservationId:number):void{
@@ -30,6 +32,6 @@ isPastEndDate(endDate: string): boolean {
 }
 
 public addOpinion(reservationId: number) {
-  // wyslanie opinii 
+  this.router.navigateByUrl(`history/${reservationId}/opinions/add`);
 }
 }

@@ -19,6 +19,7 @@ namespace StayStop.Model
         public required string Details { get; set; }
         public required int? AddedById { get; set; }
         public required User? AddedBy { get; set; }
+        public required DateTime AddedOn { get; set; } = DateTime.Now;
 
     }
 }

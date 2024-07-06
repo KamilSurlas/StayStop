@@ -10,9 +10,11 @@ namespace StayStop.BLL.IService
     public interface IOpinionService
     {
         int Create(int reservationId, OpinionRequestDto opinionDto);
-        void Update(int reservationId, OpinionUpdateRequestDto opinionDto);
+        void UpdateByOpinionId(int reservationId, OpinionUpdateRequestDto opinionDto);
         OpinionResponseDto GetByReservationId(int reservationId);
         void Delete(int reservationId);
-
+        List<OpinionResponseDto> GetUserOpinions();
+        void DeleteByOpinionId(int opinionId);
+        OpinionResponseDto GetByOpinionId(int opinionId);
     }
 }

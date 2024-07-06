@@ -8,6 +8,7 @@ import { UserResponseDto } from "../models/user-response";
 import { HotelUpdateRequestDto } from "../models/hotel-update-request";
 import { HotelRequestDto } from "../models/hotel-request";
 import { ReservationDetailsDto } from "../models/reservation-details";
+import { OpinionResponseDto } from "../models/opinion-response";
 @Injectable({
     providedIn: 'root'
   })
@@ -74,5 +75,8 @@ export class HotelsService {
 
           const params = httpParams;
           return this.httpClient.get<PageResult<HotelResponseDto>>(`${this.apiUrl}available`, {params: params});
+      }
+      public getOpinions(hotelId:number):Observable<OpinionResponseDto[]>{
+        return this.httpClient.get<OpinionResponseDto[]>(`${this.apiUrl + hotelId}/opinions`);
       }
     }

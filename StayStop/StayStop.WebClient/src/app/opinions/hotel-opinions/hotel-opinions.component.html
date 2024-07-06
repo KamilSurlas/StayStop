@@ -1,0 +1,21 @@
+<!-- Add Angular Material components as needed -->
+<mat-card *ngIf="hotel">
+    <mat-card-header>
+      <mat-card-title>{{ hotel.name }} Opinions</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="opinion-container">
+        <mat-card *ngFor="let opinion of opinions" class="opinion-card">
+          <mat-card-header>
+            <mat-card-title>{{ opinion.userOpinion }}</mat-card-title>
+            <mat-card-subtitle>Mark: {{ opinion.mark }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ opinion.details }}</p>
+            <p class="added-on">Added on: {{ opinion.addedOn | date:'yyyy-MM-dd' }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  

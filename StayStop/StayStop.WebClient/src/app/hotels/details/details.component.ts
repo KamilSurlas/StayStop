@@ -32,7 +32,9 @@ constructor(private route: ActivatedRoute,private hotelsData: HotelsDataService,
 getStars(starCount: number): any[] {
   return new Array(starCount);
 }
-
+SeeOpinions(hotelId:number){
+  this.router.navigateByUrl(`hotels/${hotelId}/opinions`);
+}
 public onRoomChoosed(roomId:number){
   this.router.navigateByUrl(`/hotels/${this.hotelId}/rooms/${roomId}`);
 }

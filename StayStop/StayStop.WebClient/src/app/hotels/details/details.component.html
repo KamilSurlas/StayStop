@@ -1,42 +1,46 @@
 <div class="hotel-details-container" *ngIf="hotel; else loading">
-    <mat-card class="hotel-card">
-      <img mat-card-image [src]="hotel.coverImage" alt="Hotel cover image">
-      <mat-card-title>{{ hotel.name }}
-            <ng-container *ngFor="let star of getStars(hotel.stars)">
-              <mat-icon color="warn">star</mat-icon>
-            </ng-container>
-      </mat-card-title>
-      <mat-card-subtitle>{{ hotel.city }}, {{ hotel.country }} </mat-card-subtitle>
-      <mat-card-content>
-        <p>{{ hotel.description }}</p>
-        <mat-divider></mat-divider>
-        <h3>Details</h3>
-        <p>Hotel Type: {{ hotel.hotelType }}</p>
-        <p>Address: {{ hotel.street }}, {{ hotel.zipCode }}</p>
-        <p>Email: {{ hotel.emailAddress }}</p>
-        <p>Phone: {{ hotel.phoneNumber }}</p>
-        <mat-divider></mat-divider>
-        <h3>Available rooms</h3>
-        <mat-grid-list cols="3" rowHeight="2:1">
-            <mat-grid-tile *ngFor="let room of hotel.rooms">
-            <img class="selectable" *ngIf="room.isAvailable" (click)="onRoomChoosed(room.roomId)" [src]="room.coverImage" alt="Room image" style="cursor: pointer;"><br>
-            <mat-grid-tile-footer>
-                <h3>{{ room.roomType}} Room for {{room.numberOfAdults + room.numberOfChildren}} people</h3>
-              </mat-grid-tile-footer>
-          </mat-grid-tile>
-        </mat-grid-list>
-        <mat-divider></mat-divider>
-        <h3>Hotel gallery</h3>
-        <mat-grid-list cols="3" rowHeight="2:1">
-          <mat-grid-tile *ngFor="let image of hotel.images">
-            <img [src]="image" alt="Hotel image">
-          </mat-grid-tile>
-        </mat-grid-list>
-      </mat-card-content>
-    </mat-card>
-  </div>
-  
-  <ng-template #loading>
-    <mat-spinner></mat-spinner>
-  </ng-template>
+  <mat-card class="hotel-card">
+    <img mat-card-image [src]="hotel.coverImage" alt="Hotel cover image">
+    <mat-card-title>
+      {{ hotel.name }}
+      <ng-container *ngFor="let star of getStars(hotel.stars)">
+        <mat-icon color="warn">star</mat-icon>
+      </ng-container>
+    </mat-card-title>
+    <mat-card-subtitle>{{ hotel.city }}, {{ hotel.country }} </mat-card-subtitle>
+    <mat-card-content>
+      <p>{{ hotel.description }}</p>
+      <mat-divider></mat-divider>
+      <h3>Details</h3>
+      <p>Hotel Type: {{ hotel.hotelType }}</p>
+      <p>Address: {{ hotel.street }}, {{ hotel.zipCode }}</p>
+      <p>Email: {{ hotel.emailAddress }}</p>
+      <p>Phone: {{ hotel.phoneNumber }}</p>
+      <mat-divider></mat-divider>
+      <h3>Available rooms</h3>
+      <mat-grid-list cols="3" rowHeight="2:1">
+        <mat-grid-tile *ngFor="let room of hotel.rooms">
+          <img class="selectable" *ngIf="room.isAvailable" (click)="onRoomChoosed(room.roomId)" [src]="room.coverImage" alt="Room image" style="cursor: pointer;"><br>
+          <mat-grid-tile-footer>
+            <h3>{{ room.roomType }} Room for {{ room.numberOfAdults + room.numberOfChildren }} people</h3>
+          </mat-grid-tile-footer>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <mat-divider></mat-divider>
+      <h3>Hotel gallery</h3>
+      <mat-grid-list cols="3" rowHeight="2:1">
+        <mat-grid-tile *ngFor="let image of hotel.images">
+          <img [src]="image" alt="Hotel image">
+        </mat-grid-tile>
+      </mat-grid-list>
+      <mat-divider></mat-divider>
+      <div class="button-container">
+        <button mat-raised-button color="accent" (click)="SeeOpinions(hotelId)">See hotel opinions</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
 
+<ng-template #loading>
+  <mat-spinner></mat-spinner>
+</ng-template>

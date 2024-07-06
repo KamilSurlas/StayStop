@@ -44,7 +44,11 @@ import { AddHotelComponent } from './hotels/add-hotel/add-hotel.component';
 import { BasketComponent } from './basket/basket.component';
 import { UserReservationHistoryComponent } from './user-reservation-history/user-reservation-history.component';
 import { ReservationDetailsComponent } from './reservation-details/reservation-details.component';
-//import { AddHotelComponent } from './hotels/add-hotel/add-hotel.component';
+import { AddOpinionComponent } from './opinions/add-opinion/add-opinion.component';
+import { HotelOpinionsComponent } from './opinions/hotel-opinions/hotel-opinions.component';
+import { UserOpinionsComponent } from './opinions/user-opinions/user-opinions.component';
+import { UpdateOpinionComponent } from './opinions/update-opinion/update-opinion.component';
+
 
 
 
@@ -74,7 +78,11 @@ export function tokenGetter() {
     AddRoomComponent,
     BasketComponent,
     UserReservationHistoryComponent,
-    ReservationDetailsComponent
+    ReservationDetailsComponent,
+    AddOpinionComponent,
+    HotelOpinionsComponent,
+    UserOpinionsComponent,
+    UpdateOpinionComponent
   ],
   imports: [
     BrowserModule,

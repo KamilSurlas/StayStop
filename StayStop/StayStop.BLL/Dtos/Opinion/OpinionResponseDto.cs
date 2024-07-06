@@ -15,5 +15,6 @@ namespace StayStop.BLL.Dtos.Opinion
         public required int Mark { get; set; }
         public required string UserOpinion { get; set; }
         public required string Details { get; set; }
+        public required DateTime AddedOn { get; set; }
     }
 }

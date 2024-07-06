@@ -1,0 +1,24 @@
+<form #newOpinionForm="ngForm" (ngSubmit)="onSubmit()" class="opinion-form">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Mark</mat-label>
+      <mat-select id="mark" name="mark" required [(ngModel)]="newOpinion.mark">
+        <mat-option *ngFor="let mark of marks" [value]="mark">{{ mark }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Your opinion</mat-label>
+      <textarea matInput name="userOpinion" rows="3" required [(ngModel)]="newOpinion.userOpinion"></textarea>
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Details</mat-label>
+      <textarea matInput name="details" rows="5" required [(ngModel)]="newOpinion.details"></textarea>
+    </mat-form-field>
+  
+    <div class="button-container">
+      <button mat-button type="button" id="clear" (click)="onCancel()">Cancel</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="newOpinionForm.invalid">Submit</button>
+    </div>
+  </form>
+  

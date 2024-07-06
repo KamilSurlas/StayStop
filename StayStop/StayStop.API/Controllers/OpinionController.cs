@@ -25,7 +25,7 @@ namespace StayStop.API.Controllers
 
 
             return Created($"api/reservation/{reservationId}/opinion/{newOpinionId}", null);
-        }
+        }      
         [HttpGet]
         [AllowAnonymous]
         public ActionResult<OpinionResponseDto> GetByReservationId([FromRoute] int reservationId)
@@ -40,12 +40,31 @@ namespace StayStop.API.Controllers
             _opinionService.Delete(reservationId);
             return NoContent();
         }
-        [HttpPut]
-        public ActionResult Update([FromRoute] int reservationId, [FromBody] OpinionUpdateRequestDto opinionDto)
+        [HttpGet("/api/opinions/{opinionId}")]
+        public ActionResult GetByOpinionId([FromRoute] int opinionId)
         {
-            _opinionService.Update(reservationId, opinionDto);
+            var res = _opinionService.GetByOpinionId(opinionId);
+            return Ok(res);
+        }
+        [HttpDelete("/api/opinions/{opinionId}")]
+        public ActionResult DeleteByOpinionId([FromRoute] int opinionId)
+        {
+            _opinionService.DeleteByOpinionId(opinionId);
+            return NoContent();
+        }
+        [HttpPut("/api/opinions/{opinionId}")]
+        public ActionResult UpdateByOpinionId([FromRoute] int opinionId, [FromBody] OpinionUpdateRequestDto opinionDto)
+        {
+            _opinionService.UpdateByOpinionId(opinionId, opinionDto);
 
             return Ok();
+        }
+        [HttpGet("/api/user/opinions")]
+        public ActionResult<List<OpinionResponseDto>> GetUserOpinions()
+        {
+            var results = _opinionService.GetUserOpinions();
+
+            return Ok(results);
         }
     }
 }

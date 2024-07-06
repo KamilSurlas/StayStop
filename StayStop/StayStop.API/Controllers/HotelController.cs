@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using StayStop.BLL.Dtos.Hotel;
 using StayStop.BLL.Dtos.Hotel.HotelOpinion;
+using StayStop.BLL.Dtos.Opinion;
 using StayStop.BLL.Dtos.Reservation.Helpers.Models;
 using StayStop.BLL.IService;
 using StayStop.BLL.Pagination;
@@ -103,6 +104,12 @@ namespace StayStop.API.Controllers
 
             return NoContent();
         }
-       
+        [HttpGet("{hotelId}/opinions")]
+        public ActionResult<IEnumerable<OpinionResponseDto>> GetHotelOpinions([FromRoute] int hotelId)
+        {
+            var results= _hotelService.GetOpinions(hotelId);
+
+            return Ok(results);
+        }
     }
 }

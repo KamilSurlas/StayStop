@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using StayStop.BLL.Authorization;
 using StayStop.BLL.Dtos.Hotel;
 using StayStop.BLL.Dtos.Hotel.HotelOpinion;
+using StayStop.BLL.Dtos.Opinion;
 using StayStop.BLL.Dtos.Reservation.Helpers.Models;
 using StayStop.BLL.Dtos.Room;
 using StayStop.BLL.Dtos.User;
@@ -338,6 +339,23 @@ namespace StayStop.BLL_EF.Service
 
             return results ?? null;
 
+
+        }
+
+        public List<OpinionResponseDto> GetOpinions(int hotelId)
+        {
+            var hotel = GetHotelById(hotelId);
+
+            var opinions = _context.Opinions
+       .Include(o => o.Reservation)
+       .ThenInclude(r => r.ReservationPositions)
+       .ThenInclude(rp => rp.Room)
+       .Where(o => o.Reservation.ReservationPositions.Any(rp => rp.Room.HotelId == hotelId));
+
+
+            var results = _mapper.Map<List<OpinionResponseDto>>(opinions);
+
+            return results;
 
         }
     }
