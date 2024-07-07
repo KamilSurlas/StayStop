@@ -150,11 +150,6 @@ namespace StayStop.BLL_EF.Service
                 : baseQuery.AsQueryable().OrderByDescending(selected).ToList();
             }
 
-            if (pagination.Stars is not null)
-            {
-                baseQuery = baseQuery.Where(h => h.Stars == pagination.Stars).ToList();
-            }
-
             var hotels = baseQuery
               .Skip(pagination.PageSize * (pagination.PageNumber - 1))
             .Take(pagination.PageSize)

@@ -6,5 +6,4 @@ export interface HotelPagination {
     pageSize: number;
     hotelsSortBy: string | null;
     sortDirection: SortDirection;
-    stars:number | null;
 }

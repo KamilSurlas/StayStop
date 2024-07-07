@@ -4,9 +4,8 @@ import { PageResult } from '../models/page-result';
 import { HotelResponseDto } from '../models/hotel-response';
 import { HotelsService } from '../services/hotels.service';
 import { PageEvent } from '@angular/material/paginator';
-import { Router } from '@angular/router';
 import { HotelsDataService } from '../services/hotels-data.service';
-import { ReservationService } from '../services/reservation.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-hotels',
@@ -24,7 +23,6 @@ export class HotelsComponent {
   public numberOfKids: number | null = null;
   public numberOfRooms: number | null = null;
   public pageSizeOptions: number[] = [5,10,15];
-  public stars: number | null = null;
   constructor(private hotelsService: HotelsService, private router: Router, hotelsData: HotelsDataService){
     if(hotelsData.getHotelsData() != null) {
       this.result = hotelsData.getHotelsData();
@@ -39,7 +37,7 @@ export class HotelsComponent {
       this.laodHotels();
   }
   private laodHotels():void {
-    this.hotelsService.getAll({pageSize: this.pageSize, pageNumber:this.pageNumber, searchPhrase: this.searchPhrase, hotelsSortBy: this.sortBy, sortDirection: this.sortDirection, stars:this.stars}).subscribe(
+    this.hotelsService.getAll({pageSize: this.pageSize, pageNumber:this.pageNumber, searchPhrase: this.searchPhrase, hotelsSortBy: this.sortBy, sortDirection: this.sortDirection}).subscribe(
       {
       next: (res) => {
         this.result= res
@@ -54,6 +52,10 @@ export class HotelsComponent {
     this.result!.totalItemsCount = e.length;
     this.pageSize = e.pageSize;
     this.pageNumber = e.pageIndex + 1;
+    this.laodHotels();
+  }
+
+  searchHotels() {
     this.laodHotels();
   }
 }

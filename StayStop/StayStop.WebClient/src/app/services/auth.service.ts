@@ -118,4 +118,15 @@ export class AuthService {
     
     return null;
   }
+
+  getUserRole() : string | null {
+    const token = localStorage.getItem("accessToken");
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      const decodeToken = this.jwtHelper.decodeToken(token);
+      
+      return (decodeToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']);
+    }
+    
+    return null;
+  }
 }

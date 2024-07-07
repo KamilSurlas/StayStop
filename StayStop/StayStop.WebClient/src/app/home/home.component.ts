@@ -61,8 +61,7 @@ export class HomeComponent {
       pageNumber: 1, 
       searchPhrase: this.searchPhrase, 
       hotelsSortBy: null, 
-      sortDirection: SortDirection.ASC, 
-      stars: null},
+      sortDirection: SortDirection.ASC},
       {
       from: startDateValue!,
       to: endDateValue!,

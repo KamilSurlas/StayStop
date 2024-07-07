@@ -1,56 +1,83 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { AuthenticatedResponse } from '../models/authenticated-response';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate  {
 
-  constructor(private router:Router, private jwtHelper: JwtHelperService, private http: HttpClient){}
+  constructor(private router:Router, private authService: AuthService, private http: HttpClient){}
   
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const token = localStorage.getItem("accessToken");
+    const userRole = this.authService.getUserRole();
+    const path = state.url;
 
-    if (token && !this.jwtHelper.isTokenExpired(token)){
-      console.log(this.jwtHelper.decodeToken(token))
-      return true;
+    let canActivate: boolean = false;
+
+    // Sprawdzenie autoryzacji dla poszczególnych ścieżek
+    switch(path) {
+      case 'management/hotels/add':
+        canActivate = userRole === 'Admin' || userRole === 'HotelOwner';
+        break;
+      
+      case 'account':
+        canActivate = this.authService.isUserAuthenticated();
+        break;
+
+      case 'management/hotels/:hotelid/rooms/add':
+        canActivate = userRole === 'Admin' || userRole === 'HotelOwner' || userRole === 'Manager';
+        break;
+
+      case 'management/hotels':
+        canActivate = userRole === 'Admin' || userRole === 'HotelOwner' || userRole === 'Manager';
+        break;
+
+      case 'management/hotels/:hotelid':
+        canActivate = userRole === 'Admin' || userRole === 'HotelOwner' || userRole === 'Manager';
+        break;
+
+      case 'management/hotels/:hotelid/rooms/:roomid':
+        canActivate = userRole === 'Admin' || userRole === 'HotelOwner' || userRole === 'Manager';
+        break;
+
+      case 'basket':
+        canActivate = this.authService.isUserAuthenticated();
+        break;
+
+      case 'history':
+        canActivate = this.authService.isUserAuthenticated();
+        break;
+
+      case 'history/:reservationid':
+        canActivate = this.authService.isUserAuthenticated();
+        break;
+
+      case 'history/:reservationid/opinions/add':
+        canActivate = this.authService.isUserAuthenticated();
+        break;
+
+      case 'opinions/:opinionid/update':
+        canActivate = this.authService.isUserAuthenticated();
+        break;
+
+      case 'panel':
+        canActivate = userRole === 'Admin';
+        break;
+
+      case 'panel/:reservationid':
+        canActivate = userRole === 'Admin';
+        break;
+
+      default:
+        canActivate = false;
+        break;
     }
 
-    const isRefreshSuccess = await this.tryRefreshingTokens(token!); 
-    if (!isRefreshSuccess) { 
-      this.router.navigate(["login"]); 
+    if (!canActivate) {
+      this.router.navigate(["login"]);
     }
-
-    return isRefreshSuccess;
-  }
-
-  private async tryRefreshingTokens(token: string): Promise<boolean> {
-    const refreshToken: string | null = localStorage.getItem("refreshToken");
-    if (!token || !refreshToken) { 
-      return false;
-    }
-    
-    const credentials = JSON.stringify({ accessToken: token, refreshToken: refreshToken });
-    let isRefreshSuccess: boolean;
-
-    const refreshRes = await new Promise<AuthenticatedResponse>((resolve, reject) => {
-      this.http.post<AuthenticatedResponse>("https://localhost:5080/api/account/refresh", credentials, {
-        headers: new HttpHeaders({
-          "Content-Type": "application/json"
-        })
-      }).subscribe({
-        next: (res: AuthenticatedResponse) => resolve(res),
-        error: (_) => { reject; isRefreshSuccess = false;}
-      });
-    });
-
-    localStorage.setItem("accessToken", refreshRes.accessToken);
-    localStorage.setItem("refreshToken", refreshRes.refreshToken);
-    isRefreshSuccess = true;
-
-    return isRefreshSuccess;
+    return canActivate;
   }
 }
