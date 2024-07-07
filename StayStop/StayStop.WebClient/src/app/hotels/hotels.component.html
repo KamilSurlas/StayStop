@@ -6,20 +6,36 @@
         <input matInput name="searchHotel" [(ngModel)]="searchPhrase" #message maxlength="256">
       </mat-form-field>
 
-
       <mat-form-field class="example-full-width">
         <mat-label>Number of rooms</mat-label>
-        <input matInput type="number" name="fourthInput" [(ngModel)]="numberOfRooms" min="0" #fourthMessage maxlength="256">
+        <input matInput type="number" name="numberOfRooms" [(ngModel)]="numberOfRooms" min="0" #fourthMessage maxlength="256">
       </mat-form-field>
 
       <mat-form-field class="example-full-width">
         <mat-label>Number of kids</mat-label>
-        <input matInput type="number" name="fourthInput" [(ngModel)]="numberOfKids" min="0" #fourthMessage maxlength="256">
+        <input matInput type="number" name="numberOfKids" [(ngModel)]="numberOfKids" min="0" #fourthMessage maxlength="256">
       </mat-form-field>
 
       <mat-form-field class="example-full-width">
         <mat-label>Number of adults</mat-label>
-        <input matInput type="number" name="fifthInput" [(ngModel)]="numberOfAdults" min="0" #fifthMessage maxlength="256">
+        <input matInput type="number" name="numberOfAdults" [(ngModel)]="numberOfAdults" min="0" #fifthMessage maxlength="256">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Sort by</mat-label>
+        <mat-select [(ngModel)]="sortBy" name="sortBy">
+          <mat-option value="city">City</mat-option>
+          <mat-option value="country">Country</mat-option>
+          <mat-option value="nameHotel">Name</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Sort order</mat-label>
+        <mat-select [(ngModel)]="sortDirection" name="sortDirection" [ngModelOptions]="{standalone: true}">
+          <mat-option value="asc">Ascending</mat-option>
+          <mat-option value="desc">Descending</mat-option>
+        </mat-select>
       </mat-form-field>
 
       <button mat-flat-button class="mat-button mat-button-base mat-flat-button mat-primary" (click)="searchHotels()">Search</button>
@@ -36,8 +52,6 @@
     </div>
   </div>
 </div>
-
-
 
 <mat-paginator [length]="result?.totalItemsCount"
   [pageSize]="pageSizeOptions[0]"
