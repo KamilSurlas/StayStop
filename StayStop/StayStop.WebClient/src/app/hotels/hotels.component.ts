@@ -19,19 +19,12 @@ export class HotelsComponent {
   public sortBy: string | null = null;
   public sortDirection: SortDirection = SortDirection.ASC;
   public result: PageResult<HotelResponseDto> | null = null;
-  public numberOfAdults: number | null = null;
-  public numberOfKids: number | null = null;
-  public numberOfRooms: number | null = null;
   public pageSizeOptions: number[] = [5,10,15];
   constructor(private hotelsService: HotelsService, private router: Router, hotelsData: HotelsDataService){
     if(hotelsData.getHotelsData() != null) {
       this.result = hotelsData.getHotelsData();
       if(hotelsData.getSearchPhrase() != null)
         this.searchPhrase = hotelsData.getSearchPhrase();
-      if(hotelsData.getNumberOfAdults() != null)
-        this.numberOfAdults = hotelsData.getNumberOfAdults();
-      if(hotelsData.getNumberOfKids() != null)
-        this.numberOfKids = hotelsData.getNumberOfKids();
     }
     else
       this.laodHotels();

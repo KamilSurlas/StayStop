@@ -175,7 +175,14 @@ namespace StayStop.BLL_EF.Service
                 throw new UserNotFoundException("User does not exist");
             }
 
-            _mapper.Map(dto, user);
+            var passwordVerify = _passwordHasher.VerifyHashedPassword(user, user.HashedPassword, dto.CurrentPassword);
+
+            if (passwordVerify != PasswordVerificationResult.Success)
+            {
+                throw new InvalidDataException("Provided old password is wrong");
+            }
+
+            _mapper.Map(dto,user);
             _context.SaveChanges();
             return CreateToken(user, true);
         }

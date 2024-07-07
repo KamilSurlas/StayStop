@@ -13,8 +13,8 @@ import { Router } from '@angular/router';
 export class BasketComponent {
   constructor(private reservationService: ReservationService, private roomService: RoomsService, private router: Router) {
     this.loadRoomsDetails();
-    this.startDate = this.reservationService.reservation?.startDate;
-    this.endDate = this.reservationService.reservation?.endDate;
+    this.startDate = ReservationService.reservation?.startDate;
+    this.endDate = ReservationService.reservation?.endDate;
   }
   public rooms: RoomResponseDto[] = [];
   startDate: string | undefined;
@@ -23,7 +23,7 @@ export class BasketComponent {
   createdMessage: string | null = null;
   createdReservationId: number = null!;
   loadRoomsDetails() {
-    const reservationPositions = this.reservationService.reservation?.reservationPositions;
+    const reservationPositions = ReservationService.reservation?.reservationPositions;
 
     if (reservationPositions != null) {
       reservationPositions!.forEach(position => {

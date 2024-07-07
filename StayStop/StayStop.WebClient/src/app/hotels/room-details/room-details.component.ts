@@ -12,10 +12,10 @@ import { ReservationPositionRequestDto } from '../../models/reservation-position
   styleUrl: './room-details.component.css'
 })
 export class RoomDetailsComponent {
-//http://localhost:5080/api/reservation/1/reservationPosition
+
 public error: string | null = null;
 public room: RoomResponseDto | null = null;
-//public amount 
+
 public roomId: number;
 public hotelId:number;
 
@@ -44,7 +44,7 @@ public deleteRoom():void{
 }
 
   bookRoom() {
-    if (this.reservationService.reservation?.endDate == null || this.reservationService.reservation?.startDate == null) {
+    if (ReservationService.reservation?.endDate == null || ReservationService.reservation?.startDate == null) {
       alert('You did not chose dates')
     }
     else {
@@ -60,8 +60,8 @@ public deleteRoom():void{
           roomId: this.roomId
         });
     
-        if (this.reservationService.reservation) {
-          this.reservationService.reservation.reservationPositions.push(...reservationPositions);
+        if (ReservationService.reservation?.reservationPositions) {
+          ReservationService.reservation!.reservationPositions.push(...reservationPositions);
         }
       }
       

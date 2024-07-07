@@ -74,7 +74,7 @@ namespace StayStop.BLL_EF.Mapper
 
             //UpdateAcc
             CreateMap<UserUpdateRequestDto, User>()
-                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+                .ConvertUsing<UpdateUserConverter>();
         }
     }
 }

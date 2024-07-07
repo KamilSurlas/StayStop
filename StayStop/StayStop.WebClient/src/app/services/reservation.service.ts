@@ -11,14 +11,15 @@ import { ReservationPagination } from '../models/reservation-pagination';
   providedIn: 'root'
 })
 export class ReservationService {
-
-  constructor(private httpClient: HttpClient) { }
-  public reservation : ReservationRequestDto | null = null;
+  public static reservation : ReservationRequestDto | null = null;
   private apiUrl: string = 'http://localhost:5080/api/reservation/';
+  constructor(private httpClient: HttpClient) { 
+  }
+ 
 
   public post(): Observable<any> {
-    this.reservation!.reservationStatus = ReservationStatus.Booked;
-    return this.httpClient.post<any>(`${this.apiUrl}`, this.reservation);
+    ReservationService.reservation!.reservationStatus = ReservationStatus.Booked;
+    return this.httpClient.post<any>(`${this.apiUrl}`, ReservationService.reservation);
   }
 
   public get(): Observable<ReservationResponseDto[]> {
@@ -43,5 +44,5 @@ export class ReservationService {
                         .append("sortDirection",pagination.sortDirection ?? "");
     return this.httpClient.get<PageResult<ReservationResponseDto>>(this.apiUrl, {params: httpParams});
   }
-  
+
 }
