@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guards/auth-guard.guard';
 import { HotelsComponent } from './hotels/hotels.component';
 import { DetailsComponent } from './hotels/details/details.component';
 import { RoomDetailsComponent } from './hotels/room-details/room-details.component';
-
 import { RegisterComponent } from './register/register.component';
 import { AccountComponent } from './account/account.component';
 import { HotelManagementComponent } from './hotels/hotel-management/hotel-management.component';
@@ -23,6 +21,7 @@ import { UserOpinionsComponent } from './opinions/user-opinions/user-opinions.co
 import { UpdateOpinionComponent } from './opinions/update-opinion/update-opinion.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { AdminReservationDetailsComponent } from './admin-panel/admin-reservation-details/admin-reservation-details.component';
+import { RouterModule, Routes } from '@angular/router';
 
 
 
@@ -33,22 +32,22 @@ const routes: Routes = [
   { path: 'hotels/:hotelid', component: DetailsComponent },
   { path: `hotels/:hotelid/rooms/:roomid`,component: RoomDetailsComponent },
   { path: 'register', component: RegisterComponent },
-  {path: 'management/hotels/add',component: AddHotelComponent},
-  { path: 'account', component: AccountComponent },
-  {path: 'management/hotels/:hotelid/rooms/add',component: AddRoomComponent},
-  { path: 'management/hotels', component: HotelManagementComponent},
+  {path: 'management/hotels/add',component: AddHotelComponent, canActivate: [AuthGuard]},
+  { path: 'account', component: AccountComponent, canActivate: [AuthGuard] },
+  {path: 'management/hotels/:hotelid/rooms/add',component: AddRoomComponent, canActivate: [AuthGuard]},
+  { path: 'management/hotels', component: HotelManagementComponent, canActivate: [AuthGuard]},
   { path: 'hotels', component: HotelsComponent },
-  { path:  'management/hotels/:hotelid', component:ManageHotelComponent},
-  {path:  'management/hotels/:hotelid/rooms/:roomid', component: ManageRoomComponent},
-  { path: 'basket', component: BasketComponent },
-  { path: 'history', component: UserReservationHistoryComponent },
-   {path: 'history/:reservationid',component: ReservationDetailsComponent},
-   {path:'history/:reservationid/opinions/add',component:AddOpinionComponent},
+  { path:  'management/hotels/:hotelid', component:ManageHotelComponent , canActivate: [AuthGuard]},
+  {path:  'management/hotels/:hotelid/rooms/:roomid', component: ManageRoomComponent, canActivate: [AuthGuard]},
+  { path: 'basket', component: BasketComponent, canActivate: [AuthGuard] },
+  { path: 'history', component: UserReservationHistoryComponent, canActivate: [AuthGuard] },
+   {path: 'history/:reservationid',component: ReservationDetailsComponent, canActivate: [AuthGuard]},
+   {path:'history/:reservationid/opinions/add',component:AddOpinionComponent, canActivate: [AuthGuard]},
    { path: 'hotels/:hotelid/opinions', component:HotelOpinionsComponent },
    {path:'opinions',component:UserOpinionsComponent},
-   {path: 'opinions/:opinionid/update',component: UpdateOpinionComponent},
-   { path: 'panel', component: AdminPanelComponent},
-   {path: 'panel/:reservationid',component:AdminReservationDetailsComponent}
+   {path: 'opinions/:opinionid/update',component: UpdateOpinionComponent, canActivate: [AuthGuard]},
+   { path: 'panel', component: AdminPanelComponent, canActivate: [AuthGuard]},
+   {path: 'panel/:reservationid',component:AdminReservationDetailsComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

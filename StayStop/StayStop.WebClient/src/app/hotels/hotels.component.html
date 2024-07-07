@@ -6,15 +6,6 @@
         <input matInput name="searchHotel" [(ngModel)]="searchPhrase" #message maxlength="256">
       </mat-form-field>
 
-      <mat-form-field class="example-full-width">
-        <mat-label>Minimal price</mat-label>
-        <input matInput type="number" name="secondInput" ngModel="minPrice" min="0" #secondMessage maxlength="256">
-      </mat-form-field>
-
-      <mat-form-field class="example-full-width">
-        <mat-label>Maximum price</mat-label>
-        <input matInput type="number" name="thirdInput" ngModel="maxPrice" min="0" #thirdMessage maxlength="256">
-      </mat-form-field>
 
       <mat-form-field class="example-full-width">
         <mat-label>Number of rooms</mat-label>
@@ -31,12 +22,7 @@
         <input matInput type="number" name="fifthInput" [(ngModel)]="numberOfAdults" min="0" #fifthMessage maxlength="256">
       </mat-form-field>
 
-      <mat-form-field class="example-full-width">
-        <mat-label>Stars</mat-label>
-        <input matInput type="number" name="sixthInput" [(ngModel)]="stars" min="1" max="5" #sixthMessage maxlength="256">
-      </mat-form-field>
-
-      <button mat-flat-button class="mat-button mat-button-base mat-flat-button mat-primary">Filter</button>
+      <button mat-flat-button class="mat-button mat-button-base mat-flat-button mat-primary" (click)="searchHotels()">Search</button>
     </form>
   </div>
 
