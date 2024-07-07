@@ -51,7 +51,7 @@ namespace StayStop.API.Controllers
         }
         [HttpGet]
         [Authorize(Roles = UserRole.Admin)]
-        public ActionResult<IEnumerable<ReservationResponseDto>> GetAll([FromQuery] ReservationPagination pagination)
+        public ActionResult<PageResult<ReservationResponseDto>> GetAll([FromQuery] ReservationPagination pagination)
         {
             var reservations = _reservationService.GetAll(pagination);
 

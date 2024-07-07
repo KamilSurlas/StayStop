@@ -1,0 +1,46 @@
+<div *ngIf="isDataEmpty()" class="no-reservations-message">
+    There is no reservations.
+  </div>
+  
+  <div *ngIf="!isDataEmpty()" class="reservation-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Reservation ID</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Price</th>
+          <th>Status</th>
+          <th>Participants</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of data">
+          <td>{{ r.reservationId }}</td>
+          <td>{{ r.startDate | date: 'shortDate' }}</td>
+          <td>{{ r.endDate | date: 'shortDate' }}</td>
+          <td>{{ r.price | currency }}</td>
+          <td>{{ r.reservationStatus }}</td>
+          <td>
+            <ul class="reservation-positions">
+                <li *ngFor="let position of r.reservationPositions">
+                  Adults: {{ position.numberOfAdults }} 
+                  <br>
+                  Children: {{ position.numberOfChildren }}
+                </li>
+            </ul>
+          </td>
+          <td>
+            <button class="details-button" (click)="viewDetails(r.reservationId)">Details</button>
+            <button 
+              class="cancel-button" 
+              >
+              Cancel
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

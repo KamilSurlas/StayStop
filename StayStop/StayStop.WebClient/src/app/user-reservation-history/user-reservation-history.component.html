@@ -1,4 +1,9 @@
-<div class="reservation-table">
+<div *ngIf="isDataEmpty()" class="no-reservations-message">
+  You do not have any reservations!
+</div>
+
+
+<div *ngIf="!this.isDataEmpty()" class="reservation-table">
     <table>
       <thead>
         <tr>
@@ -25,5 +30,5 @@
         </tr>
       </tbody>
     </table>
-  </div>
+</div>
   

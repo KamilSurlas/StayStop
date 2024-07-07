@@ -53,7 +53,6 @@ throw new Error('Method not implemented.');
     const startDateValue = this.range.get('start')?.value;
     const endDateValue = this.range.get('end')?.value;
 
-
     this.hotelsService.getAvailable({ 
       pageSize: 5, 
       pageNumber: 1, 

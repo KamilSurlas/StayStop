@@ -66,4 +66,12 @@
     width: 100%;
     text-align: center;
   }
+
   
+  .error-message {
+    color: red; /* To make the error message noticeable */
+    font-size: 1.5em; /* Adjust the size as needed */
+    font-weight: bold; /* Make the text bold */
+    margin-top: 10px; /* Add some spacing above the error message */
+    display: block; /* Ensure the error message is displayed as a block element */
+}

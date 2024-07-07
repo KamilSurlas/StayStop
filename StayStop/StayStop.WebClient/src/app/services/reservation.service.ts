@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ReservationRequestDto } from '../models/reservation-request';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from "rxjs";
 import { ReservationResponseDto } from '../models/reservation-response';
 import { ReservationStatus } from '../models/reservation-status';
+import { PageResult } from '../models/page-result';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +32,12 @@ export class ReservationService {
   }
   public changeStatus(reservationId: number, status: ReservationStatus):Observable<void>{
     return this.httpClient.put<void>(this.apiUrl + reservationId,status);
+  }
+
+  public getAll(pageNumber: number, pageSize: number):Observable<PageResult<ReservationResponseDto>> {
+    const httpParams = new HttpParams()
+                        .append("pageNumber", pageNumber)
+                        .append("pageSize", pageSize);
+    return this.httpClient.get<PageResult<ReservationResponseDto>>(this.apiUrl, {params: httpParams});
   }
 }

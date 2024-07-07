@@ -21,6 +21,7 @@ import { AddOpinionComponent } from './opinions/add-opinion/add-opinion.componen
 import { HotelOpinionsComponent } from './opinions/hotel-opinions/hotel-opinions.component';
 import { UserOpinionsComponent } from './opinions/user-opinions/user-opinions.component';
 import { UpdateOpinionComponent } from './opinions/update-opinion/update-opinion.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 
 
@@ -44,7 +45,8 @@ const routes: Routes = [
    {path:'history/:reservationid/opinions/add',component:AddOpinionComponent},
    { path: 'hotels/:hotelid/opinions', component:HotelOpinionsComponent },
    {path:'opinions',component:UserOpinionsComponent},
-   {path: 'opinions/:opinionid/update',component: UpdateOpinionComponent}
+   {path: 'opinions/:opinionid/update',component: UpdateOpinionComponent},
+   { path: 'panel', component: AdminPanelComponent}
 ];
 
 @NgModule({

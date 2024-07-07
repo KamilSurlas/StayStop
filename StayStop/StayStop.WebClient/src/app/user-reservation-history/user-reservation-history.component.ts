@@ -11,7 +11,7 @@ import { ReservationStatus } from '../models/reservation-status';
 })
 export class UserReservationHistoryComponent {
 
-  constructor(private reservationService: ReservationService, private router: Router) {
+  constructor(public reservationService: ReservationService, private router: Router) {
     this.loadData();
   }
   reservations: ReservationResponseDto[] = [];
@@ -47,5 +47,9 @@ export class UserReservationHistoryComponent {
         console.log(err);
       }
     })
+  }
+
+  isDataEmpty(): boolean {
+    return this.reservations.length === 0;
   }
 }

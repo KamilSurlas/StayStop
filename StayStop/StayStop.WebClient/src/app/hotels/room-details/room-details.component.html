@@ -17,10 +17,10 @@
       </mat-card-content>
       <mat-card-actions>
         <button mat-raised-button color="primary" class="book-button" (click)="bookRoom()">Book Now</button>
-      
       </mat-card-actions>
-      <span *ngIf="error" class="error-message">{{error}}</span>
-    </mat-card>
+
+      
+      </mat-card>
   </div>
   
   <ng-template #loading>
@@ -31,12 +31,5 @@
 
 
   
-  <div *ngIf="error">
-    <mat-card class="error-card">
-      <mat-card-title>Error</mat-card-title>
-      <mat-card-content>
-        <p>{{ error }}</p>
-      </mat-card-content>
-    </mat-card>
-  </div>
+
   

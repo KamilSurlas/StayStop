@@ -40,4 +40,8 @@ export class AppComponent {
   navigateToCart() {
     this.router.navigate(["basket"]); 
   }
+
+  isUserAdmin(): boolean {
+    return this.authService.isRoleAdmin();
+  }
 }

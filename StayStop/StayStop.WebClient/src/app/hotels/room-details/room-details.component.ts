@@ -44,24 +44,32 @@ public deleteRoom():void{
 }
 
   bookRoom() {
-    let numberOfAdults: number = this.hotelService.getNumberOfAdults() ?? 0;
-    let numberOfKids: number = this.hotelService.getNumberOfKids() ?? 0;
-
-    if (numberOfKids > 0 || numberOfAdults > 0) {
-      let reservationPositions: ReservationPositionRequestDto[] = [];
-      reservationPositions.push({
-        numberOfAdults: numberOfAdults,
-        numberOfChildren: numberOfKids,
-        amount: 1,
-        roomId: this.roomId
-      });
+    if (this.reservationService.reservation?.endDate == null || this.reservationService.reservation?.startDate == null) {
+      alert('You did not chose dates')
+    }
+    else {
+      let numberOfAdults: number = this.hotelService.getNumberOfAdults() ?? 0;
+      let numberOfKids: number = this.hotelService.getNumberOfKids() ?? 0;
   
-      if (this.reservationService.reservation) {
-        this.reservationService.reservation.reservationPositions.push(...reservationPositions);
+      if (numberOfKids > 0 || numberOfAdults > 0) {
+        let reservationPositions: ReservationPositionRequestDto[] = [];
+        reservationPositions.push({
+          numberOfAdults: numberOfAdults,
+          numberOfChildren: numberOfKids,
+          amount: 1,
+          roomId: this.roomId
+        });
+    
+        if (this.reservationService.reservation) {
+          this.reservationService.reservation.reservationPositions.push(...reservationPositions);
+        }
+      }
+      
+      else {
+        alert('You cannot book without at least 1 person');
       }
     }
     
-
     console.log(this.reservationService);
   }
 }
