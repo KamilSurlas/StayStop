@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { ReservationService } from './services/reservation.service';
 import { Router } from '@angular/router';
@@ -43,5 +43,12 @@ export class AppComponent {
 
   isUserAdmin(): boolean {
     return this.authService.isRoleAdmin();
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  clearLocalStorage(event: Event) {
+    // Usuń tokeny z localStorage
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
   }
 }
