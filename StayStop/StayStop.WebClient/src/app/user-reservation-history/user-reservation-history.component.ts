@@ -29,8 +29,6 @@ export class UserReservationHistoryComponent {
 
   canBeCancelled(reservation: ReservationResponseDto) : boolean {
     const castedDate = new Date(reservation.startDate);
-    //console.log('casred ' + castedDate);
-    //console.log('nowa ' + new Date());
     return new Date() < castedDate;
   }
 

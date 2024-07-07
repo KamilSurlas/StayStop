@@ -25,7 +25,7 @@ export class HotelsComponent {
   public numberOfRooms: number | null = null;
   public pageSizeOptions: number[] = [5,10,15];
   public stars: number | null = null;
-  constructor(private hotelsService: HotelsService, private router: Router, private hotelsData: HotelsDataService){
+  constructor(private hotelsService: HotelsService, private router: Router, hotelsData: HotelsDataService){
     if(hotelsData.getHotelsData() != null) {
       this.result = hotelsData.getHotelsData();
       if(hotelsData.getSearchPhrase() != null)

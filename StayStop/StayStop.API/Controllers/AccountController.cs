@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StayStop.BLL.Authentication;
 using StayStop.BLL.Dtos.User;
 using StayStop.BLL.IService;
+using StayStop.Model.Constants;
 
 namespace StayStop.API.Controllers
 {
@@ -28,6 +30,7 @@ namespace StayStop.API.Controllers
         }
 
         [HttpPut("update")]
+        [Authorize]
         public ActionResult UpdateAccount([FromBody] UserUpdateRequestDto dto) {
             var token = _accountService.UpdateUser(dto);
             return Ok(token);
@@ -38,6 +41,14 @@ namespace StayStop.API.Controllers
         {
             var refreshToken = _accountService.RefreshToken(token);
             return Ok(refreshToken);
+        }
+        [HttpGet("{userId}")]
+        [Authorize(Roles = UserRole.Admin)]
+        public ActionResult<UserResponseDto> GetUserById(int userId) 
+        {
+            var result = _accountService.GetUserById(userId);
+
+            return Ok(result);
         }
     }
 }

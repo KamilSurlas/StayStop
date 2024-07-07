@@ -81,6 +81,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IAuthorizationHandler, HotelOperationRequirementHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, RoomOperationRequirementHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, OpinionOperationRequirementHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, ReservationOperationRequirementHandler>();
 builder.Services.AddFluentValidationAutoValidation();
 var authSettings = new AuthenticationSettings();
 builder.Configuration.GetSection("Authentication").Bind(authSettings);

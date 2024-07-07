@@ -23,6 +23,7 @@
           <img class="selectable" *ngIf="room.isAvailable" (click)="onRoomChoosed(room.roomId)" [src]="room.coverImage" alt="Room image" style="cursor: pointer;"><br>
           <mat-grid-tile-footer>
             <h3>{{ room.roomType }} Room for {{ room.numberOfAdults + room.numberOfChildren }} people</h3>
+            <h2 *ngIf="calculateRoomPrice(room) != null">Price: {{calculateRoomPrice(room) | currency}}</h2>
           </mat-grid-tile-footer>
         </mat-grid-tile>
       </mat-grid-list>

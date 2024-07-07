@@ -11,6 +11,7 @@ export class HotelsDataService {
   private numberOfAdults: number | null = null;
   private numberOfKids: number | null = null;
   private numberOfRooms: number | null = null;
+  private numberOfNights: number | null = null;
 
   setHotelsData(data: PageResult<HotelResponseDto>): void {
     this.data = data;
@@ -20,8 +21,12 @@ export class HotelsDataService {
     return this.data;
   }
 
-
-
+  setNumberOfNights(nOfNights: number):void{
+    this.numberOfNights = nOfNights;
+  }
+  getNumberOfNights():number | null{
+  return this.numberOfNights
+  }
   setSearchPhrase(searchPhrase: string) : void {
     this.searchPhrase = searchPhrase;
   }

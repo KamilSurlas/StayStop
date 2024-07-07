@@ -16,10 +16,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let r of data">
+        <tr *ngFor="let r of result?.items">
           <td>{{ r.reservationId }}</td>
-          <td>{{ r.startDate | date: 'shortDate' }}</td>
-          <td>{{ r.endDate | date: 'shortDate' }}</td>
+          <td>{{ r.startDate | date: 'yyy-MM-dd' }}</td>
+          <td>{{ r.endDate | date: 'yyyy-MM-dd' }}</td>
           <td>{{ r.price | currency }}</td>
           <td>{{ r.reservationStatus }}</td>
           <td>
@@ -33,14 +33,17 @@
           </td>
           <td>
             <button class="details-button" (click)="viewDetails(r.reservationId)">Details</button>
-            <button 
-              class="cancel-button" 
-              >
-              Cancel
-            </button>
+            <button class="cancel-button" (click)="cancelReservation(r.reservationId)">Cancel</button>
+            <button class="cancel-button" (click)="deleteReservation(r.reservationId)">Delete reservation</button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
   
+
+  <mat-paginator [length]="result?.totalItemsCount"
+  [pageSize]="pageSizeOptions[0]"
+  (page)="handlePageEvent($event)"
+  [pageSizeOptions]="pageSizeOptions">
+</mat-paginator>

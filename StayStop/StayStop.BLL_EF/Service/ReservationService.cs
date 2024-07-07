@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using StayStop.BLL.Authorization;
 using StayStop.BLL.DateTimeExtension;
-using StayStop.BLL.Dtos.Hotel;
 using StayStop.BLL.Dtos.Reservation;
 using StayStop.BLL.Exceptions;
 using StayStop.BLL.IService;
@@ -10,13 +11,7 @@ using StayStop.BLL_EF.Exceptions;
 using StayStop.DAL.Context;
 using StayStop.Model;
 using StayStop.Model.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StayStop.BLL_EF.Service
 {
@@ -25,12 +20,14 @@ namespace StayStop.BLL_EF.Service
         private readonly StayStopDbContext _context;
         private readonly IMapper _mapper;
         private readonly IUserContextService _userContextService;
+        private readonly IAuthorizationService _authorizationService;
 
-        public ReservationService(StayStopDbContext context, IMapper mapper, IUserContextService userContextService)
+        public ReservationService(StayStopDbContext context, IMapper mapper, IUserContextService userContextService, IAuthorizationService authorizationService)
         {
             _context = context;
             _mapper = mapper;
             _userContextService = userContextService;
+            _authorizationService = authorizationService;
         }
 
         private User GetUserById(int userId)
@@ -164,9 +161,10 @@ namespace StayStop.BLL_EF.Service
         public void UpdateStatus(int reservationId, ReservationStatus reservationStatus)
         {
             var reservation = GetReservationById(reservationId);
-            if (reservation.UserId != _userContextService.GetUserId)
+            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, reservation, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
+            if (!authorizationResult.Succeeded)
             {
-                throw new ForbiddenException("Access denied");
+                throw new ForbiddenException("Permission denied");
             }
             if (reservation.ReservationStatus != reservationStatus &&
                 reservation.ReservationStatus != ReservationStatus.Canceled)

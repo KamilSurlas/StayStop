@@ -12,6 +12,7 @@ namespace StayStop.BLL.Dtos.Reservation
         public required decimal Price { get; set; }
         public required List<ReservationPositionResponseDto> ReservationPositions { get; set; }
         public required ReservationStatus ReservationStatus { get; set; }
+        public required int UserId { get; set; }
     }
 }
 

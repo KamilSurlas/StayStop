@@ -15,9 +15,7 @@ import { DatePipe } from '@angular/common'
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-clearData() {
-throw new Error('Method not implemented.');
-}
+
   @Output() submit = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
   public searchPhrase: string | null = null;
@@ -32,7 +30,12 @@ throw new Error('Method not implemented.');
 
   constructor(private authService: AuthService, private hotelsService: HotelsService, private hotelsData: HotelsDataService, private router: Router, 
     private reservationService: ReservationService) { }
-
+    private calculateNumberOfNights(date1:Date, date2:Date){
+      var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+      var numberOfNights = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+      console.log(numberOfNights);
+      return numberOfNights;
+    }
   isUserAuthenticated = (): boolean => {
     return this.authService.isUserAuthenticated();
   }
@@ -76,6 +79,7 @@ throw new Error('Method not implemented.');
         this.hotelsData.setNumberOfAdults(this.numberOfAdults);
         this.hotelsData.setNumberOfKids(this.numberOfKids);
         this.hotelsData.setNumberOfRooms(this.numberOfRooms);
+     
 
         
         
@@ -86,7 +90,6 @@ throw new Error('Method not implemented.');
         if (startDateValue != null && endDateValue != null) {
           if (!this.reservationService.reservation) {
 
-            //Zmiana czasu, ponieważ roznica czasowa
             const startDateAdjusted = new Date(startDateValue);
             startDateAdjusted.setHours(startDateAdjusted.getHours() + 2);
 
@@ -100,7 +103,7 @@ throw new Error('Method not implemented.');
               reservationPositions: [],
               reservationStatus: null!,
             };
-
+            this.hotelsData.setNumberOfNights(this.calculateNumberOfNights(startDateAdjusted, endDateAdjusted));
 
             console.log(this.reservationService.reservation.endDate);
           } else {
@@ -109,11 +112,7 @@ throw new Error('Method not implemented.');
             this.reservationService.reservation.endDate = endDateValue.toISOString();
           }
         }
-        //console.log(this.reservationService.reservation?.startDate);
-        //console.log(this.reservationService.reservation?.endDate);
-        //let data = this.datepipe.transform(this.range.get('start')?.value, 'yyyy-MM-dd');
-        //console.log(this.range.get('start')?.value?.toISOString());
-
+   
         this.router.navigate(['/hotels']);
       },
       error: (err) => console.log(err)

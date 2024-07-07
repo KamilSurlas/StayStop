@@ -7,6 +7,7 @@ using StayStop.BLL.Authentication;
 using StayStop.BLL.Dtos.User;
 using StayStop.BLL.Exceptions;
 using StayStop.BLL.IService;
+using StayStop.BLL_EF.Exceptions;
 using StayStop.DAL.Context;
 using StayStop.Model;
 using System;
@@ -177,6 +178,20 @@ namespace StayStop.BLL_EF.Service
             _mapper.Map(dto, user);
             _context.SaveChanges();
             return CreateToken(user, true);
+        }
+
+        public UserResponseDto GetUserById(int userId)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
+
+            if (user is null)
+            {
+                throw new ContentNotFoundException($"User with id: {userId} was not found");
+            }
+
+            var result = _mapper.Map<UserResponseDto>(user);
+
+            return result;
         }
     }
 }

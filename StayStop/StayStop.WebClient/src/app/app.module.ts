@@ -49,6 +49,7 @@ import { HotelOpinionsComponent } from './opinions/hotel-opinions/hotel-opinions
 import { UserOpinionsComponent } from './opinions/user-opinions/user-opinions.component';
 import { UpdateOpinionComponent } from './opinions/update-opinion/update-opinion.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { AdminReservationDetailsComponent } from './admin-panel/admin-reservation-details/admin-reservation-details.component';
 
 
 
@@ -84,7 +85,8 @@ export function tokenGetter() {
     HotelOpinionsComponent,
     UserOpinionsComponent,
     UpdateOpinionComponent,
-    AdminPanelComponent
+    AdminPanelComponent,
+    AdminReservationDetailsComponent
   ],
   imports: [
     BrowserModule,

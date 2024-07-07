@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import { ReservationResponseDto } from '../models/reservation-response';
 import { ReservationStatus } from '../models/reservation-status';
 import { PageResult } from '../models/page-result';
+import { ReservationPagination } from '../models/reservation-pagination';
 
 @Injectable({
   providedIn: 'root'
@@ -34,10 +35,13 @@ export class ReservationService {
     return this.httpClient.put<void>(this.apiUrl + reservationId,status);
   }
 
-  public getAll(pageNumber: number, pageSize: number):Observable<PageResult<ReservationResponseDto>> {
+  public getAll(pagination: ReservationPagination):Observable<PageResult<ReservationResponseDto>> {
     const httpParams = new HttpParams()
-                        .append("pageNumber", pageNumber)
-                        .append("pageSize", pageSize);
+                        .append("pageNumber", pagination.pageNumber)
+                        .append("pageSize", pagination.pageSize)
+                        .append("sortBy",pagination.reservationsSortBy ?? "")
+                        .append("sortDirection",pagination.sortDirection ?? "");
     return this.httpClient.get<PageResult<ReservationResponseDto>>(this.apiUrl, {params: httpParams});
   }
+  
 }

@@ -3,6 +3,7 @@ import { HotelResponseDto } from '../../models/hotel-response';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HotelsService } from '../../services/hotels.service';
 import { HotelsDataService } from '../../services/hotels-data.service';
+import { RoomResponseDto } from '../../models/room-response';
 
 @Component({
   selector: 'app-details',
@@ -28,6 +29,13 @@ constructor(private route: ActivatedRoute,private hotelsData: HotelsDataService,
     }, 
   })
 }
+}
+calculateRoomPrice(room: RoomResponseDto):number | null{
+  if(this.hotelsData.getHotelsData() != null) {
+     let price = this.hotelsData.getNumberOfNights()! * this.hotelsData.getNumberOfAdults()! * room.priceForAdult + this.hotelsData.getNumberOfNights()! * this.hotelsData.getNumberOfKids()! * room.priceForChild;
+     return price;
+  }
+  return null;
 }
 getStars(starCount: number): any[] {
   return new Array(starCount);

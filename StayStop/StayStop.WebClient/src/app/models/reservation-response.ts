@@ -8,4 +8,5 @@ export interface ReservationResponseDto {
     price: number;
     reservationPositions: ReservationPositionResponseDto[];
     reservationStatus: ReservationStatus;
+    userId: number;
 }
