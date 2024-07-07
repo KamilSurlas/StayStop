@@ -88,7 +88,7 @@ export class HomeComponent {
         console.log('start' + startDateValue);
 
         if (startDateValue != null && endDateValue != null) {
-          if (!this.reservationService.reservation) {
+          if (!ReservationService.reservation) {
 
             const startDateAdjusted = new Date(startDateValue);
             startDateAdjusted.setHours(startDateAdjusted.getHours() + 2);
@@ -96,7 +96,7 @@ export class HomeComponent {
             const endDateAdjusted = new Date(endDateValue);
             endDateAdjusted.setHours(endDateAdjusted.getHours() + 2);
 
-            this.reservationService.reservation = {
+            ReservationService.reservation = {
               
               startDate: startDateAdjusted.toISOString(),
               endDate: endDateAdjusted.toISOString(),
@@ -105,11 +105,11 @@ export class HomeComponent {
             };
             this.hotelsData.setNumberOfNights(this.calculateNumberOfNights(startDateAdjusted, endDateAdjusted));
 
-            console.log(this.reservationService.reservation.endDate);
+            console.log(ReservationService.reservation.endDate);
           } else {
             console.log('else');
-            this.reservationService.reservation.startDate = startDateValue.toISOString();
-            this.reservationService.reservation.endDate = endDateValue.toISOString();
+            ReservationService.reservation.startDate = startDateValue.toISOString();
+            ReservationService.reservation.endDate = endDateValue.toISOString();
           }
         }
    

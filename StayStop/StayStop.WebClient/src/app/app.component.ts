@@ -34,7 +34,7 @@ export class AppComponent {
   }
 
   isBasketEmpty = (): boolean => {
-    return (this.reservationService.reservation?.reservationPositions.length == 0 || this.reservationService.reservation == null);
+    return (ReservationService.reservation?.reservationPositions.length == 0 || ReservationService.reservation == null);
   }
 
   navigateToCart() {
