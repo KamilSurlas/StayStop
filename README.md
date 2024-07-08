@@ -10,6 +10,7 @@ An application created as a college project. Application is designed to the proc
 <li>Booking rooms</li>
 <li>Admin panel for reservations management</li>
 <li>User reservations history</li>
+<li>Hotels' opinions</li>
 
 ## Run the app
 In order to run the app follow this steps:
