@@ -13,7 +13,9 @@ An application created as a college project. Application is designed to the proc
 <li>Hotels' opinions</li>
 
 ## Run the app
-In order to run the app follow this steps:
+In order to run the app follow this steps: 
+
+
 Clone the repo
 ```bash
 git clone https://github.com/KamilSurlas/StayStop.git
