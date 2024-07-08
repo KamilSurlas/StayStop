@@ -47,8 +47,6 @@ export class AppComponent {
 
   @HostListener('window:beforeunload', ['$event'])
   clearLocalStorage(event: Event) {
-    // Usuń tokeny z localStorage
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    this.logOut();
   }
 }
